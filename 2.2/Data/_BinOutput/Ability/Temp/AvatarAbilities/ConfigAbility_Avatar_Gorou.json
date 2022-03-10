@@ -1,0 +1,4683 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_Arrow_FX",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "FastAim"
+          ],
+          "modifierName": "Gorou_Arrow_FX"
+        }
+      ],
+      "modifiers": {
+        "Gorou_Arrow_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "##箭的表现"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_PressShoot",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 10551,
+          "chargeTime": 0.2,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 999999.0
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10551,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10553,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EntityDoSkill",
+              "skillID": 10554,
+              "isHold": true
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetCameraLockTime",
+              "lockTime": 0.3
+            },
+            {
+              "$type": "MoleMole.Config.EntityDoSkill",
+              "skillID": 10554,
+              "isHold": true
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 101.0
+              }
+            }
+          ],
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10551,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10553,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EntityDoSkill",
+              "skillID": 10554,
+              "isHold": true
+            }
+          ],
+          "chargeStateIDs": [
+            "ShootBS",
+            "Shoot",
+            "FastAim",
+            "FastAimShoot"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FastAim",
+            "FastAimShoot"
+          ],
+          "modifierName": "KeepFastAiming"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FastAimShoot"
+          ],
+          "modifierName": "SetFastAimShooting"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ShootBS",
+            "FastAim",
+            "FastAimShoot"
+          ],
+          "modifierName": "SetNeedAimEndStates"
+        }
+      ],
+      "modifiers": {
+        "KeepFastAiming": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FastAiming",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.9,
+                "y": 0.4,
+                "z": -1.95
+              },
+              "cameraFollowUpper": {
+                "x": 0.9,
+                "y": 0.97,
+                "z": -2.0
+              },
+              "cameraFastFocusMode": true,
+              "faceToTarget": true,
+              "faceToTargetAngleThreshold": 360.0,
+              "dragButtonName": "Skill1",
+              "assistance": {
+                "ps4": {
+                  "useFocusSticky": true
+                },
+                "ps5": {
+                  "useFocusSticky": true
+                },
+                "other": {
+                  "useFocusSticky": true,
+                  "useGyro": true
+                }
+              },
+              "vcam_fov": 30.0
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FastAiming"
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus",
+              "keepRotation": true
+            }
+          ]
+        },
+        "SetFastAimShooting": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FastAimShooting",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FastAimShooting"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAnimatorBool",
+                  "value": true,
+                  "parameter": "FastAiming"
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "AimEnd"
+              }
+            }
+          ]
+        },
+        "SetNeedAimEndStates": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "InStatesNeedAimEnd",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "InStatesNeedAimEnd"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_AimPressShoot",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 10553,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 999999.0
+          },
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10551,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10553,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EntityDoSkill",
+              "skillID": 10554,
+              "isHold": true
+            }
+          ],
+          "chargeStateIDs": [
+            "Aim",
+            "AimShoot"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "AimShoot"
+          ],
+          "modifierName": "KeepAiming"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "AimShoot"
+          ],
+          "modifierName": "SetAimShooting"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "AimShoot"
+          ],
+          "modifierName": "SetNeedAimEndStates"
+        }
+      ],
+      "modifiers": {
+        "KeepAiming": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Aiming",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.9,
+                "y": 0.4,
+                "z": -1.95
+              },
+              "cameraFollowUpper": {
+                "x": 0.9,
+                "y": 0.97,
+                "z": -2.0
+              },
+              "cameraFastFocusMode": true,
+              "faceToTarget": true,
+              "faceToTargetAngleThreshold": 360.0,
+              "dragButtonName": "Skill1",
+              "assistance": {
+                "ps4": {
+                  "useFocusSticky": true
+                },
+                "ps5": {
+                  "useFocusSticky": true
+                },
+                "other": {
+                  "useFocusSticky": true,
+                  "useGyro": true
+                }
+              },
+              "vcam_fov": 30.0
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Aiming"
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus",
+              "keepRotation": true
+            }
+          ]
+        },
+        "SetAimShooting": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "AimShooting",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "AimShooting"
+            }
+          ]
+        },
+        "SetNeedAimEndStates": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "InStatesNeedAimEnd",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "InStatesNeedAimEnd"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootAimingArrow_Charge",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "FastAim"
+          ],
+          "modifierName": "ShootAimingArrow_Charge_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "AimShoot"
+          ],
+          "modifierName": "ShowAimingEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FastAim",
+            "FastAimShoot"
+          ],
+          "modifierName": "ShowAimingEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim",
+            "FastAim",
+            "FastAimShoot",
+            "AimShoot"
+          ],
+          "modifierName": "ShootAimingArrow_Charge_Remove"
+        }
+      ],
+      "modifiers": {
+        "ShootAimingArrow_Charge_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "AimChargeMark"
+            }
+          ]
+        },
+        "ShootAimingArrow_Charge_Remove": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -5.0
+              },
+              "key": "_Enchanted_Time",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AimChargeMark"
+            }
+          ]
+        },
+        "AimChargeMark": {
+          "stacking": "MultipleRefreshNoRemove",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.0
+            }
+          },
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_Enchanted_Time",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "ShowAimingEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "RockMagic_Arrow_Glow_WithoutWind_Once"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "RockMagic_Arrow_Glow_Once"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "RockMagic_Arrow_Glow_WithoutWind_Once"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Enchanted_Time",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "MoreThanAndEqual"
+                }
+              ],
+              "modifierName": "RockMagic_Arrow_Glow_Once"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Enchanted_Time",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "modifierName": "RockMagic_Arrow_Glow_WithoutWind_Once"
+            }
+          ]
+        },
+        "RockMagic_Arrow_Glow_Once": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ExtraAttack_Glow_Once_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ExtraAttack_Glow_Loop_02"
+              }
+            }
+          ]
+        },
+        "RockMagic_Arrow_Glow_WithoutWind_Once": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ExtraAttack_Glow_Once_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ExtraAttack_Glow_Loop_01"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -5.0
+          },
+          "key": "_Enchanted_Time",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "AimChargeMark"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "RockMagic_Arrow_Glow_Once"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "RockMagic_Arrow_Glow_WithoutWind_Once"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_Aiming",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Enchanted_Time",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "forceByCaster": true,
+              "compareType": "LessAndEqual"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 41055010,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "FocusAnchor",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "WeaponL"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_ElectricMagic_ShootArrow"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.9
+                  }
+                },
+                "attachPointName": "WeaponR"
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Enchanted_Time",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "MoreThanAndEqual"
+                }
+              ],
+              "bulletID": 41055011,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "FocusAnchor",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "WeaponL"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Enchanted_Time",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "MoreThanAndEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_OnShooting"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.9
+                  }
+                },
+                "attachPointName": "WeaponR"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Bullet_Gorou_AimingArrow_WithoutRock",
+      "abilitySpecials": {
+        "DamageWithoutElectric": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Fly_Big"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Arrow_Hit_Earth",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "ExtraAttack",
+              "attenuationTag": "ExtraAttack",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "DamageWithoutElectric"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Pierce",
+                "enBreak": 20.0,
+                "enHeadBreak": 60.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.01
+              },
+              "canHitHead": true,
+              "hitHeadPattern": {
+                "onHitEffectName": "Eff_Arrow_Hit_Head",
+                "hitImpulseType": "LV5",
+                "hitHaltTime": 0.12,
+                "hitHaltTimeScale": 0.01
+              },
+              "bulletWane": {
+                "waneDelay": 0.7,
+                "damageWaneInterval": 0.05,
+                "damageWaneRatio": 0.1,
+                "damageWaneMinRatio": 0.1,
+                "elementDurabilityWaneInterval": 0.05,
+                "elementDurabilityWaneRatio": 0.1,
+                "elementDurabilityWaneMinRatio": 0.1,
+                "hitLevelWaneInterval": 0.1,
+                "hitLevelWaneMin": "Mute"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Bullet_Gorou_AimingArrow_Rock",
+      "abilitySpecials": {
+        "DamageWithElectric": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Rock_Fly_Trail"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Rock_Fly_Particle"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Rock_Hit",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "ExtraAttack",
+              "attenuationTag": "ExtraAttack",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "DamageWithElectric"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Pierce",
+                "enBreak": 10.0,
+                "enHeadBreak": 30.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Rock_Hit",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.01
+              },
+              "canHitHead": true,
+              "hitHeadPattern": {
+                "onHitEffectName": "Eff_Arrow_Hit_Head_Rock",
+                "hitImpulseType": "LV5",
+                "hitHaltTime": 0.12,
+                "hitHaltTimeScale": 0.01
+              },
+              "bulletWane": {
+                "waneDelay": 0.7,
+                "damageWaneInterval": 0.05,
+                "damageWaneRatio": 0.1,
+                "damageWaneMinRatio": 0.1,
+                "elementDurabilityWaneInterval": 0.05,
+                "elementDurabilityWaneRatio": 0.1,
+                "elementDurabilityWaneMinRatio": 0.1,
+                "hitLevelWaneInterval": 0.1,
+                "hitLevelWaneMin": "Mute"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_01",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DebugLog",
+          "content": "##触发普攻"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41055001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "WeaponL"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Small"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "WeaponL"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_02",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41055002,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "WeaponL"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Small"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "WeaponL"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_03",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41055003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -0.1294
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.141
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5554
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Big"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -0.1294
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.141
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5554
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_04",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41055004,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -0.1294
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.8
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.3554
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Big"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -0.1294
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.8
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.3554
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_05",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41056005,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "WeaponL"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Venti_ShootArrow_Big"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "WeaponL"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_Light_Material",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Small"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Fly_Small"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Arrow_Hit_Earth",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_Heavy_Material",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ShootArrow_Big"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_Arrow_Fly_Big"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Arrow_Hit_Earth",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ShootArrow_Damage",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK01"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_01_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK02"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_02_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK03"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_03_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK04"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_04_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK05"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_05_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "NormalAttack_01_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_02_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_03_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_04_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_05_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ElementalArt_SkillHoldCharge",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SkillButtonHoldChargeMixin",
+          "skillID": 10552,
+          "nextLoopTriggerID": "NextLoopTrigger",
+          "endHoldTrigger": "EndHoldTrigger",
+          "beforeStateIDs": [
+            "Gorou_ElementalArt_BS"
+          ],
+          "chargeLoopStateIDs": [
+            "Gorou_ElementalArt_Charge"
+          ],
+          "chargeLoopDurations": [
+            10.0
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalArt_Charge",
+            "Gorou_ElementalArt_Custom"
+          ],
+          "modifierName": "Focus"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalArt_Charge_BS",
+            "Gorou_ElementalArt_Charge"
+          ],
+          "modifierName": "AimingAlertFX"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalArt_Charge"
+          ],
+          "modifierName": "Charge_FX"
+        }
+      ],
+      "modifiers": {
+        "Focus": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.8,
+                "y": 0.2,
+                "z": -2.5
+              },
+              "cameraFollowUpper": {
+                "x": 0.5,
+                "y": -0.2
+              },
+              "cameraFastFocusMode": true,
+              "dragButtonName": "Skill2",
+              "assistance": {
+                "ps4": {},
+                "ps5": {},
+                "other": {
+                  "useGyro": true
+                }
+              },
+              "canMove": false,
+              "showCrosshair": false,
+              "focusAnchorVerAngle": 5.0
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus",
+              "keepRotation": true
+            }
+          ]
+        },
+        "Charge_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "key": "_GOROU_THROW_RANGE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Aim_Line"
+              }
+            }
+          ]
+        },
+        "AimingAlertFX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Aim_AimAlert"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Aim_AimAlert_Hand"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10552,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41038009,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "FocusAnchor"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.DebugLog",
+          "content": "##能创建bullet么！！"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ElementalArt",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalArt",
+            "Gorou_ElementalArt_Custom"
+          ],
+          "modifierName": "Kill_ElementalArt_Field"
+        }
+      ],
+      "modifiers": {
+        "Kill_ElementalArt_Field": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41055006
+              },
+              "modifierName": "Gorou_Kill_ElementalArt_Field"
+            }
+          ]
+        },
+        "Gorou_Kill_ElementalArt_Field": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10552,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Gorou_ElementalBurst_State",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                "onGround": true,
+                "onGroundIgnoreWater": true,
+                "onGroundRaycastUpDist": 3.0
+              },
+              "gadgetID": 41055006,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "##领域创建失败"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Smash"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -5.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 10.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Art",
+                  "attenuationTag": "Elemental_Art",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 120.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 142.9,
+                    "attackType": "Range"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV1",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.02
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 0.4,
+                    "shakeTime": 0.12,
+                    "shakeDistance": 60.0,
+                    "extension": {
+                      "baseOnCamera": true
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Gorou_ShowLayer",
+      "modifiers": {
+        "SkillObj_Gorou_FieldLand_ShowLayer_Mixin": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_ElementalArt_Layer0",
+                "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Test",
+                "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Test",
+                "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Test"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Test": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_EnergyDisk_AddFallingAttack01"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Test": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_EnergyDisk_AddFallingAttack02"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Test": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_EnergyDisk_AddFallingAttack03"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "OriginOwner",
+          "doOffStage": true,
+          "modifierName": "SkillObj_Gorou_FieldLand_ShowLayer_Mixin"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Gorou_ShowLayer1",
+      "modifiers": {
+        "SkillObj_Gorou_FieldLand_ShowLayer_Mixin1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Test0",
+                "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Test1",
+                "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Test2",
+                "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Test3"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Test0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0_AttachEffect_Avatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer01",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Test1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer02",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Test2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer03",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Test3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer04",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "OriginOwner",
+          "doOffStage": true,
+          "modifierName": "SkillObj_Gorou_FieldLand_ShowLayer_Mixin1"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Gorou_FieldLand",
+      "abilitySpecials": {
+        "Gadget_Gorou_ElementalArt_RockNum_Max": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Gadget_Gorou_ElementalArt_RockNum_Cache": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Avatar_Gorou_ElementalArt_RockNum_CacheCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Gorou_FieldLand_Layer_HeadEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_HeadEffect_Layer0",
+                "Avatar_Gorou_HeadEffect_Layer1",
+                "Avatar_Gorou_HeadEffect_Layer2",
+                "Avatar_Gorou_HeadEffect_Layer3"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_HeadEffect_Layer0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer01",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_HeadEffect_Layer1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer02",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_HeadEffect_Layer2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer03",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_HeadEffect_Layer3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer04",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Gorou_FieldLand_Layer_HeadEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Gorou_FieldLand_Layer_HeadEffect_Avatar"
+            }
+          ]
+        },
+        "Gorou_FieldLand_Layer_HeadEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Onkill_FireEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_AttachOnKillEffect_Layer0",
+                "Avatar_Gorou_AttachOnKillEffect_Layer1",
+                "Avatar_Gorou_AttachOnKillEffect_Layer2",
+                "Avatar_Gorou_AttachOnKillEffect_Layer3"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer_Init": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Gorou_FieldLand_Layer_Mixin": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_ElementalArt_Layer0",
+                "Avatar_Gorou_ElementalArt_Layer1",
+                "Avatar_Gorou_ElementalArt_Layer2",
+                "Avatar_Gorou_ElementalArt_Layer3"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_FieldAlert"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer0_Handler"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Avatar_Gorou_ElementalArt_Layer0_Modifier"
+            }
+          ]
+        },
+        "UNIQUE_Avatar_Gorou_ElementalArt_Layer0_Modifier": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.2
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Avatar_Gorou_ElementalArt_Layer1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "1",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "ToLayer01",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Symbol"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_FieldAlert"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_Handler"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack1"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Avatar_Gorou_ElementalArt_Layer1_Modifier"
+            }
+          ]
+        },
+        "UNIQUE_Avatar_Gorou_ElementalArt_Layer1_Modifier": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.2
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Avatar_Gorou_ElementalArt_Layer2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_03"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "2",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_FieldAlert"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack2"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_04"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "3",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_FieldAlert"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack3"
+              }
+            }
+          ]
+        },
+        "Gorou_FieldLand_Layer_Update": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Gadget",
+                    "Field",
+                    "Bullet"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_COMMON_GADGET_ISSUMMON",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+              "overrideMapKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Gadget_Gorou_ElementalArt_RockNum_Max"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              },
+              "key": "Gadget_Gorou_ElementalArt_RockNum_Cache",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "Gadget_Gorou_ElementalArt_RockNum_Cache",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "modifierName": "Gorou_FieldLand_Layer_Update_SetLayer"
+            }
+          ]
+        },
+        "Gorou_FieldLand_Layer_Update_SetLayer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "##发现数量变多"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount"
+              },
+              "key": "Gadget_Gorou_ElementalArt_RockNum_Max",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+              "overrideMapKey": "Gadget_Gorou_ElementalArt_RockNum_Max"
+            },
+            {
+              "$type": "MoleMole.Config.CopyGlobalValue",
+              "srcTarget": "Self",
+              "dstTarget": "Self",
+              "srcKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+              "dstKey": "Avatar_Gorou_ElementalArt_Layer"
+            },
+            {
+              "$type": "MoleMole.Config.CopyGlobalValue",
+              "srcTarget": "Self",
+              "dstTarget": "OriginOwner",
+              "srcKey": "Avatar_Gorou_ElementalArt_RockNum_CacheCount",
+              "dstKey": "Avatar_Gorou_ElementalArt_Layer"
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachOnKillEffect_Layer0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_01_Die"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachOnKillEffect_Layer1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_02_Die"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachOnKillEffect_Layer2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_03_Die"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachOnKillEffect_Layer3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag_04_Die"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Attack"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -5.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "height": 10.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Elemental_Art",
+              "attenuationTag": "Elemental_Art",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 120.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Rock",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 142.9,
+                "attackType": "Range"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV1",
+                "retreatType": "ByHitDirection",
+                "hitHaltTimeScale": 0.02
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeRange": 0.4,
+                "shakeTime": 0.12,
+                "shakeDistance": 60.0,
+                "extension": {
+                  "baseOnCamera": true
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": " Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Field_Shirou"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalArt_Flag"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "Gadget_Gorou_ElementalArt_RockNum_Max",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "shapeName": "CircleR10",
+            "campTargetType": "All",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Gadget",
+                "Field",
+                "Bullet"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_COMMON_GADGET_ISSUMMON",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "Gadget_Gorou_ElementalArt_RockNum_Max",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "Gadget_Gorou_ElementalArt_RockNum_Max",
+          "overrideMapKey": "Gadget_Gorou_ElementalArt_RockNum_Max"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Gadget_Gorou_ElementalArt_RockNum_Max"
+          },
+          "key": "Avatar_Gorou_ElementalArt_Layer",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Gadget_Gorou_ElementalArt_RockNum_Max"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.CopyGlobalValue",
+          "srcTarget": "Self",
+          "dstTarget": "OriginOwner",
+          "srcKey": "Gadget_Gorou_ElementalArt_RockNum_Max",
+          "dstKey": "Avatar_Gorou_ElementalArt_Layer"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Gorou_FieldLand_Layer_Mixin"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "OriginOwner",
+          "modifierName": "Gorou_FieldLand_Layer_HeadEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Gorou_FieldLand_Layer_Update"
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Avatar_Gorou_ElementalArt_Onkill_FireEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Gorou_ElementalArt_Bullet",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.DebugLog",
+          "content": "##小技能投射子弹"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DebugLog",
+          "content": "##子弹移动到地面了么"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Gorou_ElementalArt_CustomPos",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalDir",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Gorou_ElementalArt_CustomDir",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelfOwner"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "target": "OriginOwner",
+          "abilityName": "Gorou_ElementalArt_Bullet_CreateGadget"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Gorou_ElementalArt_Bullet_CreateGadget",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DebugLog",
+          "content": "##子弹回弹创建"
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "onGroundRaycastUpDist": 3.0,
+            "positionKey": "_ABILITY_Gorou_ElementalArt_CustomPos",
+            "directionKey": "_ABILITY_Gorou_ElementalArt_CustomDir"
+          },
+          "gadgetID": 41055006,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Gorou_ElementalArt_Bullet_LifeOver",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Gorou_ElementalArt_CustomPos",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalDir",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Albedo_Monolith_CustomDir",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelfOwner"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "target": "OriginOwner",
+          "abilityName": "Gorou_ElementalArt_Bullet_CreateGadget"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_ElementalBurst",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalBurst",
+            "Gorou_ElementalBurst_AS"
+          ],
+          "modifierName": "Gorou_ElementalBurst_Invincible"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Gorou_ElementalBurst",
+          "modifierName": "Avatar_Gorou_ElementalBurst_Camera_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Gorou_ElementalBurst"
+          ],
+          "modifierName": "Avatar_Gorou_ElementalBurst_Camera_Handler"
+        }
+      ],
+      "modifiers": {
+        "Avatar_Gorou_ElementalBurst_KillSelf": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillGadget",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "gadgetInfo": {
+                "configID": 41055006
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalBurst_Self"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalBurst_Self": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 16.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "gadgetID": 41055007,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "gadgetID": 41055008,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Gorou_ElementalBurst_State",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Gorou_ElementalBurst_State",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "onGround": true,
+                "onGroundIgnoreWater": true,
+                "onGroundRaycastUpDist": 3.0
+              },
+              "gadgetID": 41055006,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalBurst_Effect_Mixin": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "Avatar_Gorou_ElementalArt_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Avatar_Gorou_AttachEffect_Layer0",
+                "Avatar_Gorou_AttachEffect_Layer1",
+                "Avatar_Gorou_AttachEffect_Layer2",
+                "Avatar_Gorou_AttachEffect_Layer3"
+              ]
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachEffect_Layer0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer0_Handler"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer0_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Avatar_Gorou_ElementalArt_Layer0_Modifier"
+            }
+          ]
+        },
+        "UNIQUE_Avatar_Gorou_ElementalArt_Layer0_Modifier": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.2
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Avatar_Gorou_AttachEffect_Layer1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_Handler"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack1"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer1_Handler": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Avatar_Gorou_ElementalArt_Layer1_Modifier"
+            }
+          ]
+        },
+        "UNIQUE_Avatar_Gorou_ElementalArt_Layer1_Modifier": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.2
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Avatar_Gorou_AttachEffect_Layer2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer2_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack2"
+              }
+            }
+          ]
+        },
+        "Avatar_Gorou_AttachEffect_Layer3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Team": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar"
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalArt_Layer3_AttachEffect_Avatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_Stack3"
+              }
+            }
+          ]
+        },
+        "Gorou_ElementalBurst_Invincible": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 11002
+            }
+          ]
+        },
+        "Gorou_ElementalBurst_Weather": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWeatherMixin",
+              "type": "Skill",
+              "weatherPattern": "Weather_Albedo_AlchemicalBreakOut",
+              "duration": 1.6
+            }
+          ]
+        },
+        "Avatar_Gorou_ElementalBurst_Camera_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableHeadControl",
+              "blend": false
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "大招镜头调用了吗"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "doOffStage": true,
+              "cameraParam": {
+                "forceRadius": 6.0,
+                "forceRadiusDuration": 0.4,
+                "shouldKeepForceRadius": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitCameraShot",
+              "doOffStage": true
+            }
+          ],
+          "onAvatarOut": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "doOffStage": true,
+              "cameraParam": {
+                "forceRadius": 6.0,
+                "forceRadiusDuration": 0.4,
+                "shouldKeepForceRadius": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitCameraShot",
+              "doOffStage": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10555,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "Avatar_Gorou_ElementalBurst_KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Gorou_BurstFieldLand",
+      "modifiers": {
+        "Gorou_BurstFieldLand_Handler": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 15.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalBurst_Attack"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Gorou_ElementalBurst_FieldAlert_Test"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "Gorou_BurstFieldLand_Handler"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Die"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Gorou_BurstFieldLand_Dog",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Bow_Gorou_ElementalBurst_Shirou"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelfOwner",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByDefault"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Gorou_Radar_Collectables_Daoqi",
+      "modifiers": {
+        "Radar_Toggle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Radar_Collectables_Daoqi",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_Radar_Collectables_Daoqi",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Radar_Toggle"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

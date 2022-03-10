@@ -1,0 +1,765 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_Bramble_Interact",
+      "modifiers": {
+        "Bramble_Burning": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ShieldBarMixin",
+              "showDamageText": ""
+            },
+            {
+              "$type": "MoleMole.Config.RejectAttackMixin",
+              "attackTag": "_Bramble_Attack"
+            },
+            {
+              "$type": "MoleMole.Config.DoActionByEventMixin",
+              "type": "Current",
+              "onAbilityStateAdded": [
+                {
+                  "abilityState": "ElementBurning",
+                  "actions": [
+                    {
+                      "$type": "MoleMole.Config.AttachModifier",
+                      "modifierName": "Burning_Effect"
+                    }
+                  ]
+                }
+              ],
+              "onAbilityStateRemoved": [
+                {
+                  "abilityState": "ElementBurning",
+                  "actions": [
+                    {
+                      "$type": "MoleMole.Config.RemoveModifier",
+                      "modifierName": "Burning_Effect"
+                    }
+                  ]
+                }
+              ],
+              "costEnergyDeltaName": ""
+            }
+          ],
+          "state": "Limbo",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_BurnOut"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_BurnOut"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Burning_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Element_Burning"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "key": "_CUSTOM_ATTACK_SHAPE_TYPE",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ABILITY_BURNING_IGNITE_ONLY",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Bramble_Burning"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_Bramble_Attack",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "_Bramble_Attack",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementType": "Grass",
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "strikeType": "Default",
+              "enBreak": 100.0,
+              "ignoreLevelDiff": true
+            },
+            "hitPattern": {
+              "onHitEffectName": "default",
+              "hitImpulseType": "LV4",
+              "hitHaltTimeScale": 0.01
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_WoodenObject_Interact",
+      "modifiers": {
+        "WoodMaterial": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "state": "Limbo",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Die_Effect"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_WoodenObject_DeathType",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitElement",
+                      "element": "Fire"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHitDamage",
+                      "logic": "Equal",
+                      "damage": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasElement",
+                      "element": "Fire"
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_SceneObj_WoodenObject_Broken"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.KillSelf"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Water"
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitDamage",
+                      "logic": "Equal",
+                      "damage": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_SceneObj_WoodenObject_Broken"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.KillSelf"
+                }
+              ]
+            }
+          ]
+        },
+        "Die_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_WoodenObject_DeathType",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_BurnOut"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_WoodenObject_DeathType",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "WoodMaterial"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_WoodenObject_DeathType",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ABILITY_BURNING_IGNITE_ONLY",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_FirewoodStacks_Interact",
+      "modifiers": {
+        "NormalModifier": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 50.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_LeafBlanket_01_Burnout"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "NormalModifier"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ABILITY_BURNING_IGNITE_ONLY",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_BrambleWorld_Interact",
+      "modifiers": {
+        "Burning": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ShieldBarMixin",
+              "showDamageText": ""
+            }
+          ],
+          "state": "Limbo",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_BurnOut"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_BurnOut"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Double_Attack"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Double_Attack"
+            }
+          ]
+        },
+        "Double_Attack": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.75
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "doOffStage": true,
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackBox",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.15
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.75
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.5
+                      }
+                    }
+                  },
+                  "size": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 4.4
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.5
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.8
+                    }
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Grass",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 10.0
+                    },
+                    "strikeType": "Pierce",
+                    "enBreak": 9999999.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Burning"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ABILITY_BURNING_IGNITE_ONLY",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_BrambleWorld_Attack",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementType": "Grass",
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "strikeType": "Default",
+              "enBreak": 100.0,
+              "ignoreLevelDiff": true
+            },
+            "hitPattern": {
+              "onHitEffectName": "default",
+              "hitImpulseType": "LV4",
+              "hitHaltTimeScale": 0.01
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Item_Moving_Trap_Attack",
+      "modifiers": {
+        "test": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementType": "Fire",
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "strikeType": "Default",
+              "enBreak": 100.0,
+              "ignoreLevelDiff": true
+            },
+            "hitPattern": {
+              "onHitEffectName": "",
+              "hitImpulseType": "LV4",
+              "hitHaltTimeScale": 0.01
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "test"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_WoodenMaterial_GinSengTree",
+      "onFieldEnter": [
+        {
+          "$type": "MoleMole.Config.ExecuteGadgetLua"
+        }
+      ]
+    }
+  }
+]

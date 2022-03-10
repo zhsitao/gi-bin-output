@@ -1,0 +1,5708 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_ExtraAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 10386,
+          "chargeTime": 0.12,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging",
+              "value": true
+            }
+          ],
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginSecondCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "chargeStateIDs": [
+            "Attack01",
+            "Attack02",
+            "Attack03",
+            "Attack04",
+            "Run"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_StaminaCost"
+        }
+      ],
+      "abilitySpecials": {
+        "ExtraAttack_Sword_Stamina_Cost": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Flexible_Stamina": {
+          "type": "float",
+          "dynamicValue": -2.0
+        }
+      },
+      "modifiers": {
+        "ExtraAttack_StaminaCost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10001,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_SkillHoldCharge",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SkillButtonHoldChargeMixin",
+          "skillID": 10387,
+          "nextLoopTriggerID": "NextLoopTrigger",
+          "endHoldTrigger": "EndHoldTrigger",
+          "beforeStateIDs": [
+            "FullRockAlchemist_BS"
+          ],
+          "chargeLoopStateIDs": [
+            "FullRockAlchemist_Charge"
+          ],
+          "chargeLoopDurations": [
+            10.0
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FullRockAlchemist_Charge",
+            "FullRockAlchemist_Custom"
+          ],
+          "modifierName": "Focus"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FullRockAlchemist_BS",
+            "FullRockAlchemist_Charge"
+          ],
+          "modifierName": "AimingAlertFX"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FullRockAlchemist_Charge"
+          ],
+          "modifierName": "Charge_FX"
+        }
+      ],
+      "modifiers": {
+        "Focus": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.8,
+                "y": 0.2,
+                "z": -2.5
+              },
+              "cameraFollowUpper": {
+                "x": 0.5,
+                "y": -0.2
+              },
+              "cameraFastFocusMode": true,
+              "dragButtonName": "Skill2",
+              "assistance": {
+                "ps4": {},
+                "ps5": {},
+                "other": {
+                  "useGyro": true
+                }
+              },
+              "canMove": false,
+              "showCrosshair": false,
+              "focusAnchorVerAngle": 5.0
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus",
+              "keepRotation": true
+            }
+          ]
+        },
+        "Charge_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "key": "_FURIOUSMONOLITH_THROW_RANGE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Aim_Line"
+              }
+            }
+          ]
+        },
+        "AimingAlertFX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_AimAlert"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_AimAlert_Hand"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10387,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41038003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "FocusAnchor"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_FullRockAlchemist",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FullRockAlchemist",
+            "FullRockAlchemist_Custom"
+          ],
+          "modifierName": "KillGadget"
+        }
+      ],
+      "modifiers": {
+        "KillGadget": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41038001
+              },
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_DieFx_Mark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41038001
+              },
+              "modifierName": "Albedo_FuriousMonolith_Killer"
+            }
+          ]
+        },
+        "Albedo_FuriousMonolith_Killer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10387,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "onGroundRaycastUpDist": 3.0
+          },
+          "gadgetID": 41038001,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_FullRockAlchemist_Custom",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "onGroundRaycastUpDist": 3.0,
+            "positionKey": "_ABILITY_Albedo_Monolith_CustomPos",
+            "directionKey": "_ABILITY_Albedo_Monolith_CustomDir"
+          },
+          "gadgetID": 41038001,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Bullet_Albedo_FuriousMonolith_Bullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Albedo_Monolith_CustomPos",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalDir",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Albedo_Monolith_CustomDir",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelfOwner"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "target": "OriginOwner",
+          "abilityName": "Avatar_Albedo_FullRockAlchemist_Custom"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Bullet_Albedo_FuriousMonolith_Bullet_LifeOver",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Albedo_Monolith_CustomPos",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalDir",
+          "target": "OriginOwner",
+          "key": "_ABILITY_Albedo_Monolith_CustomDir",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelfOwner"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "target": "OriginOwner",
+          "abilityName": "Avatar_Albedo_FullRockAlchemist_Custom"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Albedo_FuriousMonolith",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByTeamStatusMixin",
+          "actions": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByCurTeamHasFeatureTag",
+                  "featureTagID": 10038,
+                  "logic": "LesserOrEqual"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 30.0
+        },
+        "CheckInterval": {
+          "type": "float",
+          "dynamicValue": 0.3
+        },
+        "OpeningDamage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "AvatarCheckDelay": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_DelayCreateMovingPlatform_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_DelayCreateMovingPlatform"
+            }
+          ]
+        },
+        "UNIQUE_DelayCreateMovingPlatform": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_DelayCreateMovingPlatform_Handler"
+            },
+            {
+              "$type": "MoleMole.Config.CreateMovingPlatform",
+              "lifeByOwnerIsAlive": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 41038002,
+              "campID": 1001,
+              "campTargetType": "Enemy",
+              "byServer": true
+            }
+          ]
+        },
+        "Albedo_Monolith_Field_AvatarCheckDelay_Intro": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByIsCombat"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetOverrideMapValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  },
+                  "overrideMapKey": "AvatarCheckDelay"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.SetOverrideMapValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.25
+                  },
+                  "overrideMapKey": "AvatarCheckDelay"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_AvatarCheckDelay"
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_AvatarCheckDelay": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "AvatarCheckDelay"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarInDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarInDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_Monolith_Field_AvatarCheckDelay_Outro": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Albedo_FuriousMonolith_Elevator_Killer": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "hideEntity": true
+            }
+          ]
+        },
+        "FuriousMonolith_RockDurability_Handler": {
+          "modifierName": "",
+          "elementType": "Rock",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_DieFx_Mark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_DelayCreateMovingPlatform_Handler"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41038002
+              },
+              "modifierName": "UNIQUE_Albedo_FuriousMonolith_Elevator_Killer"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "hideEntity": true
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Recover_RockDurability"
+            }
+          ]
+        },
+        "Recover_RockDurability": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              },
+              "modifierName": "FuriousMonolith_RockDurability_Handler",
+              "elementType": "Rock",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            }
+          ]
+        },
+        "CreateElevator_FailFx": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Elevator_Fail"
+              }
+            }
+          ]
+        },
+        "UNIQUE_MonolithLife": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_DelayCreateMovingPlatform_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_MonolithLife"
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Earthquake"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "FuriousMonolith_RockDurability_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -2.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "height": 4.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Elemental_Art",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "OpeningDamage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Rock",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 50.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Earthquake_Behit",
+                "hitImpulseType": "LV4",
+                "retreatType": "ByHitDirection",
+                "hitHaltTimeScale": 0.02
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeRange": 0.4,
+                "shakeTime": 0.12,
+                "shakeDistance": 60.0,
+                "extension": {
+                  "baseOnCamera": true
+                }
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarStateMark",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarInDelay",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "Albedo_Monolith_Field_AvatarCheckDelay_Intro"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarStateMark",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarCheckDelay",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Caster",
+              "key": "_ABILITY_Albedo_Monolith_ElevatorCD",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TryTriggerPlatformStartMove",
+              "detectHeight": 6.0,
+              "detectWidth": 1.5,
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "CreateElevator_FailFx"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "doOffStage": true,
+              "content": "!!!!!!!!!!!TryTriggerPlatformStartMove!!!!!!!!!!"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Target",
+              "modifierName": "Albedo_Monolith_Field_AvatarCheckDelay_Outro"
+            }
+          ]
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_Albedo_Monolith_DieFx_Mark",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Broken"
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Die"
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 41038002
+          },
+          "modifierName": "UNIQUE_Albedo_FuriousMonolith_Elevator_Killer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Albedo_ForceResetPlatform",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TryTriggerPlatformStartMove",
+          "forceReset": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Albedo_FuriousMonolith_Field",
+      "abilitySpecials": {
+        "AlchemyTrapCD": {
+          "type": "float",
+          "dynamicValue": 2.0
+        },
+        "BloomEnergy": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Art": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "BloomBurst_Timer": {
+          "type": "float",
+          "dynamicValue": 30.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Albedo_Monolith_Field_Bloom_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10H10",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "Albedo_Monolith_Field_Monitor"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10H20",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_AvatarStateCheck"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10H20",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "Albedo_Monolith_Field_AvatarStateCheck_Keeper"
+            }
+          ]
+        },
+        "Albedo_Monolith_Field_Monitor": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasAbilityState",
+                      "target": "Self",
+                      "abilityState": "Invincible"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasAbilityState",
+                      "target": "Self",
+                      "abilityState": "LockHP"
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Albedo_MonolithField_AlchemyTrapCD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasAbilityState",
+                      "target": "Self",
+                      "abilityState": "Limbo"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetHPValue",
+                      "target": "Self",
+                      "logic": "Lesser",
+                      "HP": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      }
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Other",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetConfigID",
+                          "configIdArray": [
+                            10000038,
+                            41038001
+                          ]
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.Predicated",
+                          "target": "Other",
+                          "targetPredicates": [
+                            {
+                              "$type": "MoleMole.Config.ByAttackTags",
+                              "attackTags": [
+                                "Elemental_Burst",
+                                "Elemental_Art"
+                              ]
+                            }
+                          ],
+                          "successActions": [
+                            {
+                              "$type": "MoleMole.Config.Predicated",
+                              "target": "Other",
+                              "targetPredicates": [
+                                {
+                                  "$type": "MoleMole.Config.ByAttackTags",
+                                  "attackTags": [
+                                    "Elemental_Art"
+                                  ]
+                                },
+                                {
+                                  "$type": "MoleMole.Config.ByAttackType",
+                                  "attackType": "Melee"
+                                }
+                              ],
+                              "successActions": [
+                                {
+                                  "$type": "MoleMole.Config.DebugLog",
+                                  "doOffStage": true,
+                                  "content": "!!!!!!!!!!ElementalArt_BornAttack_Check!!!!!!!!!!"
+                                },
+                                {
+                                  "$type": "MoleMole.Config.ApplyModifier",
+                                  "target": "Caster",
+                                  "modifierName": "UNIQUE_Albedo_Monolith_Field_Attacker"
+                                }
+                              ]
+                            }
+                          ],
+                          "failActions": [
+                            {
+                              "$type": "MoleMole.Config.DebugLog",
+                              "doOffStage": true,
+                              "content": "!!!!!!!!!!Not_ElementalArt_Or_Burst_Check!!!!!!!!!!"
+                            },
+                            {
+                              "$type": "MoleMole.Config.ApplyModifier",
+                              "target": "Caster",
+                              "modifierName": "UNIQUE_Albedo_Monolith_Field_Attacker"
+                            }
+                          ]
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "doOffStage": true,
+                          "content": "!!!!!!!!!!Not_Albedo_Check!!!!!!!!!!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Caster",
+                          "modifierName": "UNIQUE_Albedo_Monolith_Field_Attacker"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_AvatarStateCheck": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Sit",
+                "SitB",
+                "BeHit",
+                "BeHitAir",
+                "HitThrow",
+                "Fly",
+                "Swim",
+                "Climb",
+                "ClimbTransient",
+                "Die",
+                "Die_RagDoll"
+              ],
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_AvatarStateMark"
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_AvatarStateMark": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarStateMark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_Field_AvatarStateMark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_Monolith_Field_AvatarStateCheck_Keeper": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_AvatarStateCheck",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_Attacker": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "AlchemyTrapCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "target": "Caster",
+              "key": "_ABILITY_Albedo_AlchemyTrap_Pos",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "Fx_ChestNode",
+                "attachPointTargetType": "Applier"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_MonolithField_AlchemyTrapCD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemyTrap_Explode"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_ABILITY_Albedo_AlchemyTrap_Pos",
+                "directionKey": ""
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_ABILITY_Albedo_AlchemyTrap_Pos",
+                    "directionKey": ""
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.4
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Art",
+                  "attenuationTag": "Elemental_Art",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 50.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Damage_Art"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "FIGHT_PROP_CUR_DEFENSE"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV1",
+                    "retreatType": "ByHitDirection"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "target": "OriginOwner",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "BloomEnergy"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "BloomEnergy"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "BloomBurst"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "OriginOwner",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddElementDurability",
+                  "target": "OriginOwner",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BloomBurst_Timer"
+                  },
+                  "modifierName": "UNIQUE_Albedo_BloomBurst_Handler",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BloomBurst_Timer"
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddElementDurability",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BloomBurst_Timer"
+                  },
+                  "modifierName": "UNIQUE_Albedo_BloomBurst_FXHandler",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BloomBurst_Timer"
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_MonolithField_AlchemyTrapCD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_AlchemyTrap_BloomElemBall_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Art"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackType",
+                  "attackType": "Default"
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "Albedo_AlchemyTrap_BloomElemBall"
+                }
+              ]
+            }
+          ]
+        },
+        "Albedo_AlchemyTrap_BloomAttackUp": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "Elemental_Art"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.25
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "LesserOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackType",
+                  "attackType": "Default"
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ]
+            }
+          ]
+        },
+        "Albedo_AlchemyTrap_BloomElemBall": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "chance": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.67
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.GenerateElemBall",
+                  "configID": 2023,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_ABILITY_Albedo_AlchemyTrap_Pos",
+                    "directionKey": ""
+                  },
+                  "ratio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "baseEnergy": 3.0
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_Talent_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10H20",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "FallingAttackUp"
+                }
+              ],
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_FallingAttackUp"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10H20",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "FallingAttackUp"
+                }
+              ],
+              "modifierName": "Albedo_Monolith_Field_FallingAttackUp_Keeper"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllTeams",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Fire_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Water_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Ice_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Electric_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "ShieldFever"
+                }
+              ],
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_ShieldFever"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllTeams",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Fire_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Water_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Ice_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_CrystalSeed_Electric_Shield_Mark",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "ShieldFever"
+                }
+              ],
+              "modifierName": "Albedo_Monolith_Field_ShieldFever_Keeper"
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_FallingAttackUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "FallingAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.3
+              }
+            }
+          ]
+        },
+        "UNIQUE_Albedo_Monolith_Field_ShieldFever": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "UNIQUE_Albedo_CrystalSeed_AttackUp"
+            }
+          ]
+        },
+        "UNIQUE_Albedo_CrystalSeed_AttackUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.17
+              }
+            }
+          ],
+          "state": "AttackUp"
+        },
+        "Albedo_Monolith_Field_FallingAttackUp_Keeper": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_FallingAttackUp",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_Monolith_Field_ShieldFever_Keeper": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "modifierName": "UNIQUE_Albedo_Monolith_Field_ShieldFever",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_FieldAlert"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Albedo_Monolith_Field_Bloom_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Albedo_Monolith_Field_Talent_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Albedo_AlchemyTrap_BloomElemBall_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "BloomExtraDPR"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Albedo_AlchemyTrap_BloomAttackUp"
+            }
+          ]
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_FieldAlert_Die"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Albedo_FuriousMonolith_FullBloom",
+      "abilitySpecials": {
+        "FullBloomDelay": {
+          "type": "float",
+          "dynamicValue": 0.37
+        },
+        "Damage_Burst": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FullBloomExtraDmg": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DEF2ATK_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "BloomLevel": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Albedo_AlchemicalBreakOut_FullBloom_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.13
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 6.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 7.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 8.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 9.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 11.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 12.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom",
+                "Albedo_AlchemicalBreakOut_FullBloom"
+              ],
+              "removeAppliedModifier": false
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "modifierName": "UNIQUE_MonolithLife",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 30.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 15.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_AlchemicalBreakOut_FullBloom": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount_NoTarget",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 1,
+                "sortType": "Random",
+                "shapeName": "CircleR10H10",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloom_UnavailableMark",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Target",
+                  "modifierName": "Albedo_AlchemicalBreakOut_FullBloom_OnTarget"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount_NoTarget",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomCount_NoTarget",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "Albedo_AlchemicalBreakOut_FullBloom_OnSelf"
+            }
+          ]
+        },
+        "Albedo_AlchemicalBreakOut_FullBloom_OnTarget": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "FullBloomDelay"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "doOffStage": true,
+              "content": "!!!!!!!!!!!FullBloom_OnTarget!!!!!!!!!!"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Albedo_AlchemicalBreakOut_FullBloom_UnavailableMark"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Explode"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "Fx_ChestNode",
+                "attachPointTargetType": "Self"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Caster",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "Fx_ChestNode",
+                    "attachPointTargetType": "Self"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "Elemental_Burst",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Damage_Burst"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "damageExtra": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FullBloomExtraDmg"
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "retreatType": "ByHitDirection"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "doOffStage": true,
+              "content": "!!!!!!!!!!!Albedo_AlchemicalBreakOut_FullBloom_OnTarget!!!!!!!!!!"
+            }
+          ]
+        },
+        "Albedo_AlchemicalBreakOut_FullBloom_UnavailableMark": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloom_UnavailableMark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloom_UnavailableMark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Albedo_AlchemicalBreakOut_FullBloom_OnSelf": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "FullBloomDelay"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "doOffStage": true,
+              "content": "!!!!!!!!!!!FullBloom_OnSelf!!!!!!!!!!"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Explode"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "bornRandom": {
+                  "$type": "MoleMole.Config.BornRandomFromCenter",
+                  "minRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  },
+                  "maxRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 9.5
+                  }
+                }
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "bornRandom": {
+                      "$type": "MoleMole.Config.BornRandomFromCenter",
+                      "minRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.5
+                      },
+                      "maxRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 9.5
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "Elemental_Burst",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Damage_Burst"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "damageExtra": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FullBloomExtraDmg"
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "retreatType": "ByHitDirection"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "doOffStage": true,
+              "content": "!!!!!!!!!!!Albedo_AlchemicalBreakOut_FullBloom_OnSelf!!!!!!!!!!"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+          "overrideMapKey": "BloomLevel"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "FIGHT_PROP_CUR_DEFENSE"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "DEF2ATK_Ratio"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "BloomLevel"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              }
+            ]
+          },
+          "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+          "overrideMapKey": "FullBloomExtraDmg"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Albedo_AlchemicalBreakOut_FullBloom_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Albedo_AlchemicalBreakOut_FullBloom_Handler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SkillObj_Albedo_FuriousMonolith_Elevator",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_COMMON_MOVING_PLATFORM_ACTIVE",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "UNIQUE_Albedo_FuriousMonolith_Elevator_Active"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 30.0
+        },
+        "CreateElevator_CD": {
+          "type": "float",
+          "dynamicValue": 1.5
+        },
+        "ElevatorLife": {
+          "type": "float",
+          "dynamicValue": 6.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Albedo_FuriousMonolith_Elevator_Active": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "ElevatorLife"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Elevator"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Owner",
+              "modifierName": "UNIQUE_CreateElevator_CD"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_FuriousMonolith_Elevator_Die"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "target": "Owner",
+              "abilityName": "SkillObj_Albedo_ForceResetPlatform"
+            }
+          ]
+        },
+        "UNIQUE_CreateElevator_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CreateElevator_CD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_ElevatorCD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_Monolith_ElevatorCD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_COMMON_MOVING_PLATFORM_ACTIVE",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_AlchemicalBreakOut",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "AlchemicalBreakOut"
+          ],
+          "modifierName": "AlchemicalBreakOut_CameraShot"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "AlchemicalBreakOut",
+          "modifierName": "AlchemicalBreakOut_End",
+          "normalizeEnd": 0.79
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "AlchemicalBreakOut",
+          "modifierName": "AlchemicalBreakOut_Shake",
+          "normalizeEnd": 0.81
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "AlchemicalBreakOut"
+          ],
+          "modifierName": "UNIQUE_AlchemicalBreakOut_Weather"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "AlchemicalBreakOut",
+            "AlchemicalBreakOut_AS"
+          ],
+          "modifierName": "AlchemicalBreakOut_State"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Albedo_BloomBurst_Handler"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.ApplyModifier",
+                "target": "Team",
+                "doOffStage": true,
+                "modifierName": "Albedo_BloomBurst_L2Trigger"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.ApplyModifier",
+                "target": "Team",
+                "doOffStage": true,
+                "modifierName": "Albedo_BloomBurst_L3Trigger"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.ApplyModifier",
+                "target": "Team",
+                "doOffStage": true,
+                "modifierName": "Albedo_BloomBurst_L4Trigger"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "OpeningDamage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "ElemMasteryUpTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "ElemMasteryDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DEF2ATK_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "BloomLevel": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FullBloomExtraDmg": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "BloomBurst_Timer": {
+          "type": "float",
+          "dynamicValue": 30.0
+        }
+      },
+      "modifiers": {
+        "AlchemicalBreakOut_Start": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "AlchemicalBreakOutSkin"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -2.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault"
+                    }
+                  },
+                  "height": 4.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "enBreak": 400.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "none",
+                    "hitImpulseType": "",
+                    "overrideHitImpulse": {
+                      "hitLevel": "Heavy",
+                      "hitImpulseX": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 800.0
+                      },
+                      "hitImpulseY": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "retreatType": "ByHitDirection"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackNotHitScene",
+                  "attackPattern": {
+                    "$type": "MoleMole.Config.ConfigAttackCircle",
+                    "triggerType": "TriggerNoRepeat",
+                    "born": {
+                      "$type": "MoleMole.Config.ConfigBornBySelf",
+                      "offset": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.5
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        }
+                      }
+                    },
+                    "height": 2.0,
+                    "radius": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    }
+                  },
+                  "checkWaterLayer": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByAvatarInWaterDepth",
+                  "compareType": "LessAndEqual",
+                  "depth": 0.5
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self_Hand"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self_Sword"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AvatarEnterCameraShot",
+                  "cameraMoveCfgPath": "Camera_Albedo_AlchemicalBreakOut"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self_Hand_Thirdparty"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self_Sword_Thirdparty"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_Self_Thirdparty"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_ShakeMark",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnableHeadControl",
+              "blend": false
+            }
+          ]
+        },
+        "AlchemicalBreakOut_CameraShot": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "cameraParam": {
+                "forceRadius": 6.0,
+                "forceRadiusDuration": 0.0,
+                "shouldKeepForceRadius": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitCameraShot"
+            }
+          ]
+        },
+        "AlchemicalBreakOut_End": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+              "overrideMapKey": "BloomLevel"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41038001
+              },
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "BloomLevel"
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FIGHT_PROP_CUR_DEFENSE"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "DEF2ATK_Ratio"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BloomLevel"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  }
+                ]
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+              "overrideMapKey": "FullBloomExtraDmg"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10388,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_RockWave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -2.7
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 5.4,
+                  "fanAngle": 120.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 8.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "OpeningDamage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 100.0,
+                    "attackType": "Melee",
+                    "damageExtra": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FullBloomExtraDmg"
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "retreatType": "ByHitDirection"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.ActCameraRadialBlur",
+              "cameraRadialBlur": {
+                "power": 0.8,
+                "blurTime": 0.4,
+                "fadeTime": 0.2
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 41038001
+              },
+              "abilityName": "SkillObj_Albedo_FuriousMonolith_FullBloom"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_FullBloomExtraDmg",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Caster",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "ElemMasteryUp"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "AllPlayerAvatars",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                      "logic": "LesserOrEqual",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 40.0
+                      }
+                    }
+                  ],
+                  "modifierName": "UNIQUE_Albedo_AlchemicalBreakOut_ElemMasteryUp"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "AllPlayerAvatars",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                      "logic": "LesserOrEqual",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 40.0
+                      }
+                    }
+                  ],
+                  "modifierName": "Albedo_AlchemicalBreakOut_ElemMasteryUp_Keeper"
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_AlchemicalBreakOut_ElemMasteryUp"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "AlchemicalBreakOut_Shake": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_ShakeMark",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.6,
+                "shakeTime": 0.24,
+                "shakeDistance": 60.0,
+                "shakeDir": {
+                  "y": -1.0
+                },
+                "extension": {
+                  "baseOnCamera": true,
+                  "rangeAttenuation": 0.1
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_ShakeMark",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_AlchemicalBreakOut_Weather": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWeatherMixin",
+              "type": "Skill",
+              "weatherPattern": "Weather_Albedo_AlchemicalBreakOut",
+              "transDuration": 0.3,
+              "duration": 1.12
+            }
+          ]
+        },
+        "AlchemicalBreakOut_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 11002
+            },
+            {
+              "$type": "MoleMole.Config.ControlEmotion",
+              "toggleEmoSync": false,
+              "toggleBlink": false,
+              "toggleEyeKey": false
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ControlEmotion",
+              "doOffStage": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHeadControl",
+              "doOffStage": true,
+              "enable": true
+            }
+          ]
+        },
+        "UNIQUE_Albedo_BloomBurst_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "BloomBurst_Timer"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "BloomBurst_Timer"
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Albedo_BloomBurst_FXHandler"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "Team",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Albedo_BloomBurst_FXHandler"
+            }
+          ]
+        },
+        "UNIQUE_Albedo_BloomBurst_FXHandler": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "BloomBurst_Timer"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "BloomBurst_Timer"
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByTeamStatusMixin",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "Team",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByCurTeamHasFeatureTag",
+                      "featureTagID": 10038,
+                      "logic": "LesserOrEqual"
+                    }
+                  ],
+                  "modifierName": "UNIQUE_Albedo_BloomBurst_FXHandler"
+                }
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              ],
+              "parameter": "L2",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              ],
+              "parameter": "L3",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Albedo_AlchemicalBreakOut_BloomBurstCount",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                }
+              ],
+              "parameter": "L4",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            }
+          ]
+        },
+        "Albedo_BloomBurst_L2Trigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "L2",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            }
+          ]
+        },
+        "Albedo_BloomBurst_L3Trigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "L3",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            }
+          ]
+        },
+        "Albedo_BloomBurst_L4Trigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "L4",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Boy_Sword_Albedo_BloomBurstCount"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Albedo_AlchemicalBreakOut_ElemMasteryUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "ElemMasteryUpTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "ElemMasteryUpTime"
+          },
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "ElemMasteryDelta"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Albedo_AlchemicalBreakOut_ElemMasteryUp_Keeper": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ElemMasteryUpTime"
+              },
+              "modifierName": "UNIQUE_Albedo_AlchemicalBreakOut_ElemMasteryUp",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ElemMasteryUpTime"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AlchemicalBreakOut_Start"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_DamageHandler",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "NormalAttack_01"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage1"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "NormalAttack_02"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage2"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "NormalAttack_03"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage3"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "NormalAttack_04"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage4"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "NormalAttack_05"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage5"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ExtraAttack_1"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage6"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ExtraAttack_2"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "damage7"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "damage1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage5": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage6": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "damage7": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Albedo_FallingAnthem",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AvatarChangeSkillMixin",
+          "jumpSkillID": 5038010,
+          "flySkillID": 5038010
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_BS_Material"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_Loop_Normal"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS_2",
+            "FallingAnthem_Loop",
+            "FallingAnthem_Loop_Low"
+          ],
+          "modifierName": "FallingAnthem_LoopDamage"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_BS_VelocityForce_Initialize"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_Height_Detect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_FallingDamageImmune_01"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop"
+          ],
+          "modifierName": "Inertia"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_OverHead_Camera"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_ClearVelocityForce"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_ClearVelocityForce_AS"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop"
+          ],
+          "modifierName": "FallingAnthem_AttachWeaponEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS_2"
+          ],
+          "modifierName": "FallingAnthem_CameraRadialBlur"
+        }
+      ],
+      "abilitySpecials": {
+        "FallingAnthem_Normal_Loop_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Normal_Rank_1_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Normal_Rank_2_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Altitude_Lv0": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "FallingAnthem_Altitude_Lv1": {
+          "type": "float",
+          "dynamicValue": 40.0
+        },
+        "FallingAnthem_Altitude_Lv2": {
+          "type": "float",
+          "dynamicValue": 60.0
+        },
+        "FallingAnthem_Altitude_Lv3": {
+          "type": "float",
+          "dynamicValue": 100.0
+        },
+        "FallingAnthem_Altitude_Lv4": {
+          "type": "float",
+          "dynamicValue": 200.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv0": {
+          "type": "float",
+          "dynamicValue": -1.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv1": {
+          "type": "float",
+          "dynamicValue": -1.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv2": {
+          "type": "float",
+          "dynamicValue": -0.9
+        },
+        "FallingAnthem_FallingDamageRatio_Lv3": {
+          "type": "float",
+          "dynamicValue": -0.8
+        },
+        "FallingAnthem_FallingDamageRatio_Lv4": {
+          "type": "float",
+          "dynamicValue": -0.6
+        },
+        "FallingAnthem_FallingDamageRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "FallingAnthem_AttachWeaponEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Sword_FallAnthem_Self_01"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_CameraRadialBlur": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.23
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CameraBlurMixin",
+              "cameraRadialBlur": {
+                "power": 0.3,
+                "fadeTime": 0.15
+              }
+            }
+          ]
+        },
+        "FallingAnthem_BS_Material": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Sword_FallAnthem_BS"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_BS_VelocityForce_Initialize": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddGravityScale": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -2.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveVelocityForce",
+              "forces": [
+                "RushMoveType"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_LoopDamage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "FallingAttack",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FallingAnthem_Normal_Loop_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "overrideByWeapon": true,
+                    "strikeType": "Slash",
+                    "enBreak": 25.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.02
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_01": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ABILITY_FallingAttack_Altitude"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv0"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv1"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv0"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv2"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv1"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv3"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv2"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv3"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "FallingAnthem_FallingDamageImmune_02"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_02": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_ABILITY_FallingAttack_Altitude",
+              "overrideMapKey": "FallingAnthem_FallingDamageRatio"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "FallingAnthem_FallingDamageImmune_03"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_03": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FallingDamageRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "FallingAnthem_FallingDamageRatio"
+            }
+          }
+        },
+        "FallingAnthem_Loop_Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_FallingAnthem_UseCamera",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -1.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "FallingAnthem_Loop_Normal_Rank_1",
+                "FallingAnthem_Loop_Normal_Rank_2"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_Loop_Normal_Rank_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Sword_FallAnthem_Loop_01"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_Loop_Normal_Rank_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Sword_FallAnthem_Loop_02"
+              }
+            }
+          ]
+        },
+        "Inertia": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyInertiaVelocityMixin",
+              "useXZ": false,
+              "useY": false
+            }
+          ]
+        },
+        "FallingAnthem_Height_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "FallingAnthem_OverHead_Camera": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAnimatorFloat",
+                  "logic": "Equal",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "parameter": "FallingAnthem_UseCamera"
+                }
+              ],
+              "cameraParam": {
+                "forceRadius": 4.5,
+                "forceRadiusDuration": 0.2,
+                "shouldKeepForceRadius": true
+              }
+            }
+          ]
+        },
+        "FallingAnthem_OverHead_Camera_Remover": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarExitCameraShot",
+              "doOffStage": true
+            }
+          ]
+        },
+        "FallingAnthem_Landed_Camera": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAnimatorFloat",
+                  "logic": "Equal",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "parameter": "FallingAnthem_UseCamera"
+                }
+              ],
+              "cameraParam": {
+                "forceRadius": 6.0,
+                "forceRadiusDuration": 0.1,
+                "shouldKeepForceRadius": true
+              }
+            }
+          ]
+        },
+        "FallingAnthem_ClearVelocityForce": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveVelocityForce",
+              "forces": [
+                "RushMoveType",
+                "InertiaType"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_ClearVelocityForce_AS": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveVelocityForce",
+              "forces": [
+                "RushMoveType",
+                "InertiaType"
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_1_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Blunt",
+                "enBreak": 100.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.24,
+                "shakeTime": 0.12,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.24,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_2_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Blunt",
+                "enBreak": 150.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV7",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.5,
+                "shakeTime": 0.2,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.4,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Sword_FallAnthem_Strike_01"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Sword_FallAnthem_Strike_02"
+          }
+        }
+      ]
+    }
+  }
+]

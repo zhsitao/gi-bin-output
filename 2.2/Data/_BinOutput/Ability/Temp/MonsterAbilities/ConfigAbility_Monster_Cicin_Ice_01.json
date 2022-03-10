@@ -1,0 +1,1664 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_ResetOrder",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "Order",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_FireIceSpear",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42606005,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.2
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_IceSpear_Hit",
+      "modifiers": {
+        "Monster_Cicin_IceSpear_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_IceSpearBullet"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Monster_Cicin_IceSpear_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "Monster_Cicin_IceSpear_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Cicin_Ice_IceSpearHit"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "doOffStage": true,
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 20.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.05
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_PoseChange",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_MONSTER_CICIN_ICE_IS_SUMMONED",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Monster_Cicin_ChangePoseToAlong",
+            "Monster_Cicin_ChangePoseToSummoned"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Monster_Cicin_ChangePoseToAlong": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "IsSummoned"
+            }
+          ]
+        },
+        "Monster_Cicin_ChangePoseToSummoned": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "IsSummoned",
+              "value": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_RushAttack_UpdateDistance",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blink",
+            "Fury",
+            "RushAtk",
+            "SPRushAtk",
+            "IceExplode"
+          ],
+          "modifierName": "Monster_Cicin_Ice_AttackEndrue"
+        }
+      ],
+      "abilitySpecials": {
+        "DistanceToTarget": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Monster_Cicin_Ice_AttackEndrue": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            }
+          }
+        },
+        "Monster_Cicin_EndRushTrigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_Rush"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ReachTarget"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "key": "_MONSTER_CICIN_RUSHATTCK_POS",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.55
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.25
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_0",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.29
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.25
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_0",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.29
+              },
+              "key": "_MONSTER_CICIN_RUSHATTCK_POS_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.FixedMonsterRushMove",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "positionKey": "_MONSTER_CICIN_RUSHATTCK_POS",
+            "directionKey": ""
+          },
+          "timeRange": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "animatorStateIDs": [
+            "RushToTarget_BS",
+            "RushToTarget_Loop",
+            "RushToTarget_AS"
+          ],
+          "overrideMoveCollider": "",
+          "isInAir": true
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Cicin_EndRushTrigger"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_SPRushUpdateDistance",
+      "abilitySpecials": {
+        "DistanceToTarget": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Monster_Cicin_SPEndRushTrigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_Rush"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ReachTarget"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 25.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "retreatType": "ByTangent",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "SelfAttackTarget",
+          "key": "_MONSTER_CICIN_RUSHATTCK_POS",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget"
+          },
+          "setTarget": false
+        },
+        {
+          "$type": "MoleMole.Config.FixedMonsterRushMove",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "positionKey": "_MONSTER_CICIN_RUSHATTCK_POS",
+            "directionKey": ""
+          },
+          "timeRange": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "animatorStateIDs": [
+            "SPRushAtk_BS",
+            "SPRushAtk_Loop",
+            "SPRushAtk_AS"
+          ],
+          "overrideMoveCollider": "",
+          "isInAir": true
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Cicin_SPEndRushTrigger"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_BlinkToMaster",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_MONSTER_CICIN_BLINKING",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Empty",
+            "Monster_Cicin_BlinkTimer"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Monster_Cicin_BlinkTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Cicin_BlinkTime"
+            }
+          ]
+        },
+        "Monster_Cicin_BlinkTime": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ReachTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "key": "_MONSTER_CICIN_BLINKING",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.55
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.25
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_0",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.29
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.25
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_0",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.7
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_1",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.29
+              },
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN_2",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "positionKey": "_MONSTER_FATUUS_MAGE_ICE_SENDPOSTOCICIN",
+            "directionKey": ""
+          },
+          "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.HideUIBillBoard",
+          "hide": true
+        },
+        {
+          "$type": "MoleMole.Config.TriggerSetVisible"
+        },
+        {
+          "$type": "MoleMole.Config.EnablePushColliderName",
+          "pushColliderNames": [
+            "PushCollider"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_CICIN_BLINKING",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_BlinkToSPRush",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_MONSTER_CICIN_BLINKING",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Empty",
+            "Monster_Cicin_BlinkTimer"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Monster_Cicin_BlinkTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Cicin_BlinkTime"
+            }
+          ]
+        },
+        "Monster_Cicin_BlinkTime": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ReachTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_BlinkAS"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "key": "_MONSTER_CICIN_BLINKING",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "target": "Owner",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          },
+          "hitSceneTest": false,
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "target": "Owner",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          ],
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          },
+          "hitSceneTest": false,
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "target": "Owner",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_FATUUS_MAGE_ICE_SUMMONNO",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ],
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          },
+          "hitSceneTest": false,
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.HideUIBillBoard",
+          "hide": true
+        },
+        {
+          "$type": "MoleMole.Config.TriggerSetVisible"
+        },
+        {
+          "$type": "MoleMole.Config.EnablePushColliderName",
+          "pushColliderNames": [
+            "PushCollider"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_CICIN_BLINKING",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_CICIN_DIETYPE",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_IceShieldEnergyGet",
+      "modifiers": {
+        "Monster_Cicin_IceShieldEnergyGet_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_ShieldEnergy"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Monster_Cicin_IceShieldEnergyGet_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ISOWNER",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Cicin_IceShieldEnergyGet_Effect"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_IceShieldEnergyGetFail",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Cicin_Ice_ShieldEnergyDisappear"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_Steer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk"
+          ],
+          "endNormalizedTime": 0.75,
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 1.5
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Fury"
+          ],
+          "endNormalizedTime": 4.0,
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 1.5
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "RushAtk"
+          ],
+          "endNormalizedTime": 100.0,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 1.5
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SPRushAtk"
+          ],
+          "endNormalizedTime": 100.0,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 1.5
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_Die",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_CICIN_DIETYPE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Cicin_Ice_Die"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "target": "Owner",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          },
+          "key": "_CICIN_ICE_COUNT",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_GiveEnegy",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42606006,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          },
+          "trackTarget": "Owner"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Cicin_Ice_CommonEffect",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAbilityStateMixin",
+          "abilityStates": [
+            "ElementFrozen"
+          ],
+          "modifierName": "FrozenDetect"
+        }
+      ],
+      "modifiers": {
+        "FrozenDetect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Wing"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "CommonEffect"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Frozen",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_Frozen"
+              ],
+              "setEnable": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Wing"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "CommonEffect"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Frozen"
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_Frozen"
+              ]
+            }
+          ]
+        },
+        "CommonEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Cicin_Ice_BodyElement"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "CommonEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_MONSTER_CICIN_DIETYPE",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  }
+]

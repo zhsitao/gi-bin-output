@@ -1,0 +1,1522 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_ExtraAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_Damage_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 10281,
+          "chargeTime": 0.2,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.4
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            }
+          ],
+          "chargeStateIDs": [
+            "Attack01",
+            "Attack02",
+            "Attack03",
+            "Attack04",
+            "Attack05"
+          ]
+        }
+      ],
+      "modifiers": {
+        "ExtraAttack_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_WhiteBox_RushAttack"
+              }
+            }
+          ]
+        },
+        "ExtraAttack_Damage_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Fire_Blink_BS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Fire_Blink_AS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_HideWeapon",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack",
+            "ExtraAttack_BS"
+          ],
+          "modifierName": "ExtraAttack_HideWeapon_Handler"
+        }
+      ],
+      "modifiers": {
+        "ExtraAttack_HideWeapon_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "visible": true,
+              "partNames": [
+                "equip01"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_ExtraAttack_TriggerBullet",
+      "modifiers": {
+        "Prototype_ExtraAttack_Blink_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "ExtraAttack"
+                  ]
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "Blink"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Prototype_ExtraAttack_Blink_Handler"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41023001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "FocusAnchor",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "WeaponR"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Xiangling_ExtraAttack_Damage",
+      "abilitySpecials": {
+        "ExtraAttack_Damage": {
+          "type": "float",
+          "dynamicValue": 0.8
+        }
+      },
+      "modifiers": {
+        "Xiangling_ExtraAttack_Material": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_WhiteBox_Pole"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Arrow_Fly"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_WhiteBox_RushAttack"
+              },
+              "scale": 0.2
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Xiangling_ExtraAttack_Material"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "ExtraAttack",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ExtraAttack_Damage"
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 20.0
+              },
+              "overrideByWeapon": true,
+              "strikeType": "Slash",
+              "attackType": "Range"
+            },
+            "hitPattern": {
+              "onHitEffectName": "default",
+              "hitLevel": "Heavy",
+              "hitImpulseX": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 180.0
+              },
+              "hitImpulseY": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "hitImpulseType": "",
+              "hitHaltTimeScale": 0.05
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_ExtraAttackHold",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SkillButtonHoldChargeMixin",
+          "skillID": 10282,
+          "nextLoopTriggerID": "NextLoopTrigger",
+          "endHoldTrigger": "EndHoldTrigger",
+          "beforeStateIDs": [
+            "SKill_ExtraAttack_BS_01"
+          ],
+          "chargeLoopStateIDs": [
+            "SKill_ExtraAttack_BS_02"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "SKill_ExtraAttack_BS_01",
+            "SKill_ExtraAttack_BS_02"
+          ],
+          "modifierName": "Focus"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "SKill_ExtraAttack"
+          ],
+          "modifierName": "Visible_Handler"
+        }
+      ],
+      "modifiers": {
+        "Focus": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.5,
+                "z": -2.5
+              },
+              "cameraFollowUpper": {
+                "x": 0.3,
+                "y": -0.2
+              },
+              "cameraFastFocusMode": true,
+              "dragButtonName": "Skill2",
+              "assistance": {
+                "ps4": {},
+                "ps5": {},
+                "other": {
+                  "useGyro": true
+                }
+              },
+              "canMove": false
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus"
+            }
+          ]
+        },
+        "Visible_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Fire_Blink_BS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Fire_Blink_AS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Pole_Polespine",
+      "modifiers": {
+        "Pole_Appear": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.1
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                },
+                "onGround": true,
+                "alongGround": true
+              },
+              "gadgetID": 41028001,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -2.83
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.1
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.83
+                  }
+                },
+                "onGround": true,
+                "alongGround": true
+              },
+              "gadgetID": 41028001,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.83
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.1
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.83
+                  }
+                },
+                "onGround": true,
+                "alongGround": true
+              },
+              "gadgetID": 41028001,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10283,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Pole_Appear"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Pole_Attack",
+      "modifiers": {
+        "Pole_Attack_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Pole_Attack_Hit"
+            }
+          ]
+        },
+        "Pole_Attack_Hit": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.05
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Skill",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.5
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitLevel": "Air",
+                    "hitImpulseX": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "hitImpulseY": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 600.0
+                    },
+                    "hitImpulseType": "",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "cameraShake": {}
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_IceExplodeArrow"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_IceSlash_Out"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Pole_Attack_Timer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack01",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.2
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk01",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.27
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 280.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.03,
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack02",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.6
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk02",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.32
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 360.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.03,
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack03",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.2
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk03",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.25
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 240.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.03,
+                "shakeTime": 0.06
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack03B",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.2
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk03",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.34
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Pierce",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 300.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.03,
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack04",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.2
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk04",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.14
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 120.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.05,
+                "shakeTime": 0.06
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack04B",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.2
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk04B",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.14
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Heavy",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 480.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.03,
+                "hitHaltTimeScale": 0.01,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.05,
+                "shakeTime": 0.06
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack05",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.4
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk05",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.9
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Air",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 680.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 480.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.09,
+                "hitHaltTimeScale": 0.03,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.12,
+                "shakeTime": 0.18
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Prototype_Attack_Extra",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "filterByFrame": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.7
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.4
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.3
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "atk05",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.9
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Spear",
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitLevel": "Air",
+                "hitImpulseX": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "hitImpulseY": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 480.0
+                },
+                "hitImpulseType": "",
+                "hitHaltTime": 0.09,
+                "hitHaltTimeScale": 0.03,
+                "canBeDefenceHalt": true
+              },
+              "cameraShake": {
+                "shakeRange": 0.12,
+                "shakeTime": 0.18
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  }
+]

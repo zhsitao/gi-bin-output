@@ -1,0 +1,3557 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_SpecialsState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "Sacrifice",
+            "TurnToSacrifice"
+          ],
+          "enterPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELEMENTSHIELD_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "exitPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELEMENTSHIELD_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield_Remove_NoBroken"
+            }
+          ],
+          "exitActions": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ElementState",
+              "value": 2
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield_Effect"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ElementShield_Remove_NoBroken",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "ElementState",
+          "value": 2
+        },
+        {
+          "$type": "MoleMole.Config.ResetAnimatorTrigger",
+          "triggerID": "ShiledBrokenTrigger"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_SacrificeAlert",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "ElementState",
+          "value": 2
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "abilityName": "Monster_Abyss_Electric_ElementShield"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "abilityName": "Monster_Abyss_Electric_ElementShield_Effect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ElementShield",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            300,
+            301,
+            302
+          ],
+          "modifierName": "Abyss_Electric_ElementShield_RecoverHandler"
+        }
+      ],
+      "abilitySpecials": {
+        "ElementShield_DurabilityImprove": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Abyss_Electric_ElementShield_RecoverHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+            }
+          ]
+        },
+        "UNIQUE_Abyss_Electric_ElementShield": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Electric",
+          "elementDurability": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 200.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "ElementShield_DurabilityImprove"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 200.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ElementShieldMixin",
+              "elementType": "Electric",
+              "showDamageText": "",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "onShieldSuccess": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Abyss_Electric_ElementShield_Hit_Invalid"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SendEffectTrigger",
+                  "parameter": "BeHitInvalid",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Abyss_Electric_ElementShield_BS"
+                  }
+                }
+              ],
+              "onShieldFailed": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Abyss_Electric_ElementShield_Hit"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_ABILITY_ABYSS_Electric_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SendEffectTrigger",
+                  "parameter": "BeHit",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Abyss_Electric_ElementShield_BS"
+                  }
+                }
+              ],
+              "useMutiPlayerFixData": true,
+              "updateShieldByMaxHp": true
+            },
+            {
+              "$type": "MoleMole.Config.VelocityForceMixin",
+              "excludeForces": [
+                "WindZoneType"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ELEMENTSHIELD_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableMonsterMoveOnWater",
+              "enable": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 14001
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ShiledBrokenTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ElementState"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ELEMENTSHIELD_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_DizzyTimer"
+            },
+            {
+              "$type": "MoleMole.Config.EnableMonsterMoveOnWater",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_RETURNTOBORN_TAG_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield_Effect"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELITEAFFIX_DEFENCE_ENHANCE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAnimatorFloat",
+                  "target": "Caster",
+                  "logic": "GreaterOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 301.0
+                  },
+                  "parameter": "PoseID"
+                }
+              ],
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Electric",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "enBreak": 0.0
+                },
+                "hitPattern": {
+                  "onHitEffectName": "none",
+                  "hitImpulseType": "LV0",
+                  "muteHitText": true
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "target": "TargetOwner",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELITEAFFIX_DEFENCE_ENHANCE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAnimatorFloat",
+                  "target": "Caster",
+                  "logic": "GreaterOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 301.0
+                  },
+                  "parameter": "PoseID"
+                }
+              ],
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Electric",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "enBreak": 0.0
+                },
+                "hitPattern": {
+                  "onHitEffectName": "none",
+                  "hitImpulseType": "LV0",
+                  "muteHitText": true
+                }
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTERAFFIX_ELEMENTSHIELD_DURABILITYIMPROVE",
+          "overrideMapKey": "ElementShield_DurabilityImprove"
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "ElementState",
+          "value": 2
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "ElementState",
+          "value": 2
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ElementShield_Effect",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            300,
+            301,
+            302
+          ],
+          "modifierName": "Abyss_Electric_ElementShield_Effect_RecoverHandler"
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_Abyss_Electric_ElementShield_Effect": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_ElementShield"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_ElementShield"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_ElementShield_BS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_ElementShield"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_ElementShield"
+              ]
+            }
+          ]
+        },
+        "Abyss_Electric_ElementShield_Effect_RecoverHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield_Effect"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELEMENTSHIELD_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "modifierName": "UNIQUE_Abyss_Electric_ElementShield_Effect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_DizzyTimer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            100,
+            101
+          ],
+          "modifierName": "Abyss_Electric_DizzyTimer_Handler"
+        }
+      ],
+      "abilitySpecials": {
+        "ElementShield_GapReduce": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Abyss_Electric_DizzyTimer_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_DizzyTimer"
+            }
+          ],
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_DizzyTimer"
+            }
+          ]
+        },
+        "UNIQUE_Abyss_Electric_DizzyTimer": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 12.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "ElementShield_GapReduce"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 12.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.0
+            }
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELEMENTSHIELD_TAG_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "intID": "ElementState",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTERAFFIX_ELEMENTSHIELD_GAPREDUCE",
+          "overrideMapKey": "ElementShield_GapReduce"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_GatherSet",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            201
+          ],
+          "modifierName": "GatherEndure"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "GatherStart",
+            "GatherLoop",
+            "GatherSuccess_Alert"
+          ],
+          "modifierName": "GatherState"
+        }
+      ],
+      "modifiers": {
+        "GatherEndure": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.4
+            }
+          }
+        },
+        "GatherState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELEMENTSHIELD_TAG_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "intID": "ElementState"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_GatherLoop",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "GatherLoop"
+          ],
+          "modifierName": "GatherLoop_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "GatherStart",
+            "GatherLoop"
+          ],
+          "modifierName": "Gather_Barrage_Handler"
+        }
+      ],
+      "modifiers": {
+        "GatherLoop_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_Gather"
+              }
+            }
+          ]
+        },
+        "Gather_Barrage_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Gather_Barrage"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_GATHER_BARRAGE_DIRECTION_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Gather_Barrage"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42201020
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillServerGadget",
+              "gadgetInfo": {
+                "configID": 42201020
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Gather_Barrage"
+            }
+          ]
+        },
+        "Gather_Barrage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Self",
+                  "key": "_GATHER_BARRAGE_DIRECTION_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.CreateGadget",
+                  "lifeByOwnerIsAlive": true,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                      "angleOffset": {
+                        "y": 45.0
+                      }
+                    }
+                  },
+                  "gadgetID": 42201020,
+                  "byServer": true
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_GATHER_BARRAGE_DIRECTION_",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.CreateGadget",
+                  "lifeByOwnerIsAlive": true,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault"
+                    }
+                  },
+                  "gadgetID": 42201020,
+                  "byServer": true
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_GATHER_BARRAGE_DIRECTION_",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_GATHER_BARRAGE_DIRECTION_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_GatherAlert",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "GatherSuccess_Alert"
+          ],
+          "modifierName": "GatherAlert"
+        }
+      ],
+      "modifiers": {
+        "GatherAlert": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_Gather_Alert"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_GatherSuccess",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Abyss_Electric_DizzyTimer"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Gather_AS_Hor"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.75
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5",
+                "hitHaltTimeScale": 0.05
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Gather_AS_Ver"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5",
+                "hitHaltTimeScale": 0.05
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.16,
+            "shakeTime": 0.3,
+            "shakeDistance": 25.0,
+            "shakeDir": {
+              "y": 1.0
+            },
+            "extension": {
+              "baseCycle": 0.08,
+              "cycleDamping": 0.04,
+              "rangeAttenuation": 0.9
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_GatherBarrageEmitter",
+      "modifiers": {
+        "GatherBarrageWave": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42201018,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "BarrageAttachPoint1",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "BarrageAttachPoint1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42201018,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "BarrageAttachPoint2",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "BarrageAttachPoint2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42201018,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "BarrageAttachPoint3",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "BarrageAttachPoint3"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42201018,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+                  "attachPointName": "BarrageAttachPoint4",
+                  "attachPointTargetType": "Self"
+                },
+                "attachPointName": "BarrageAttachPoint4"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "GatherBarrageWave"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "GatherBarrageWave"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_GatherBarrage_Hit",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "ignoreMassive": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.25
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 50.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV3",
+                "hitHaltTimeScale": 0.01
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "Eff_Monster_Abyss_Electric_GatherBullet_AS",
+          "hitScene": {
+            "defaultEffect": "Eff_Monster_Abyss_Electric_GatherBullet_AS"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_GatherBarrage_Effect",
+      "modifiers": {
+        "GatherBarrage_BS": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.8
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_GatherBullet_BS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "GatherBarrage_Loop"
+            }
+          ]
+        },
+        "GatherBarrage_Loop": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_GatherBullet_Loop"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "GatherBarrage_BS"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_GatherBullet_AS"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_BlinkEffect",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blink"
+          ],
+          "modifierName": "Blink_State"
+        }
+      ],
+      "modifiers": {
+        "Blink_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Blink_Shield"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Blink_Actions"
+            }
+          ]
+        },
+        "UNIQUE_Blink_Shield": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield_Effect"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELEMENTSHIELD_TAG_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "abilityName": "Monster_Abyss_Electric_ElementShield_Effect"
+            }
+          ]
+        },
+        "UNIQUE_Blink_Actions": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Blink_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Blink_DenyLockOn"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "visible": true,
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            }
+          ]
+        },
+        "Blink_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "Blink_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Blink_Shield"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Blink_Actions"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink_BS"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ClearLockTarget",
+          "target": "CurLocalAvatar"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_FindBlinkPoint",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPoint",
+          "target": "SelfAttackTarget",
+          "forwardAngle": 45.0,
+          "minRange": 1.0,
+          "maxRange": 2.5
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTeleportToPoint"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_DoBlink",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "abilityName": "Monster_Abyss_Electric_Elite_BlinkAction"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_DoBlink_Visible",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink_AS"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.65
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Blink_Actions"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_DoBlink_Damage",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_MagneticStorm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.2
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.25
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5",
+                "hitHaltTimeScale": 0.05
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_Blink_AS",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Blink_Shield"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_Elite_BlinkAction",
+      "modifiers": {
+        "Abyss_Electric_Elite_BlinkDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42201022
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_Elite_ElectricCircle_Timer"
+            }
+          ]
+        },
+        "UNIQUE_Abyss_Electric_Elite_ElectricCircle_Timer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElectricCircle",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElectricCircle"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Abyss_Electric_Elite_BlinkDelay"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ForceDefend",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            101
+          ],
+          "modifierName": "ForceDefend"
+        }
+      ],
+      "modifiers": {
+        "ForceDefend": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.MonsterDefendMixin",
+              "stateIDs": [
+                "BeHit",
+                "BeHitThrow"
+              ],
+              "defendTriggerID": "DefendTrigger",
+              "defendProbability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "defendProbabilityDelta": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "defendTimeInterval": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 8.0
+              },
+              "alwaysRecover": false,
+              "defendCountInterval": {
+                "isDynamic": false,
+                "fixedValue": 0
+              },
+              "onDefendSucceded": [
+                {
+                  "$type": "MoleMole.Config.TriggerAbility",
+                  "abilityName": "Monster_Abyss_Electric_ForceBlink"
+                },
+                {
+                  "$type": "MoleMole.Config.ClearLockTarget",
+                  "target": "CurLocalAvatar"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ForceBlink",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ForceBlink"
+          ],
+          "modifierName": "ForceBlink_State"
+        }
+      ],
+      "modifiers": {
+        "ForceBlink_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Blink_Actions"
+            }
+          ]
+        },
+        "UNIQUE_ForceBlink_Actions": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ForceBlink_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ForceBlink_DenyLockOn"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "visible": true,
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            }
+          ]
+        },
+        "ForceBlink_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "ForceBlink_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Abyss_Electric_DizzyTimer"
+        },
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPoint",
+          "target": "SelfAttackTarget",
+          "forwardAngle": 30.0,
+          "minRange": 9.0,
+          "maxRange": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_ForceBlink_Actions"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink_BS"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ForceBlink_DoBlink",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink_AS"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "RootNode"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "abilityName": "Monster_Abyss_Electric_Elite_BlinkAction"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ForceBlink_Visible",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_ForceBlink_Actions"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ForceBlink_AS",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "ElementState",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ReturnToBorn",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ReturnToBorn"
+          ],
+          "modifierName": "ReturnToBorn_Disappear"
+        }
+      ],
+      "modifiers": {
+        "ReturnToBorn_Disappear": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_RETURNTOBORN_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_ReturnToBorn_Shield"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_ReturnToBorn_Actions"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_ReturnToBorn_Dizzy"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_Blink_BS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_RETURNTOBORN_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_ReturnToBorn_Shield": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_ElementShield"
+            },
+            {
+              "$type": "MoleMole.Config.ResetAnimatorTrigger",
+              "triggerID": "ShiledBrokenTrigger"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ReturnToBorn_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ReturnToBorn_DenyLockOn"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ElementState",
+              "value": 2
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield"
+            }
+          ]
+        },
+        "UNIQUE_ReturnToBorn_Dizzy": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Abyss_Electric_DizzyTimer"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ElementState",
+              "value": 2
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Abyss_Electric_ElementShield_Effect"
+            }
+          ]
+        },
+        "UNIQUE_ReturnToBorn_Actions": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox",
+                "HitBox_ElementShield"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider",
+                "PushCollider_ElementShield"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "visible": true,
+              "partNames": [
+                "equip01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox",
+                "HeadBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            }
+          ]
+        },
+        "ReturnToBorn_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "ReturnToBorn_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_RETURNTOBORN_TAG_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ReturnToBorn_AS",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Blink_AS"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.65
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_ReturnToBorn_Dizzy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ReturnToBorn_Visible",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_ReturnToBorn_Actions"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ReturnToBorn_ElementShield",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_ReturnToBorn_Shield"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ElectricBall",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "bulletID": 42201019,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            },
+            "attachPointName": "ElectricBall"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42201023,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            },
+            "attachPointName": "ElectricBall"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_ElectricBall_Hit",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.75
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 150.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV3",
+                "hitHaltTimeScale": 0.01
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "Eff_Monster_Abyss_Electric_ElectricBullet_AS",
+          "hitScene": {
+            "defaultEffect": "Eff_Monster_Abyss_Electric_ElectricBullet_AS"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_ElectricBall_Effect",
+      "modifiers": {
+        "ElectricBall_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_ElectricBullet_Loop"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ElectricBall_Effect"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "Eff_Monster_Abyss_Electric_ElectricBullet_AS"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_ElectricCircle",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "bulletID": 42201021
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_ElectricCircle_Damage"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42201022
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42201021
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42201022
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_ElectricCircle_Hit",
+      "modifiers": {
+        "ElectricCircle_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.23
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ElectricCircle_Damage"
+            }
+          ]
+        },
+        "ElectricCircle_Damage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.9
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableBulletCollisionPluginTrigger"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 1.2,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.75
+                  },
+                  "innerRadius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "Monster_Abyss_Electric_ElectricCircle",
+                  "attenuationGroup": "Monster_Abyss_Electric_ElectricCircle",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV3",
+                    "hitHaltTimeScale": 0.01
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ElectricCircle_Timer"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementType": "Electric",
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 25.0
+              },
+              "strikeType": "Blunt",
+              "enBreak": 100.0
+            },
+            "hitPattern": {
+              "onHitEffectName": "default",
+              "hitImpulseType": "LV3",
+              "hitHaltTimeScale": 0.01
+            },
+            "canBeModifiedBy": "OriginOwner"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Abyss_Electric_Elite_ElectricCircle_Hit",
+      "modifiers": {
+        "ElectricCircle_Elite_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.23
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ElectricCircle_Elite_Damage"
+            }
+          ]
+        },
+        "ElectricCircle_Elite_Damage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.8
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableBulletCollisionPluginTrigger"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 1.2,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.75
+                  },
+                  "innerRadius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "Monster_Abyss_Electric_ElectricCircle",
+                  "attenuationGroup": "Monster_Abyss_Electric_ElectricCircle",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.25
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV3",
+                    "hitHaltTimeScale": 0.01
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "ElectricCircle_Elite_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Abyss_Electric_Elite_ElectricCircle_Damage"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ElectricCircle_Elite_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ElectricCircle_Elite_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DamageByAttackValue",
+          "target": "Target",
+          "attackInfo": {
+            "attackTag": "",
+            "attenuationTag": "",
+            "attenuationGroup": "default",
+            "attackProperty": {
+              "damagePercentage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "elementType": "Electric",
+              "elementDurability": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 25.0
+              },
+              "strikeType": "Blunt",
+              "enBreak": 100.0
+            },
+            "hitPattern": {
+              "onHitEffectName": "default",
+              "hitImpulseType": "LV3",
+              "hitHaltTimeScale": 0.01
+            },
+            "canBeModifiedBy": "OriginOwner"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Abyss_Electric_Elite_ElectricCircle_Damage_AS"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_AnimationSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SpecialAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "RandomAction"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_WeaponElementEffect"
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_WeaponInit",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "target": "Owner",
+          "abilityName": "Monster_Abyss_Electric_WeaponElementEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Abyss_Electric_EliteSet",
+      "modifiers": {
+        "UNIQUE_MonsterEliteAffix_DefaultState": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "skillEliteSetID": 1
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_DEFENCE_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "modifierName": "UNIQUE_MonsterEliteAffix_DefaultState"
+        }
+      ]
+    }
+  }
+]

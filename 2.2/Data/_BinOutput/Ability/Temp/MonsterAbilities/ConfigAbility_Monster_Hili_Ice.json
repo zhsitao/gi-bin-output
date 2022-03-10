@@ -1,0 +1,1657 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_CreateBomb_Effect",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "CreateBomb"
+          ],
+          "modifierName": "Attach_CreateBomb_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            104
+          ],
+          "modifierName": "CreateBomb_Turn"
+        }
+      ],
+      "modifiers": {
+        "CreateBomb_Turn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.SteerAttackMixin",
+              "steerStateIDs": [
+                "CreateBomb"
+              ],
+              "endNormalizedTime": 0.5,
+              "angularSpeed": 360.0,
+              "attackTrigger": ""
+            }
+          ]
+        },
+        "Attach_CreateBomb_Effect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.BySceneSurfaceType",
+                  "filters": [
+                    "Water"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Hili_Fire_CreateBomb_Water"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.BySceneSurfaceType",
+                  "filters": [
+                    "Ice"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Hili_Ice_CreateBomb_Ice"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.BySceneSurfaceType",
+                  "filters": [
+                    "Ice",
+                    "Water"
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AttachEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Hili_Ice_CreateBomb_Ice"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  }
+                }
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "CreateBombOver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_CreateBomb",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "CreateBomb_AS",
+          "modifierName": "Monster_Hili_Ice_CreateBombModifier"
+        }
+      ],
+      "abilitySpecials": {
+        "RandomHoldTime": {
+          "type": "float",
+          "dynamicValue": 1.5
+        }
+      },
+      "modifiers": {
+        "Monster_Hili_Ice_CreateBombModifier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerCreateGadgetToEquipPart",
+              "gadgetID": 42101019,
+              "equipPart": "equip03"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "equip03",
+              "value": 1
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_HILI_ICE_BOMB_HOLDTIME",
+              "useLimitRange": true,
+              "randomInRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_HILI_ICE_BOMB_HOLDTIME",
+              "overrideMapKey": "RandomHoldTime"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Monster_Hili_Ice_HoldBomb"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_Hili_Electric_EliteTag_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "Hili_Ice_Elite_CrazyBomber"
+            }
+          ]
+        },
+        "UNIQUE_Monster_Hili_Ice_HoldBomb": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "RandomHoldTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Hili_Ice_Bomb_IceFog"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_SLIMETHROWED_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "BombThrowTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -5.0
+              },
+              "key": "_HILI_ICE_BOMB_HOLDTIME",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Hili_Ice_Elite_CrazyBomber": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 15.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EliteTrigger",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_Hili_Electric_EliteTag_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EliteTrigger"
+            },
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                2003
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_MONSTER_Hili_Electric_EliteTag_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_MONSTER_Hili_Electric_EliteTag_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "UNIQUE_Monster_Hili_Ice_HoldBomb"
+        },
+        {
+          "$type": "MoleMole.Config.ResetAnimatorTrigger",
+          "triggerID": "BombThrowTrigger"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_SlimeThrow_AddElement",
+      "modifiers": {
+        "SlimeThrow_AddElement": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 9.0
+          },
+          "elementType": "Ice",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "isElementDurabilityMutable": false
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "SlimeThrow_AddElement"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_SlimeThrow_LifeOver",
+      "modifiers": {
+        "SlimeThrow_LifeOverAnimator": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.4
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DieTrigger"
+              }
+            }
+          ]
+        },
+        "SlimeThrow_LifeOverExplode": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 8.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Hili_Ice_SlimeThrow_Explode"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "SlimeThrow_LifeOverAnimator"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "SlimeThrow_LifeOverExplode"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_BombDrop",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "CreateBomb",
+            "CreateBombState_AS",
+            "ThrowBomb",
+            "NormalIdle",
+            "NormalMove",
+            "Turn"
+          ],
+          "modifierName": "Monster_Hili_Ice_BombOnHand"
+        }
+      ],
+      "modifiers": {
+        "Monster_Hili_Ice_BombOnHand": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Monster_Hili_Ice_HoldBomb"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerDropEquipParts",
+              "equipParts": [
+                "equip03"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "equip03"
+            },
+            {
+              "$type": "MoleMole.Config.ResetAnimatorTrigger",
+              "triggerID": "BombThrowTrigger"
+            },
+            {
+              "$type": "MoleMole.Config.DoWatcherSystemAction",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Self",
+                  "key": "_SLIMETHROWED_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "watcherId": 82066,
+              "inThreatListOnly": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "canBeHandledOnRecover": true,
+              "boolID": "ThrowOver",
+              "value": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_BombThrow",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ThrowBomb"
+          ],
+          "endNormalizedTime": 0.4,
+          "angularSpeed": 150.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ThrowBomb"
+          ],
+          "modifierName": "Monster_Hili_Ice_BombThrowDuring"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "CreateBomb"
+          ],
+          "modifierName": "Monster_Hili_Ice_BeginBomb"
+        }
+      ],
+      "modifiers": {
+        "Monster_Hili_Ice_BombThrowDuring": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "canBeHandledOnRecover": true,
+              "boolID": "ThrowOver"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "canBeHandledOnRecover": true,
+              "boolID": "ThrowOver",
+              "value": true
+            }
+          ]
+        },
+        "Monster_Hili_Ice_BeginBomb": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "canBeHandledOnRecover": true,
+              "boolID": "ThrowOver"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "equip03",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerThrowEquipPart",
+          "equipPart": "equip03",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "maxAngleType": "Horizontal",
+              "maxAngle": 50.0
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "equip03"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "topLimit": 1,
+            "configID": 42101019
+          },
+          "abilityName": "Monster_Hili_SlimeThrow_OpenTrigger"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_SLIMETHROWED_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_SlimeThrow_OpenTrigger",
+      "modifiers": {
+        "UNIQUE_Monster_Hili_Ice_SlimeThrow_Trial": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Hili_Ice_Bomb_Trail"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.EnableBulletCollisionPluginTrigger"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.EnableBulletCollisionPluginTrigger",
+          "setEnable": true
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Monster_Hili_Ice_SlimeThrow_Trial"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_SlimeThrow_Explode",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Monster_Hili_Ice_SlimeThrow_Trial"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Hili_Ice_SlimeThrow_Explode"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "onGround": true
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 101.0,
+                "attackType": "Range"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5"
+              },
+              "cameraShake": {
+                "shakeRange": 2.0,
+                "shakeTime": 0.15
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerSetVisible"
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "duration": 1.3,
+          "banDrop": true,
+          "banExp": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Hili_Ice_ShootArrow_WithRandom",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Aim_BS",
+            "Aim"
+          ],
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Aim"
+          ],
+          "modifierName": "ShowAimingEffect"
+        }
+      ],
+      "modifiers": {
+        "ShowAimingEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Hili_Ice_CrossBow_Aim_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "WeaponR"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "randomAngleHor": 0.3,
+              "randomAngleVer": 0.5,
+              "maxAngle": 60.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "maxAngle": 60.0,
+              "speedForPredictive": 30.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "angleOffset": {
+                "y": 5.0
+              },
+              "maxAngle": 60.0,
+              "speedForPredictive": 30.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "angleOffset": {
+                "y": 10.0
+              },
+              "maxAngle": 60.0,
+              "speedForPredictive": 30.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "angleOffset": {
+                "y": -5.0
+              },
+              "maxAngle": 60.0,
+              "speedForPredictive": 30.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "bulletID": 42101010,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.1
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "angleOffset": {
+                "y": -10.0
+              },
+              "maxAngle": 60.0,
+              "speedForPredictive": 30.0
+            },
+            "attachPointName": "WeaponR"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Hili_Ice_CrossBow_Arrow_AS"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Hili_Ice_Arrow_Damage",
+      "modifiers": {
+        "FireEffectModifier": {
+          "modifierName": "",
+          "elementType": "Ice",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 50.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Hili_Ice_CrossBow_Arrow_Particle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Hili_Ice_CrossBow_Arrow_Trail"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "FireEffectModifier"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByHasElement",
+              "element": "Ice"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Owner",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.75
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Pierce",
+                "enBreak": 50.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.01
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByHasElement",
+              "element": "Ice"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Owner",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.75
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.7
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Pierce",
+                "enBreak": 50.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.01
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Ice"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Owner",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Pierce"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV1",
+                "hitHaltTimeScale": 0.01
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Ice"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Owner",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackBox",
+              "triggerType": "TriggerNoRepeat",
+              "checkHitLayerType": "Both",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  }
+                }
+              },
+              "size": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.1
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.7
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Pierce"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV1",
+                "hitHaltTimeScale": 0.01
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByHasElement",
+              "element": "Ice"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Hili_Ice_CrossBow_ArrowHit"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.35
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByHasElement",
+              "element": "Ice"
+            }
+          ],
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Monster_Hili_Ice_CrossBow_ArrowHit",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Ice"
+                }
+              ]
+            }
+          ],
+          "hitEntity": "Eff_Arrow_Hit_Monster",
+          "hitScene": {
+            "defaultEffect": "Eff_Arrow_Hit_Earth",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Hit_Water"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "FireEffectModifier"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hili_Ice_EliteSet",
+      "modifiers": {
+        "UNIQUE_MonsterEliteAffix_DefaultState": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "skillEliteSetID": 1
+            }
+          ]
+        },
+        "UNIQUE_MonsterEliteAffix_EliteState": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "skillEliteSetID": 2
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "modifierName": "UNIQUE_MonsterEliteAffix_DefaultState"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_ATTACK_ENHANCE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "modifierName": "UNIQUE_MonsterEliteAffix_EliteState"
+        }
+      ]
+    }
+  }
+]

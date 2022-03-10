@@ -1,0 +1,1634 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Pose",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_Riftstalker_POSE_TAG_",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Pose_None",
+            "Pose_NormalToActivated",
+            "Pose_Activated"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            201,
+            301,
+            401
+          ],
+          "modifierName": "Riftstalker_ChargeBar_Handler"
+        }
+      ],
+      "modifiers": {
+        "Riftstalker_ChargeBar_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Riftstalker_ChargeBar"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Riftstalker_ChargeBar"
+            }
+          ]
+        },
+        "UNIQUE_Riftstalker_ChargeBar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ChargeBarMixin",
+              "chargeBarElementType": "Electric",
+              "chargeBarIconID": 2,
+              "initialValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_CHARGEBAR_VALUE",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 99.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.5
+                }
+              ],
+              "modifierNameSteps": [
+                "ChargeActivated"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetChargeBarValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "ChargeActivated": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_Riftstalker_POSE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Pose_None": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ActivatedTag"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ActivatedTag"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ShaderActivatedTag"
+            }
+          ]
+        },
+        "Pose_NormalToActivated": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ActivatedTag",
+              "value": 1
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD",
+              "value": 0.2
+            }
+          ]
+        },
+        "Pose_Activated": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElecSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.65
+            }
+          },
+          "state": "DefenseDown",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "ActivatedTag",
+              "value": 2
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ActivatedTag",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ShaderActivatedTag",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD",
+              "value": 1.4
+            }
+          ]
+        },
+        "UNIQUE_Riftstalker_BeHitCheck": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Electric"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddChargeBarValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 20.0
+                  },
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "TargetOriginOwner",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Electric"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddChargeBarValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 20.0
+                  },
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Riftstalker_BeHitCheck"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Steer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "RandomWalk"
+          ],
+          "angularSpeed": 720.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "WavePaw"
+          ],
+          "endNormalizedTime": 0.2,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Strike_BS"
+          ],
+          "endNormalizedTime": 0.18,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Biting"
+          ],
+          "endNormalizedTime": 0.25,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "JumpBack"
+          ],
+          "endNormalizedTime": 0.1,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ShockWave"
+          ],
+          "endNormalizedTime": 0.12,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ShockWave"
+          ],
+          "startNormalizedTime": 0.5,
+          "endNormalizedTime": 0.59,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_AddBodyEff",
+      "modifiers": {
+        "UNIQUE_Riftstalker_Electric_BodyEff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_Body"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Riftstalker_Electric_EyeEff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_Eye"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "attachPointName": "Mouth"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_BodyEff"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_EyeEff"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_BodyEff"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_EyeEff"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_RemoveBodyEff",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_BodyEff"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Riftstalker_Electric_EyeEff"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_State",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Strike_Loop_01",
+            "Strike_Loop_02",
+            "Strike_Loop_03"
+          ],
+          "modifierName": "UNIQUE_Strike_Actions"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Strike_Loop_02"
+          ],
+          "modifierName": "Strike_FindBlinkPointActions"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Strike_Loop_03"
+          ],
+          "modifierName": "Strike_BlinkActions"
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_Strike_Actions": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ClearLockTarget",
+              "target": "CurLocalAvatar"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Strike_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Strike_DenyLockOn"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_Head",
+                "HitBox_Body"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Hound_Riftstalker_Electric_RemoveBodyEff"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_Head",
+                "HitBox_Body"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Hound_Riftstalker_Electric_AddBodyEff"
+            }
+          ]
+        },
+        "Strike_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "Strike_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        },
+        "Strike_FindBlinkPointActions": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_FindBlinkPoint"
+            }
+          ]
+        },
+        "Strike_BlinkActions": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_DoBlink"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_Strike_AS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTeleportToPoint"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_FindBlinkPoint",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "target": "SelfAttackTarget",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ROUGUE_HOUNDSTRIKE_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "linearOffset": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.8
+            },
+            "linearXZ": false,
+            "linearMin": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            },
+            "linearMax": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 40.0
+            }
+          },
+          "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 8.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+          "target": "SelfAttackTarget",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_ROUGUE_HOUNDSTRIKE_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "linearOffset": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.8
+            },
+            "linearXZ": false,
+            "linearMin": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            },
+            "linearMax": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 40.0
+            }
+          },
+          "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+          "limitY": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_DoBlink",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.TurnDirectionToPos",
+          "target": "SelfAttackTarget",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByTarget"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Strike_Attack",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.49
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.18
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.6
+                  }
+                },
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                  "angleOffset": {
+                    "x": -9.38,
+                    "y": -4.0,
+                    "z": 16.5
+                  }
+                }
+              },
+              "height": 2.95,
+              "fanAngle": 270.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Hound_Corruption_Tag",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 20.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "Eff_Monster_Riftstalker_Hit",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.05
+              }
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_JumpBack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpBack"
+          ],
+          "modifierName": "Riftstalker_JumpBack_Actions"
+        }
+      ],
+      "modifiers": {
+        "Riftstalker_JumpBack_Actions": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_JumpBack"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+              "target": "SelfAttackTarget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -8.0
+                  }
+                }
+              },
+              "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+              "limitY": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.5
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FixedMonsterRushMove",
+              "toPos": {
+                "$type": "MoleMole.Config.ConfigBornByTeleportToPoint"
+              },
+              "timeRange": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "animatorStateIDs": [
+                "JumpBack"
+              ],
+              "overrideMoveCollider": ""
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Howl",
+      "modifiers": {
+        "UNIQUE_Hound_Riftstalker_Electric_Howl": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.25
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                304
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_Howl_Response"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "key": "_RIFTSTALKER_ELECTRIC_HOWL_COUNT_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "sortType": "Nearest",
+            "shapeName": "CircleR30",
+            "campTargetType": "Alliance",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_KANIS_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_RIFTSTALKER_ELECTRIC_HOWL_COUNT_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "MoreThan"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Target",
+              "modifierName": "UNIQUE_Hound_Riftstalker_Electric_Howl"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_RIFTSTALKER_ELECTRIC_HOWL_COUNT_",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "key": "_RIFTSTALKER_ELECTRIC_HOWL_COUNT_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Smash",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Smash_Loop_01",
+            "Smash_Loop_02",
+            "Smash_Loop_03"
+          ],
+          "modifierName": "Smash_Actions"
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Smash_BS"
+          ],
+          "endNormalizedTime": 0.5,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        }
+      ],
+      "modifiers": {
+        "Smash_Actions": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Smash_EffHandler"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Smash_Rush"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42205004,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -4.0
+                  }
+                },
+                "attachPointName": "Body"
+              },
+              "lifeByOwnerIsAlive": true,
+              "trackTarget": "Self"
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42205004
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            }
+          ]
+        },
+        "Smash_EffHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_Smash_Loop"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Smash_ShaderHandler"
+            }
+          ]
+        },
+        "Smash_ShaderHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ShaderSmashTag",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ShaderSmashTag"
+            }
+          ]
+        },
+        "Smash_Rush": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+              "target": "SelfAttackTarget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "linearOffset": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 6.5
+                },
+                "linearMin": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                },
+                "linearMax": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 15.0
+                }
+              },
+              "hitSceneTest": false,
+              "limitY": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.5
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FixedMonsterRushMove",
+              "toPos": {
+                "$type": "MoleMole.Config.ConfigBornByTeleportToPoint"
+              },
+              "timeRange": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.4
+              },
+              "animatorStateIDs": [
+                "Smash_Loop_01",
+                "Smash_Loop_02",
+                "Smash_Loop_03"
+              ],
+              "overrideMoveCollider": "",
+              "checkAnimatorStateOnExitOnly": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Smash_ShaderHandler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Hound_Riftstalker_Electric_Smash_FollowBullet_Hit",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttackHittingSceneMixin",
+          "onHittingScene": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "Owner",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "SmashEnd"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "cameraShake": {
+                "shakeRange": 0.16,
+                "shakeTime": 0.09,
+                "shakeDistance": 25.0
+              }
+            }
+          ]
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Hound_Corruption_Tag",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.85
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 0.1
+              },
+              "hitPattern": {
+                "onHitEffectName": "Eff_Monster_Riftstalker_Hit",
+                "hitImpulseType": "LV1",
+                "hitHaltTimeScale": 0.01
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_Acitvated",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Activated"
+          ],
+          "modifierName": "Riftstalker_Activated_Actions"
+        }
+      ],
+      "modifiers": {
+        "Riftstalker_Activated_Actions": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "key": "_Riftstalker_POSE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Riftstalker_ChargeBar"
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                901
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_ShockWave_Bullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42205002,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "BulletAttachPoint"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_Electric_ShockWave_Effect",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Riftstalker_Electric_ShockWave"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Hound_Riftstalker_Electric_ShockWave_Bullet",
+      "modifiers": {
+        "ShockWave_Bullet_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_ShockWave_Bullet"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Riftstalker_Electric_ShockWave_Bullet_Trail"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ShockWave_Bullet_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.7
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Hound_Corruption_Tag",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.95
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 0.1
+              },
+              "hitPattern": {
+                "onHitEffectName": "Eff_Monster_Riftstalker_Hit",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.05
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "ShockWave_Bullet_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Riftstalker_Electric_ShockWave_Explode"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  }
+]

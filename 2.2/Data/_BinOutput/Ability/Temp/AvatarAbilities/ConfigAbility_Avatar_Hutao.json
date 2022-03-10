@@ -1,0 +1,5496 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_FX"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack_BS"
+          ],
+          "modifierName": "ExtraAttack_BS_FX"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_CloseCollider"
+        },
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 10461,
+          "chargeTime": 0.12,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.12
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 0
+                      },
+                      "parameter": "ComboCount"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 6
+                      },
+                      "parameter": "ComboCount"
+                    }
+                  ]
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging",
+              "value": true
+            }
+          ],
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginSecondCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_StaminaCost_Hutao_Constellation"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_StaminaCost_Hutao_Constellation"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_StaminaCost_Hutao_Constellation"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_StaminaCost_Hutao_Constellation"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "chargeStateIDs": [
+            "Attack01",
+            "Attack02",
+            "Attack03",
+            "Attack04",
+            "Attack05",
+            "Attack05",
+            "Run"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_StaminaCost"
+        }
+      ],
+      "abilitySpecials": {
+        "ExtraAttack_Pole_Stamina_Cost": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Flexible_Stamina": {
+          "type": "float",
+          "dynamicValue": -2.0
+        },
+        "ExtraAttack_StaminaCost_Hutao_Constellation": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "ExtraAttack_StaminaCost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "skillID": 10002,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "skillID": 10002,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "ExtraAttack_Pole_Stamina_Cost"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "ExtraAttack_StaminaCost_Hutao_Constellation"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "ExtraAttack_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_ExtraAttack_Sprint"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.3
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "ExtraAttack_BS_FX": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_ExtraAttack_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.3
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "ExtraAttack_CloseCollider": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "passThrough": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack_CreateBullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41046001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "RootNode"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack_Bullet",
+      "abilitySpecials": {
+        "Hutao_ExtraAttack_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "MonsterEquip"
+              ]
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "target": "Target",
+              "attackInfo": {
+                "attackTag": "ExtraAttack",
+                "attenuationTag": "ExtraAttack",
+                "attenuationGroup": "Avatar_Pole_ExtraAttack",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Hutao_ExtraAttack_Damage"
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "overrideByWeapon": true,
+                  "strikeType": "Spear",
+                  "enBreak": 120.0,
+                  "attackType": "Melee"
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "LV6",
+                  "hitHaltTime": 0.01,
+                  "hitHaltTimeScale": 0.01
+                },
+                "canBeModifiedBy": "OriginOwner"
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "massiveAttackRatio": 0.5,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.8
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "ExtraAttack",
+                  "attenuationTag": "ExtraAttack",
+                  "attenuationGroup": "Avatar_Pole_ExtraAttack",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Hutao_ExtraAttack_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "overrideByWeapon": true,
+                    "strikeType": "Spear",
+                    "enBreak": 120.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV5",
+                    "hitHaltTimeScale": 0.01,
+                    "canBeDefenceHalt": true
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack_CrimsonPlum_CreateBullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41046002,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "RootNode"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack_CrimsonPlum_Bullet",
+      "abilitySpecials": {
+        "Hutao_ExtraAttack_CrimsonPlum_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "MonsterEquip"
+              ]
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "target": "Target",
+              "attackInfo": {
+                "attackTag": "ExtraAttack",
+                "attenuationTag": "ExtraAttack",
+                "attenuationGroup": "Avatar_Pole_ExtraAttack",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Hutao_ExtraAttack_CrimsonPlum_Damage"
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Fire",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "strikeType": "Slash",
+                  "enBreak": 120.0,
+                  "attackType": "Melee"
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "LV6",
+                  "hitHaltTimeScale": 0.01
+                },
+                "canBeModifiedBy": "OriginOwner"
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "massiveAttackRatio": 0.5,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.8
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "ExtraAttack",
+                  "attenuationTag": "ExtraAttack",
+                  "attenuationGroup": "Avatar_Pole_ExtraAttack",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Hutao_ExtraAttack_CrimsonPlum_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Slash",
+                    "enBreak": 120.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV5",
+                    "hitHaltTimeScale": 0.01,
+                    "canBeDefenceHalt": true
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_ExtraAttack_KillBullet",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_KillBullet_Handler"
+        }
+      ],
+      "modifiers": {
+        "ExtraAttack_KillBullet_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillGadget",
+              "doOffStage": true,
+              "gadgetInfo": {
+                "configID": 41046001
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillGadget",
+              "doOffStage": true,
+              "gadgetInfo": {
+                "configID": 41046002
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_CrimsonPlum",
+      "abilitySpecials": {
+        "CrimsonPlum_LifeCostRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Debuff_Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Debuff_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Debuff_Constellation_LifeBonus_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Debuff_Constellation_Kill_Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_Debuff_Constellation_Kill_Critical_Delta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_PermanentSkill_CriticalUp_Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_PermanentSkill_CriticalUp_CriticalDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_MAXHP_To_AttackDelta_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_MAX_AttackDelta_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CrimsonPlum_AttackDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Hutao_CrimsonPlum_Main_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CrimsonPlum_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+              "stateID": "CrimsonPlum_ExtraAttack",
+              "modifierName": "CrimsonPlum_ExtraAttack_Invisible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+              "stateID": "CrimsonPlum_ExtraAttack_AS",
+              "modifierName": "CrimsonPlum_ExtraAttack_HideWeapon",
+              "normalizeEnd": 0.428
+            },
+            {
+              "$type": "MoleMole.Config.ReplaceEventPatternMixin",
+              "oldPatterns": [
+                "Hutao_Attack01",
+                "Hutao_Attack02",
+                "Hutao_Attack03",
+                "Hutao_Attack04",
+                "Hutao_Attack05",
+                "Hutao_Attack06",
+                "Hutao_FallingAnthem_BS_1",
+                "Hutao_FallingAnthem_AS_1",
+                "Audio_Girl_Hutao_Attack01",
+                "Audio_Girl_Hutao_Attack02",
+                "Audio_Girl_Hutao_Attack03",
+                "Audio_Girl_Hutao_Attack04",
+                "Audio_Girl_Hutao_Attack05",
+                "Audio_Girl_Hutao_Attack06",
+                "Audio_Girl_Pole_Hutao_FallingAnthem_BS_1",
+                "Audio_Girl_Pole_Hutao_FallingAnthem_AS_1"
+              ],
+              "newPatterns": [
+                "Hutao_CrimsonPlum_Attack01",
+                "Hutao_CrimsonPlum_Attack02",
+                "Hutao_CrimsonPlum_Attack03",
+                "Hutao_CrimsonPlum_Attack04",
+                "Hutao_CrimsonPlum_Attack05",
+                "Hutao_CrimsonPlum_Attack06",
+                "Hutao_CrimsonPlum_FallingAnthem_BS_1",
+                "Hutao_CrimsonPlum_FallingAnthem_AS_1",
+                "Audio_Girl_Hutao_Attack01_CP",
+                "Audio_Girl_Hutao_Attack02_CP",
+                "Audio_Girl_Hutao_Attack03_CP",
+                "Audio_Girl_Hutao_Attack04_CP",
+                "Audio_Girl_Hutao_Attack05_CP",
+                "Audio_Girl_Hutao_Attack06_CP",
+                "Audio_Girl_Pole_Hutao_FallingAnthem_BS_1_CP",
+                "Audio_Girl_Pole_Hutao_FallingAnthem_AS_1_CP"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            "Actor_AttackExtraDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "CrimsonPlum_AttackDelta"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "IsCrimsonPlum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ClearEndura"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Loop"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "sheathPoint"
+                ]
+              },
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Scythe_Start"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "sheathPoint"
+                ]
+              },
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Scythe_Loop"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "doOffStage": true,
+              "floatID": "IsCrimsonPlum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "AllPlayerAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetType",
+                  "targetType": "Caster",
+                  "isTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 40.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Avatar_Hutao_PermanentSkill_1"
+                }
+              ],
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_PermanentSkill_CriticalUp"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllPlayerAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetType",
+                  "targetType": "Caster",
+                  "isTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 40.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Avatar_Hutao_PermanentSkill_1"
+                }
+              ],
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_PermanentSkill_CriticalUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "sheathPoint"
+                ]
+              },
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Scythe_Loop"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "IsCrimsonPlum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler"
+            }
+          ],
+          "onAvatarOut": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler"
+            }
+          ]
+        },
+        "UNIQUE_Hutao_CrimsonPlum_Scythe_Start": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.4
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Scythe"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Hutao_CrimsonPlum_Scythe_Loop": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CrimsonPlum_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Scythe_Loop"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Hutao_CrimsonPlum_Debuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "CrimsonPlum_Debuff_Duration"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Mark"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Mark_Trigger"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "attachPointName": "RootNode"
+              },
+              "attackInfo": {
+                "attackTag": "Elemental_Art",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "CrimsonPlum_Debuff_Damage"
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Fire",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "strikeType": "Default",
+                  "enBreak": 1.0,
+                  "attackType": "Range",
+                  "damageExtra": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "FIGHT_PROP_MAX_HP"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "CrimsonPlum_Debuff_Constellation_LifeBonus_Factor"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  }
+                },
+                "hitPattern": {
+                  "onHitEffectName": "",
+                  "hitImpulseType": "LV1",
+                  "hitHaltTimeScale": 0.01
+                }
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "AllPlayerAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetType",
+                  "targetType": "Caster",
+                  "isTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 40.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Avatar_Hutao_Constellation_Kill"
+                }
+              ],
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Debuff_Constellation_2"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllPlayerAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetType",
+                  "targetType": "Caster",
+                  "isTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 40.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Avatar_Hutao_Constellation_Kill"
+                }
+              ],
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Debuff_Constellation_2"
+            }
+          ]
+        },
+        "CrimsonPlum_ExtraAttack_Invisible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "passThrough": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ExtraAttack_Skin"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true,
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true
+            }
+          ]
+        },
+        "CrimsonPlum_ExtraAttack_HideWeapon": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "partNames": [
+                "equip01"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_VermilionBite_HideWeapon_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "visible": true,
+              "partNames": [
+                "equip01"
+              ]
+            }
+          ]
+        },
+        "CrimsonPlum_Constellation_LifeBonus_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Burst"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Target",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Hutao_CrimsonPlum_Debuff"
+                }
+              ]
+            }
+          ]
+        },
+        "CrimsonPlum_Debuff_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Target",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Hutao_CrimsonPlum_Debuff"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Hutao_CrimsonPlum_Debuff_Constellation_2": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CrimsonPlum_Debuff_Constellation_Kill_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "CrimsonPlum_Debuff_Constellation_Kill_Critical_Delta"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Hutao_CrimsonPlum_PermanentSkill_CriticalUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CrimsonPlum_PermanentSkill_CriticalUp_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "CrimsonPlum_PermanentSkill_CriticalUp_CriticalDelta"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_CrimsonPlum_Flag",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Hutao_CrimsonPlum_AttackDelta",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "CrimsonPlum_Debuff_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "Avatar_Hutao_Constellation_LifeBonus"
+            }
+          ],
+          "modifierName": "CrimsonPlum_Constellation_LifeBonus_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "doOffStage": true,
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Avatar_Hutao_Constellation_LifeBonus"
+                }
+              ]
+            }
+          ],
+          "modifierName": "CrimsonPlum_Constellation_LifeBonus_Handler"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "FIGHT_PROP_MAX_HP"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "CrimsonPlum_MAXHP_To_AttackDelta_Factor"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              }
+            ]
+          },
+          "key": "_ABILITY_Hutao_CrimsonPlum_AttackDelta",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "FIGHT_PROP_BASE_ATTACK"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "CrimsonPlum_MAX_AttackDelta_Factor"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              }
+            ]
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_ABILITY_Hutao_CrimsonPlum_AttackDelta",
+          "overrideMapKey": "CrimsonPlum_AttackDelta"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "ignoreMassive": true,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Fire",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "strikeType": "Default",
+                "enBreak": 120.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV3",
+                "retreatType": "ByHitDirection",
+                "hitHaltTimeScale": 0.05
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeRange": 0.6,
+                "shakeTime": 0.36,
+                "shakeDistance": 30.0,
+                "extension": {
+                  "baseCycle": 0.08,
+                  "cycleDamping": -0.04
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Burst"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_CrimsonPlum_Word"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.LoseHP",
+          "amountByTargetCurrentHPRatio": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CrimsonPlum_LifeCostRatio"
+          },
+          "lethal": false
+        },
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10462,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_VermilionBite_CameraController",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "VermilionBite_Camera_Protection_Ghost"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "VermilionBite_Camera_Protection_Invincible"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "VermilionBite_Windzone_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "VermilionBite_Camera_Remover"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "VermilionBite_Camera_Weather"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite",
+            "VermilionBite_AS"
+          ],
+          "modifierName": "VermilionBite_HideWeapon"
+        }
+      ],
+      "modifiers": {
+        "VermilionBite_Camera_Protection_Ghost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 11002
+            }
+          ]
+        },
+        "VermilionBite_Camera_Protection_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "VermilionBite_Melee_Camera_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWeatherMixin",
+              "type": "Skill",
+              "weatherPattern": "Weather_Tartaglia_AquariaBlade_Melee",
+              "transDuration": 0.7,
+              "duration": 1.6
+            }
+          ]
+        },
+        "VermilionBite_Windzone_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.WindZoneMixin",
+              "shapeName": "CircleR2",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "strength": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -3.0
+              },
+              "attenuation": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "innerRadius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "targetType": "Enemy",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster",
+                    "Grass"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetWeight",
+                  "logic": "LesserOrEqual",
+                  "weight": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 250.0
+                  }
+                }
+              ],
+              "modifierName": ""
+            }
+          ]
+        },
+        "VermilionBite_Camera_Remover": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ControlEmotion",
+              "toggleEmoSync": false,
+              "toggleBlink": false,
+              "toggleEyeKey": false
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHeadControl",
+              "doOffStage": true,
+              "enable": true
+            },
+            {
+              "$type": "MoleMole.Config.AvatarExitCameraShot",
+              "doOffStage": true
+            },
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "doOffStage": true,
+              "cameraParam": {
+                "forceRadius": 6.0,
+                "shouldKeepForceRadius": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ControlEmotion",
+              "doOffStage": true
+            }
+          ]
+        },
+        "VermilionBite_Camera_Weather": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWeatherMixin",
+              "type": "Skill",
+              "weatherPattern": "Weather_Hutao_ElementalBurst",
+              "duration": 1.5
+            }
+          ]
+        },
+        "VermilionBite_HideWeapon": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_VermilionBite_HideWeapon_Flag",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "partNames": [
+                "equip01",
+                "sheathPoint"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_VermilionBite_HideWeapon_Flag",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerHideWeapon",
+              "doOffStage": true,
+              "visible": true,
+              "partNames": [
+                "equip01",
+                "sheathPoint"
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_VermilionBite_HideWeapon_Flag",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.EnableHeadControl",
+          "blend": false
+        },
+        {
+          "$type": "MoleMole.Config.AvatarEnterCameraShot",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAttackNotHitScene",
+              "attackPattern": {
+                "$type": "MoleMole.Config.ConfigAttackCircle",
+                "triggerType": "TriggerNoRepeat",
+                "born": {
+                  "$type": "MoleMole.Config.ConfigBornBySelf",
+                  "offset": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.5
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    }
+                  }
+                },
+                "height": 0.4,
+                "fanAngle": 30.0,
+                "radius": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.4
+                }
+              },
+              "checkWaterLayer": true
+            },
+            {
+              "$type": "MoleMole.Config.ByAvatarInWaterDepth",
+              "compareType": "LessAndEqual",
+              "depth": 0.5
+            }
+          ],
+          "cameraMoveCfgPath": "Camera_Hutao_ElementalBurst"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_VermilionBite_PostEffect",
+      "modifiers": {
+        "VermilionBite_PostEffect_Handler": {
+          "stacking": "Multiple",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.0
+            }
+          },
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerPostProcessEffectMixin",
+              "postEffectAssetName": "PostEffect_Avatar_Hutao_ElementalBurst_ScreenEffect",
+              "duration": 2.5
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "VermilionBite_PostEffect_Handler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_VermilionBite",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite",
+            "ExtraAttack",
+            "ExtraAttack_AS"
+          ],
+          "modifierName": "Hutao_VermilionBite_Maintainer"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "VermilionBite"
+          ],
+          "modifierName": "Hutao_VermilionBite_GlobalValue_Initializer"
+        }
+      ],
+      "abilitySpecials": {
+        "VermilionBite_LowHP_Threshold": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "VermilionBite_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "VermilionBite_LowHP_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "VermilionBite_HPRestore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "VermilionBite_LowHP_HPRestore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Hutao_VermilionBite_GlobalValue_Initializer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Hutao_VermilionBite_IsLowHP",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Hutao_VermilionBite_LifeRestore_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Burst"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Hutao_VermilionBite_LifeRestore_Count"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Hutao_VermilionBite_LifeRestore_Count": {
+          "stacking": "Multiple",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.0
+            }
+          },
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "target": "Caster",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Hutao_VermilionBite_IsLowHP",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "VermilionBite_HPRestore"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "target": "Caster",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Hutao_VermilionBite_IsLowHP",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "VermilionBite_LowHP_HPRestore"
+              }
+            }
+          ]
+        },
+        "Hutao_VermilionBite_Maintainer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 20.0
+              },
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 120.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -20.0
+              },
+              "modifierName": "UNIQUE_Hutao_CrimsonPlum_Main_Handler",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 120.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Hutao_VermilionBite_LifeRestore_Handler"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Caster",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetHPRatio",
+              "target": "Caster",
+              "logic": "LesserOrEqual",
+              "HPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "VermilionBite_LowHP_Threshold"
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Hutao_VermilionBite_IsLowHP",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "massiveAttackRatio": 0.3,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.5
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 3.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 6.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "VermilionBite_LowHP_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 250.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV3",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.36,
+                    "shakeTime": 0.12,
+                    "shakeDistance": 30.0,
+                    "shakeDir": {
+                      "x": -1.0
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "massiveAttackRatio": 0.3,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.5
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 3.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 6.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "VermilionBite_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 250.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV3",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.36,
+                    "shakeTime": 0.12,
+                    "shakeDistance": 30.0,
+                    "shakeDir": {
+                      "x": -1.0
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraRadialBlur",
+          "cameraRadialBlur": {
+            "power": 0.7,
+            "blurTime": 0.3,
+            "fadeTime": 0.1
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10463,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_VermilionBite_BakeMesh",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "VermilionBite",
+          "modifierName": "Hutao_VermilionBite_BakeMesh_Handler",
+          "normalizeStart": 0.5
+        }
+      ],
+      "modifiers": {
+        "Hutao_VermilionBite_BakeMesh_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR6H10",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "Hutao_VermilionBite_BakeMesh_Handler_Trigger"
+            }
+          ]
+        },
+        "Hutao_VermilionBite_BakeMesh_Handler_Trigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Burst"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetType",
+                  "targetType": "Caster"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireMonsterBeingHitAfterImage"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_Sprint_CloseCollider",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "SprintBS",
+          "modifierName": "Hutao_Sprint_CloseCollider_Handler",
+          "normalizeEnd": 0.25
+        }
+      ],
+      "modifiers": {
+        "Hutao_Sprint_CloseCollider_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_Sprint_Normal"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_Sprint_CrimsonPlum"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "Sprint_Skin"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "passThrough": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true,
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetPassThrough",
+              "doOffStage": true,
+              "canBeHandledOnRecover": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_Constellation_Limbo",
+      "abilitySpecials": {
+        "Hutao_Constellation_Limbo_HPRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Hutao_Constellation_Limbo_Main_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByEventMixin",
+              "onEvent": "HPDown",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "target": "Caster",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Hutao_Constellation_Limbo_HPRatio"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.BySkillReady",
+                  "skillID": 10464
+                }
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAbility",
+                  "doOffStage": true,
+                  "abilityName": "Avatar_Hutao_Constellation_Limbo_Trigger"
+                }
+              ],
+              "costEnergyDeltaName": ""
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.BySkillReady",
+                  "skillID": 10464
+                }
+              ],
+              "modifierName": "UNIQUE_Hutao_Constellation_Limbo_Untriggered_Limbo"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPValue",
+                  "target": "Caster",
+                  "logic": "Lesser",
+                  "HP": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.BySkillReady",
+                  "skillID": 10464
+                }
+              ],
+              "abilityName": "Avatar_Hutao_Constellation_Limbo_Trigger"
+            }
+          ]
+        },
+        "UNIQUE_Hutao_Constellation_Limbo_Untriggered_Limbo": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Limbo"
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "Hutao_Constellation_Limbo_Main_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.UnlockSkill",
+          "doOffStage": true,
+          "skillID": 10464
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_Constellation_Limbo_Trigger",
+      "abilitySpecials": {
+        "Hutao_Constellation_Limbo_Trigger_Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Hutao_Constellation_Limbo_Trigger_SubHurtDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Hutao_Constellation_Limbo_Trigger_CriticalDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Hutao_Constellation_Limbo_Trigger_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Hutao_Constellation_Limbo_Trigger_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FireSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_ElecSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_WaterSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_GrassSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_WindSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_IceSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_RockSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_PhysicalSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_SubHurtDelta"
+            },
+            "Actor_CriticalDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_Constellation_Limbo_Trigger_CriticalDelta"
+            },
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_Limbo_Start"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_Limbo_Loop"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_Hutao_Constellation_Limbo_Trigger_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_Hutao_Constellation_Limbo_Untriggered_Limbo"
+        },
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "doOffStage": true,
+          "skillID": 10464,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_PermanentSkill_2",
+      "abilitySpecials": {
+        "Hutao_PermanentSkill_2_HPRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Hutao_PermanentSkill_2_FireAddHurtDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Hutao_PermanentSkill_2_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Hutao_PermanentSkill_2_Active",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Hutao_PermanentSkill_2_Blank",
+                "Hutao_PermanentSkill_2_FireAddHurtUp"
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "target": "Self",
+                  "logic": "LesserOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Hutao_PermanentSkill_2_HPRatio"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Hutao_PermanentSkill_2_Active",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "target": "Self",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Hutao_PermanentSkill_2_HPRatio"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Hutao_PermanentSkill_2_Active",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Hutao_PermanentSkill_2_Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Hutao_PermanentSkill_2_FireAddHurtUp": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FireAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Hutao_PermanentSkill_2_FireAddHurtDelta"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "Hutao_PermanentSkill_2_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_NormalAttack_DamageHandler",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK01",
+            "ATK01_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_01_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK02",
+            "ATK02_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_02_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK03",
+            "ATK03_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_03_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK04",
+            "ATK04_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_04_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK05A",
+            "ATK05A_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_05A_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK05B",
+            "ATK05B_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_05B_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "animEventNames": [
+            "ATK06",
+            "ATK06_CrimsonPlum"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "NormalAttack_06_DamagePercentage"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "NormalAttack_01_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_02_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_03_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_04_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_05A_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_05B_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "NormalAttack_06_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_FallingAnthem",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AvatarChangeSkillMixin",
+          "jumpSkillID": 5046010,
+          "flySkillID": 5046010
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_BS_Material"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_Loop"
+          ],
+          "modifierName": "FallingAnthem_DamageHandler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_Loop"
+          ],
+          "modifierName": "FallingAnthem_LoopDamage"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_BS_VelocityForce_Initialize"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_Height_Detect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2",
+            "FallingAnthem_AS_1",
+            "FallingAnthem_AS_2"
+          ],
+          "modifierName": "FallingAnthem_FallingDamageImmune_01"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS",
+            "FallingAnthem_Loop"
+          ],
+          "modifierName": "Inertia"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FallingAnthem_BS"
+          ],
+          "modifierName": "FallingAnthem_ClearVelocityForce"
+        }
+      ],
+      "abilitySpecials": {
+        "FallingAnthem_Normal_Loop_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Normal_Rank_1_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Normal_Rank_2_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "FallingAnthem_Altitude_Lv0": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "FallingAnthem_Altitude_Lv1": {
+          "type": "float",
+          "dynamicValue": 40.0
+        },
+        "FallingAnthem_Altitude_Lv2": {
+          "type": "float",
+          "dynamicValue": 60.0
+        },
+        "FallingAnthem_Altitude_Lv3": {
+          "type": "float",
+          "dynamicValue": 100.0
+        },
+        "FallingAnthem_Altitude_Lv4": {
+          "type": "float",
+          "dynamicValue": 200.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv0": {
+          "type": "float",
+          "dynamicValue": -1.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv1": {
+          "type": "float",
+          "dynamicValue": -1.0
+        },
+        "FallingAnthem_FallingDamageRatio_Lv2": {
+          "type": "float",
+          "dynamicValue": -0.9
+        },
+        "FallingAnthem_FallingDamageRatio_Lv3": {
+          "type": "float",
+          "dynamicValue": -0.8
+        },
+        "FallingAnthem_FallingDamageRatio_Lv4": {
+          "type": "float",
+          "dynamicValue": -0.6
+        },
+        "FallingAnthem_FallingDamageRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "FallingAnthem_BS_Material": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Pole_FallingAnthem_BS_Normal"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_FallingAnthem_BS_CrimsonPlum"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_BS_VelocityForce_Initialize": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddGravityScale": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -2.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveVelocityForce",
+              "forces": [
+                "RushMoveType"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_DamageHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_CrimsonPlum_Flag",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -1.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "FallingAnthem_Loop_Normal",
+                "FallingAnthem_Loop_CrimsonPlum"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_LoopDamage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "FallingAttack",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FallingAnthem_Normal_Loop_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "overrideByWeapon": true,
+                    "strikeType": "Slash",
+                    "enBreak": 25.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.02
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "FallingAttack",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FallingAnthem_Normal_Loop_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "strikeType": "Slash",
+                    "enBreak": 25.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.02
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "FallingAttack",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FallingAnthem_Normal_Loop_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "overrideByWeapon": true,
+                    "strikeType": "Slash",
+                    "enBreak": 25.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.02
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "FallingAttack",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "FallingAnthem_Normal_Loop_Damage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "strikeType": "Slash",
+                    "enBreak": 25.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.02
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_01": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ABILITY_FallingAttack_Altitude"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv0"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv0"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv1"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv0"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv2"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv1"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv3"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv2"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv3"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FallingAnthem_Altitude_Lv3"
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              },
+              "key": "_ABILITY_FallingAttack_Altitude",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FallingAnthem_FallingDamageRatio_Lv4"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "FallingAnthem_FallingDamageImmune_02"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_02": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_ABILITY_FallingAttack_Altitude",
+              "overrideMapKey": "FallingAnthem_FallingDamageRatio"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "FallingAnthem_FallingDamageImmune_03"
+            }
+          ]
+        },
+        "FallingAnthem_FallingDamageImmune_03": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FallingDamageRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "FallingAnthem_FallingDamageRatio"
+            }
+          }
+        },
+        "FallingAnthem_Loop_Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_FallingAnthem_UseCamera",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -1.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "FallingAnthem_Loop_Normal_Rank_1",
+                "FallingAnthem_Loop_Normal_Rank_2"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_Loop_Normal_Rank_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Pole_FallingAnthem_Loop_01_Normal"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_Loop_Normal_Rank_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Pole_FallingAnthem_Loop_02_Normal"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_Loop_CrimsonPlum": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_FallingAnthem_UseCamera",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -1.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "FallingAnthem_Loop_CrimsonPlum_Rank_1",
+                "FallingAnthem_Loop_CrimsonPlum_Rank_2"
+              ]
+            }
+          ]
+        },
+        "FallingAnthem_Loop_CrimsonPlum_Rank_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_FallingAnthem_Loop_01_CrimsonPlum"
+              }
+            }
+          ]
+        },
+        "FallingAnthem_Loop_CrimsonPlum_Rank_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_FallingAnthem_Loop_02_CrimsonPlum"
+              }
+            }
+          ]
+        },
+        "Inertia": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyInertiaVelocityMixin",
+              "useXZ": false,
+              "useY": false
+            }
+          ]
+        },
+        "FallingAnthem_Height_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "logic": "LesserOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetAltitude",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.4
+                  }
+                }
+              ],
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "FallingAnthem_ClearVelocityForce": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveVelocityForce",
+              "forces": [
+                "RushMoveType",
+                "InertiaType"
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_1_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Blunt",
+                "enBreak": 100.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.24,
+                "shakeTime": 0.12,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.24,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_2_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "overrideByWeapon": true,
+                "strikeType": "Blunt",
+                "enBreak": 150.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV7",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.5,
+                "shakeTime": 0.2,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.4,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_1_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Fire",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 100.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.24,
+                "shakeTime": 0.12,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.24,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -0.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "height": 2.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "FallingAttack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FallingAnthem_Normal_Rank_2_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Fire",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 150.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV7",
+                "hitHaltTimeScale": 0.1
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.5,
+                "shakeTime": 0.2,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.4,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 0.3
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Pole_FallingAnthem_Strike_01_Normal"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Pole_FallingAnthem_Strike_02_Normal"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "forceByCaster": true,
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_FallingAnthem_Strike_01_CrimsonPlum"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_CrimsonPlum_Flag",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ABILITY_FallingAnthem_UseCamera",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Girl_Pole_Hutao_FallingAnthem_Strike_02_CrimsonPlum"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Hutao_DropBall",
+      "modifiers": {
+        "Hutao_DropBall_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "ExtraAttack",
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_CrimsonPlum_Flag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Hutao_DropBall_Mark",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.GenerateElemBall",
+                  "doOffStage": true,
+                  "configID": 2017,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "ratio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "baseEnergy": 6.0
+                },
+                {
+                  "$type": "MoleMole.Config.Randomed",
+                  "doOffStage": true,
+                  "chance": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  },
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.GenerateElemBall",
+                      "doOffStage": true,
+                      "configID": 2017,
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "ratio": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "baseEnergy": 3.0
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Hutao_DropBall_Mark"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Hutao_DropBall_Mark": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Hutao_DropBall_Mark",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Hutao_DropBall_Mark",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "Hutao_DropBall_Handler"
+        }
+      ]
+    }
+  }
+]

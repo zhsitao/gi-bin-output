@@ -1,0 +1,230 @@
+{
+  "common": {
+    "effectAttachShape": {
+      "$type": "MoleMole.Config.ConfigEffectAttachSkinnedMesh",
+      "mesh": "EffectMesh"
+    },
+    "mass": 10.0,
+    "viewSize": 0.5,
+    "affectedByWorld": true,
+    "checkInSurface": true,
+    "scale": 2.0,
+    "canTriggerElementReactionText": false
+  },
+  "model": {
+    "bornEffect": "",
+    "attachEffect": "",
+    "canBakeMesh": false
+  },
+  "combat": {
+    "property": {
+      "endureType": "Monster_Minion",
+      "weight": 20.0
+    },
+    "beHit": {
+      "hitBloodEffect": "",
+      "muteAllHitText": true
+    },
+    "combatLock": {
+      "lockShape": "CircleLockEnemy",
+      "denyLockOn": true,
+      "lockType": "Default"
+    },
+    "die": {
+      "dieEndTime": 0.01,
+      "dieForceDisappearTime": 10.0,
+      "dieDisappearEffect": "Eff_Animal_Common_Die"
+    }
+  },
+  "stateLayers": {
+    "defaultLayer": {
+      "$type": "MoleMole.Config.ConfigNormalStateLayer",
+      "layerIndexName": "",
+      "stateIDs": {
+        "Born": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Born": [
+              "Animal_Crab_Born",
+              "Audio_Crab_Born"
+            ]
+          },
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ]
+        },
+        "NormalIdle": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Standby": []
+          },
+          "canDoSkill": true,
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ]
+        },
+        "NormalMove": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Walk": [
+              "Audio_Crab_Walk"
+            ],
+            "Run": [
+              "Audio_Crab_Run"
+            ],
+            "Run_AS": [
+              "Audio_Crab_Run"
+            ],
+            "Walk_Mirror": [
+              "Audio_Crab_Walk"
+            ],
+            "Run_Mirror": [
+              "Audio_Crab_Run"
+            ],
+            "Run_AS_Mirror": [
+              "Audio_Crab_Run"
+            ]
+          },
+          "canDoSkill": true,
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ],
+          "canSteer": true
+        },
+        "BeHit": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Hit_L": []
+          },
+          "resetAnimatorTriggerOnEnter": [
+            "BeHit"
+          ],
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ]
+        },
+        "Disappear": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Disappear": [
+              "Animal_Crab_Disappear",
+              "Audio_Crab_Disappear"
+            ]
+          }
+        },
+        "Die": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Die": [
+              "Animal_Crab_Die"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "initialPoses": {
+    "Default": {},
+    "NoKillSelf": {
+      "initialPoseID": 2,
+      "initialPoseParams": {
+        "boolParams": {
+          "NoKillSelf": "true"
+        }
+      }
+    }
+  },
+  "aibeta": {
+    "enable": true,
+    "friendliness": 1,
+    "moveSetting": {
+      "useNavMesh": false,
+      "navMeshAgentName": "Undead01"
+    },
+    "sensing": {
+      "settings": {
+        "DefaultSetting": {
+          "enableVision": false
+        }
+      }
+    },
+    "neurons": {
+      "DefaultSetting": [
+        "HIT"
+      ]
+    },
+    "threat": {
+      "viewThreatGrow": 50.0,
+      "feelThreatGrow": 1000.0,
+      "threatBroadcastRange": 3.0
+    },
+    "defendArea": {
+      "defendRange": 100.0
+    },
+    "ui": {
+      "hasDirectionIndicator": false
+    },
+    "profiling": {
+      "lodStrategy": "MinorAnimal"
+    },
+    "returnToBornTactic": {
+      "enable": true
+    },
+    "wanderTactic": {
+      "enable": true,
+      "defaultSetting": {
+        "cdMax": 3.0,
+        "cdMin": 1.0,
+        "distanceFromBorn": 10.0,
+        "distanceFromCurrentMin": 1.5,
+        "distanceFromCurrentMax": 3.0
+      }
+    },
+    "crabMoveTactic": {
+      "enable": true,
+      "condition": {
+        "pose": [
+          2,
+          201
+        ]
+      },
+      "defaultSetting": {
+        "speedLevel": 2,
+        "turnSpeedOverride": 2.5,
+        "radiusMin": 3.0,
+        "radiusMax": 7.0,
+        "moveTimeMin": 2.5,
+        "moveTimeMax": 2.5,
+        "restTimeMin": 1.5,
+        "restTimeMax": 1.5,
+        "detectFrontDistance": 2.0
+      }
+    },
+    "fleeTactic": {
+      "enable": true,
+      "condition": {
+        "pose": [
+          1,
+          101,
+          102
+        ]
+      },
+      "nerveTrigger": [
+        "HIT"
+      ],
+      "defaultSetting": {
+        "cd": 0.0,
+        "triggerDistance": 200.0,
+        "fleeAngle": 180.0,
+        "fleeDistanceMin": 20.0
+      }
+    }
+  },
+  "animal": {
+    "hasAbility": false,
+    "tickAbilityElement": false,
+    "hasCharacterRenderering": false
+  }
+}

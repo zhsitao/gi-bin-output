@@ -1,0 +1,2146 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_AnimatorSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Alert"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "RangeAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "MeleeAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChargeAtk"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_Disappear",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            901,
+            902,
+            903
+          ],
+          "modifierName": "Invoker_Deacon_Electric_DisappearController"
+        }
+      ],
+      "modifiers": {
+        "Invoker_Deacon_Electric_DisappearController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_DISAPPEAR",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Invoker_Deacon_Electric_ElementShield"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElementState"
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTERAFFIX_QUEST_RETURNTOBORN",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "Invoker_Deacon_Electric_ReturnToBornController"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "Invoker_Deacon_Electric_Disappear"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Invoker_Deacon_Electric_Disappear_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Invoker_Deacon_Electric_Disappear_DenyLockOn"
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_Disappear_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "Invoker_Deacon_Electric_Disappear_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        },
+        "Invoker_Deacon_Electric_Disappear": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "DisappearState",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetCanDieImmediately",
+              "dieImmediately": true
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "banDrop": true,
+              "banExp": true,
+              "banHPPercentageDrop": true,
+              "killSelfType": "Disappear"
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_ReturnToBornController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToPoseIDMixin",
+              "poseIDs": [
+                902,
+                903
+              ],
+              "modifierName": "Invoker_Deacon_Electric_ReturnToBorn"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "WanderState",
+              "value": true
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_ReturnToBorn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_BornHigh"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_BornHigh"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_NormalAtk",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "NormalAtk"
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetOverrideMapValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "overrideMapKey": "Invoker_Deacon_Electric_NormalAtk_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetOverrideMapValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "overrideMapKey": "Invoker_Deacon_Electric_NormalAtk_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetOverrideMapValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "overrideMapKey": "Invoker_Deacon_Electric_NormalAtk_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetOverrideMapValue",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "overrideMapKey": "Invoker_Deacon_Electric_NormalAtk_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "AttackContinue",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Invoker_Deacon_Electric_NormalAtk_Count": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "Invoker_Deacon_Electric_NormalAtk": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "target": "SelfAttackTarget",
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK_POS",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByPredicatePoint",
+                "onGround": true,
+                "timeForPredictive": 0.5
+              },
+              "setTarget": false
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_NormalAtk01_Alert"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK_POS",
+                "directionKey": ""
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_NormalAtk01_Damage"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK_POS",
+                "directionKey": ""
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK_POS",
+                    "directionKey": ""
+                  },
+                  "height": 2.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_NormalAtk"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetAnimatorBool",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_NORMALATK",
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Invoker_Deacon_Electric_NormalAtk_Count"
+              },
+              "compareType": "MoreThanAndEqual"
+            }
+          ],
+          "boolID": "AttackContinue"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_RangeAtk",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "target": "SelfAttackTarget",
+          "bulletID": 42203001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -6.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "maxAngleType": "Horizontal"
+            },
+            "linearOffset": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -12.0
+            },
+            "linearMin": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            },
+            "linearMax": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 50.0
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "target": "SelfAttackTarget",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "forceByCaster": true,
+              "compareType": "MoreThan"
+            }
+          ],
+          "bulletID": 42203001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "maxAngleType": "Horizontal"
+            },
+            "linearOffset": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -12.0
+            },
+            "linearMin": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            },
+            "linearMax": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 50.0
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_RangeAtk_Bullet",
+      "modifiers": {
+        "Invoker_Deacon_Electric_RangeAtk_Bullet": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.15
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireSubEmitterEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_RangeAtk01_Damage"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "onGround": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAudio",
+              "operation": {
+                "$type": "MoleMole.Config.ConfigAudioEventOp",
+                "operation": {
+                  "text": "Play_sfx_monster_lnvoker_deacon_electric_vfx_rangeAtk01_damage"
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "onGround": true
+                  },
+                  "height": 4.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "Invoker_Deacon_Attenuation_1",
+                  "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_1",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.8
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireSubEmitterEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_RangeAtk01_Damage"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "onGround": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAudio",
+              "operation": {
+                "$type": "MoleMole.Config.ConfigAudioEventOp",
+                "operation": {
+                  "text": "Play_sfx_monster_lnvoker_deacon_electric_vfx_rangeAtk01_damage"
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "onGround": true
+                  },
+                  "height": 4.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "Invoker_Deacon_Attenuation_1",
+                  "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_1",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.8
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_RangeAtk_Bullet"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk_Detect",
+      "modifiers": {
+        "Invoker_Deacon_Electric_ChargeAtk_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Invoker_Deacon_Electric_ChargeAtk"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "TargetTeam",
+                  "modifierName": "UNIQUE_Invoker_Deacon_Electric_ChargeAtk"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Invoker_Deacon_Electric_ChargeAtk": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Debuff_Hit_Electric"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -20.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireUIEffect",
+              "effectPattern": "Eff_UI_Debuff_DecreaseEnergy_Invoker_Electric",
+              "effectSlot": "ElementBurst"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_ChargeAtk_Detect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk01",
+      "modifiers": {
+        "Invoker_Deacon_Electric_ChargeAtk01_01": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42203002,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+                },
+                "attachPointName": "ChargeAtk01_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Invoker_Deacon_Electric_ChargeAtk01_02"
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_ChargeAtk01_02": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42203002,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+                },
+                "attachPointName": "ChargeAtk01_02"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Invoker_Deacon_Electric_ChargeAtk01_03"
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_ChargeAtk01_03": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 42203002,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+                },
+                "attachPointName": "ChargeAtk01_03"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_ChargeAtk01_01"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk02",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 45.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 90.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.5
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 135.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 180.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.5
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.5
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 225.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 270.0
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42203003,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.5
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "y": 315.0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk01_Bullet",
+      "modifiers": {
+        "Invoker_Deacon_Electric_ChargeAtk01_Bullet": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_ChargeAtk01_Bullet"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_ChargeAtk01_Bullet"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_ChargeAtk01_Explosion"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.8
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Invoker_Deacon_Electric_ChargeAtk",
+              "attenuationTag": "Invoker_Deacon_Attenuation_2",
+              "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_2",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk01_Explosion",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_ChargeAtk01_Explosion"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.8
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Invoker_Deacon_Electric_ChargeAtk",
+              "attenuationTag": "Invoker_Deacon_Attenuation_2",
+              "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_2",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk02_Bullet",
+      "modifiers": {
+        "Invoker_Deacon_Electric_ChargeAtk02_Bullet": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_ChargeAtk02_Bullet"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Invoker_Deacon_Electric_ChargeAtk02_Bullet"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Invoker_Deacon_Electric_ChargeAtk",
+              "attenuationTag": "Invoker_Deacon_Attenuation_2",
+              "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_2",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_ChargeAtk02_Explosion",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireSubEmitterEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_ChargeAtk02_Explosion"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAudio",
+          "operation": {
+            "$type": "MoleMole.Config.ConfigAudioEventOp",
+            "operation": {
+              "text": "Play_sfx_monster_lnvoker_deacon_electric_vfx_chargeAtk02_explosion"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Invoker_Deacon_Electric_ChargeAtk",
+              "attenuationTag": "Invoker_Deacon_Attenuation_2",
+              "attenuationGroup": "Monster_Invoker_Deacon_Attenuation_2",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Electric",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "none",
+                "hitImpulseType": "LV4"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_StateControl",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToHPPercentMixin",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.2
+            }
+          ],
+          "modifierNameSteps": [
+            "Invoker_Empty",
+            "UNIQUE_Invoker_Deacon_Electric_Normal",
+            "UNIQUE_Invoker_Deacon_Electric_Element"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            301
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            302
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            401
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            402
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_STATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_Invoker_Deacon_Electric_Limbo": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_HpThresholdRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.15
+            }
+          },
+          "state": "Limbo",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Invoker_Deacon_Electric_Standby"
+              }
+            }
+          ]
+        },
+        "Invoker_Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_Invoker_Deacon_Electric_Normal": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "NormalStage",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "NormalStage"
+            }
+          ]
+        },
+        "UNIQUE_Invoker_Deacon_Electric_Element": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElementState",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.ClearEndura"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Invoker_Deacon_Electric_Limbo"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Invoker_Deacon_Electric_Transform",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            401,
+            402
+          ],
+          "modifierName": "Invoker_Deacon_Electric_Transform"
+        }
+      ],
+      "abilitySpecials": {
+        "ElementShield_DurabilityImprove": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Invoker_Deacon_Electric_Transform": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "TransformTrigger"
+              },
+              "MPTriggerOnRemote": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Invoker_Deacon_Electric_Transform_LockHP"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Invoker_Deacon_Electric_Transform_NoHeal"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_ELEMENTSTATE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "UNIQUE_Invoker_Deacon_Electric_ElementShield"
+            }
+          ],
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Invoker_Deacon_Electric_ElementShield"
+            }
+          ]
+        },
+        "Invoker_Deacon_Electric_Transform_LockHP": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "LockHP"
+        },
+        "Invoker_Deacon_Electric_Transform_NoHeal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "NoHeal"
+        },
+        "UNIQUE_Invoker_Deacon_Electric_ElementShield": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Electric",
+          "elementDurability": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 900.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "ElementShield_DurabilityImprove"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 900.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ElementShieldMixin",
+              "elementType": "Electric",
+              "showDamageText": "",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "useMutiPlayerFixData": true
+            },
+            {
+              "$type": "MoleMole.Config.VelocityForceMixin",
+              "excludeForces": [
+                "WindZoneType"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToElementDurabilityMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": true,
+                  "formula": [
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 300.0
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": true,
+                      "dynamicKey": "ElementShield_DurabilityImprove"
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Mul"
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 300.0
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Add"
+                    }
+                  ]
+                },
+                {
+                  "isFormula": true,
+                  "formula": [
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 900.0
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": true,
+                      "dynamicKey": "ElementShield_DurabilityImprove"
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Mul"
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 900.0
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Add"
+                    }
+                  ]
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_Invoker_Deacon_Electric_Transform",
+                "Invoker_Empty"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_ELEMENTSTATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_DISAPPEAR",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 14001
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42203003
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_ELEMENTSTATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElementState"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_INVOKER_DEACON_ELECTRIC_DISAPPEAR",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ]
+            }
+          ]
+        },
+        "Invoker_Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_Invoker_Deacon_Electric_Transform": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "TransformStage",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "TransformStage"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTERAFFIX_ELEMENTSHIELD_DURABILITYIMPROVE",
+          "overrideMapKey": "ElementShield_DurabilityImprove"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Invoker_Deacon_Electric_ElementShield"
+        }
+      ]
+    }
+  }
+]

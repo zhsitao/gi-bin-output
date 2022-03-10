@@ -1,0 +1,420 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_AIStateInitial",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            1
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                202
+              ]
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            2
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                101,
+                102,
+                103,
+                104,
+                201
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_Random",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "FlyDown",
+            "TakeOff",
+            "FlyUp",
+            "Disappear"
+          ],
+          "modifierName": "Random_MoveSpeedRatio"
+        }
+      ],
+      "abilitySpecials": {
+        "RandomSpeed": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Random_MoveSpeedRatio": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "RandomSpeed"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetRandomOverrideMapValue",
+          "valueRangeMax": 0.1,
+          "valueRangeMin": -0.1,
+          "overrideMapKey": "RandomSpeed"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_FlyDown",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FlyDown"
+          ],
+          "modifierName": "FlyState_Down"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Land"
+          ],
+          "modifierName": "FlyDown_Land"
+        }
+      ],
+      "modifiers": {
+        "FlyState_Down": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FlyState",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FlyState"
+            }
+          ]
+        },
+        "FlyDown_Land": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddGravityScale": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.99
+            }
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FlyState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_FlyUp",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FlyState",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_ToWander",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalMove"
+          ],
+          "modifierName": "NormalMove_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Run"
+          ],
+          "modifierName": "Run_Effect"
+        }
+      ],
+      "modifiers": {
+        "NormalMove_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Animal_Wigeon_Ripple_Walk"
+              }
+            }
+          ]
+        },
+        "Run_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Animal_Wigeon_Ripple_Run"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "WanderState",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_ToIdle",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle",
+            "Personality_101",
+            "Personality_102",
+            "Personality_103",
+            "ToWander",
+            "ToIdle",
+            "Aware",
+            "Alert",
+            "SurroundAction"
+          ],
+          "modifierName": "NormalIdle_Effect"
+        }
+      ],
+      "modifiers": {
+        "NormalIdle_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Animal_Wigeon_Ripple_Standby"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "WanderState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_Flee",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Run"
+          ],
+          "modifierName": "FleeState"
+        }
+      ],
+      "modifiers": {
+        "FleeState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FleeState"
+            }
+          ]
+        },
+        "BeHitDetect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FleeState",
+              "value": true
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "BeHitDetect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FleeState",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_Disappear",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Disappear"
+          ],
+          "modifierName": "DisappearTimer"
+        }
+      ],
+      "modifiers": {
+        "DisappearTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.StartDither",
+              "duration": 4.0
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Disappear",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "duration": 3.5,
+              "banDrop": true,
+              "banExp": true,
+              "killSelfType": "Disappear"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Wigeon_FlyEffect",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Animal_Common_Feather"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+]

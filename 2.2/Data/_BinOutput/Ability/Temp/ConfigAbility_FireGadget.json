@@ -1,0 +1,721 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "DropLight_Interact",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMutexMixin",
+          "gadgetStates": [
+            0,
+            201
+          ],
+          "modifierNames": [
+            [
+              "Fire_Off"
+            ],
+            [
+              "Fire_On"
+            ]
+          ]
+        }
+      ],
+      "modifiers": {
+        "Trigger_Bullet": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_Broken"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 70950002,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "ShootPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Trigger_Bullet02": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_Broken"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "bulletID": 70950003,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "ShootPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Fire_Off": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGroupTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "LightHitbox"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Fire"
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasElement",
+                      "element": "Water"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasElement",
+                      "element": "Ice"
+                    }
+                  ]
+                }
+              ],
+              "sourceName": "FireSourceChange",
+              "param1": 1
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "RopeHitbox"
+                  ]
+                }
+              ],
+              "modifierName": "Trigger_Bullet02"
+            }
+          ]
+        },
+        "Fire_On": {
+          "modifierName": "",
+          "elementType": "Fire",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Burning"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Burning"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "LightHitBox"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Wind"
+                }
+              ],
+              "modifierName": "Burning"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "RopeHitbox"
+                  ]
+                }
+              ],
+              "modifierName": "Trigger_Bullet"
+            }
+          ]
+        },
+        "Burning": {
+          "modifierName": "",
+          "elementType": "Fire",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 15.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_FireBasin_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ExecuteGroupTrigger",
+              "sourceName": "FireSourceChange"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "DropLight_Bullet",
+      "modifiers": {
+        "DropLight_Bullet": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.05
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BombBarrel_01_Explode"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "DropLight_Bullet"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "DropLight_Crash",
+      "modifiers": {
+        "DropLight_Crash": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Owner",
+              "modifierName": "UnlockIntee"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BombBarrel_01_Explode"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 20.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 200.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV6",
+                    "overrideHitImpulse": {
+                      "hitLevel": "Air",
+                      "hitImpulseX": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 700.0
+                      },
+                      "hitImpulseY": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 400.0
+                      }
+                    },
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "All"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "UnlockIntee": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableGadgetIntee",
+              "enable": true
+            },
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "param1": 1
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "DropLight_Crash"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "DropLight_Crash02",
+      "modifiers": {
+        "DropLight_Crash": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_WoodenObject_Broken"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 20.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 200.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV6",
+                    "overrideHitImpulse": {
+                      "hitLevel": "Air",
+                      "hitImpulseX": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 700.0
+                      },
+                      "hitImpulseY": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 400.0
+                      }
+                    },
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "All"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "DropLight_Crash"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "GearWater_Interact",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Switch_Close"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Swtich_Open"
+        }
+      ],
+      "modifiers": {
+        "Switch_Close": {
+          "modifierName": "",
+          "elementType": "Grass",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGroupTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Water"
+                }
+              ],
+              "sourceName": "SwithcDisable"
+            }
+          ]
+        },
+        "Swtich_Open": {
+          "modifierName": "",
+          "elementType": "Water",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Burning"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Burning"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Fire"
+                }
+              ],
+              "modifierName": "Burning"
+            }
+          ]
+        },
+        "Burning": {
+          "modifierName": "",
+          "elementType": "Fire",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 15.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_FireBasin_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ExecuteGroupTrigger",
+              "sourceName": "SwithcDisable"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_FIRE_GADGET_ATTACK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackBox",
+                  "triggerType": "TriggerNoRepeat",
+                  "checkHitLayerType": "Both",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "offset": {
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.5
+                      }
+                    },
+                    "attachPointName": "attachPoint"
+                  },
+                  "size": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    }
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Fire",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "strikeType": "Default"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "none",
+                    "hitImpulseType": "LV1",
+                    "hitHaltTimeScale": 0.5
+                  }
+                }
+              },
+              "targetType": "All"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_FIRE_GADGET_ATTACK",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          }
+        }
+      ],
+      "onFieldEnter": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "key": "_FIRE_GADGET_ATTACK",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          }
+        }
+      ],
+      "onFieldExit": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -2.0
+          },
+          "key": "_FIRE_GADGET_ATTACK",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          }
+        }
+      ]
+    }
+  }
+]

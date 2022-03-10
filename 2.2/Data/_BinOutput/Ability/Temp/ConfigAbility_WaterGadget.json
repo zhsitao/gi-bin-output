@@ -1,0 +1,152 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Raining",
+      "modifiers": {
+        "Raining": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 8.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "modifierName": "WetModifier"
+            }
+          ]
+        },
+        "WetModifier": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 8.0
+          },
+          "elementType": "Water",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 40.0
+          },
+          "overrideWeaponElement": true,
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Element_Wet"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Raining"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Test_KapokFlower_Interact",
+      "modifiers": {
+        "ElementWaterModifier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Grow"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Water"
+                }
+              ],
+              "boolID": "BeHitWater",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Water"
+                }
+              ],
+              "modifierName": "ElementWaterModifier"
+            }
+          ]
+        },
+        "Grow": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_ItemFlower_Bloom"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerGadgetInteractive"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "ElementWaterModifier"
+        }
+      ]
+    }
+  }
+]

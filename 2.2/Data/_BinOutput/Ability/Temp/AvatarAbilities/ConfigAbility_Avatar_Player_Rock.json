@@ -1,0 +1,2683 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_PlayerBoy_ExtraAttack_Rock",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 100545,
+          "chargeTime": 0.12,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 0
+                      },
+                      "parameter": "ComboCount"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 5
+                      },
+                      "parameter": "ComboCount"
+                    }
+                  ]
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging",
+              "value": true
+            }
+          ],
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginSecondCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "chargeStateIDs": [
+            "Attack01",
+            "Attack02",
+            "Attack03",
+            "Attack04",
+            "Run"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_StaminaCost"
+        }
+      ],
+      "abilitySpecials": {
+        "ExtraAttack_Sword_Stamina_Cost": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Flexible_Stamina": {
+          "type": "float",
+          "dynamicValue": -2.0
+        }
+      },
+      "modifiers": {
+        "ExtraAttack_StaminaCost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10001,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_PlayerGirl_ExtraAttack_Rock",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 100555,
+          "chargeTime": 0.12,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 0
+                      },
+                      "parameter": "ComboCount"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByAnimatorInt",
+                      "logic": "Equal",
+                      "value": {
+                        "isDynamic": false,
+                        "fixedValue": 5
+                      },
+                      "parameter": "ComboCount"
+                    }
+                  ]
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging",
+              "value": true
+            }
+          ],
+          "OnReleaseCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "OnBeginSecondCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByLocalAvatarStamina",
+                  "logic": "GreaterOrEqual",
+                  "stamina": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Flexible_Stamina"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Add"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "IsCharging"
+            }
+          ],
+          "chargeStateIDs": [
+            "Attack01",
+            "Attack02",
+            "Attack03",
+            "Attack04",
+            "Run"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ExtraAttack"
+          ],
+          "modifierName": "ExtraAttack_StaminaCost"
+        }
+      ],
+      "abilitySpecials": {
+        "ExtraAttack_Sword_Stamina_Cost": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Flexible_Stamina": {
+          "type": "float",
+          "dynamicValue": -2.0
+        }
+      },
+      "modifiers": {
+        "ExtraAttack_StaminaCost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "skillID": 10001,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ExtraAttack_Sword_Stamina_Cost"
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "alongGround": true
+          },
+          "gadgetID": 41005003,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10077,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku_ChargeStrike",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SkillButtonHoldChargeMixin",
+          "skillID": 10077,
+          "nextLoopTriggerID": "NextLoopTrigger",
+          "endHoldTrigger": "EndHoldTrigger",
+          "beforeStateIDs": [
+            "Hogyoku_BS"
+          ],
+          "chargeLoopStateIDs": [
+            "Hogyoku_Charge"
+          ],
+          "chargeLoopDurations": [
+            10.0
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Hogyoku_Charge",
+            "Hogyoku_Charge_2"
+          ],
+          "modifierName": "Focus"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Hogyoku_Charge"
+          ],
+          "modifierName": "Charge"
+        }
+      ],
+      "modifiers": {
+        "Focus": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AvatarEnterFocus",
+              "cameraFollowLower": {
+                "x": 0.8,
+                "y": 0.2,
+                "z": -2.5
+              },
+              "cameraFollowUpper": {
+                "x": 0.5,
+                "y": -0.2
+              },
+              "cameraFastFocusMode": true,
+              "dragButtonName": "Skill2",
+              "assistance": {
+                "ps4": {},
+                "ps5": {},
+                "other": {
+                  "useGyro": true
+                }
+              },
+              "canMove": false,
+              "showCrosshair": false,
+              "focusAnchorVerAngle": 5.0
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarExitFocus",
+              "keepRotation": true
+            }
+          ]
+        },
+        "Charge": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "key": "_HOGYOKU_THROW_RANGE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Hogyoku_Aim_Line"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10077,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 41005008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.6
+              }
+            },
+            "attachPointName": "FocusAnchor"
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_HogyokuBullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "alongGround": true
+          },
+          "gadgetID": 41005004,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_HogyokuBullet_LifeOver",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "alongGround": true
+          },
+          "gadgetID": 41005004,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku_Base",
+      "modifiers": {
+        "Hogyoku_Base_Appear": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.6
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Hogyoku_Bullet"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "onGround": true,
+                "alongGround": true
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "onGround": true,
+                "onGroundIgnoreWater": true,
+                "onGroundRaycastUpDist": 4.0,
+                "alongGround": true
+              },
+              "gadgetID": 41005004,
+              "campID": 1001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_Base_Appear"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku_Barrier",
+      "abilitySpecials": {
+        "GetElementRatio": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "BarrierLifeTimeDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Explode": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Hogyoku_AttackHandler": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.5
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "useRotation": true
+                  },
+                  "height": 2.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Art",
+                  "attenuationTag": "Elemental_Art",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Damage_Explode"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 133.2
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV5",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTime": 0.05,
+                    "hitHaltTimeScale": 0.05,
+                    "canBeDefenceHalt": true
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 0.3,
+                    "shakeTime": 0.15
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Art"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAvatarElementType",
+                  "target": "OriginOwner",
+                  "elementType": "Rock"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Self",
+                  "key": "_ABILITY_Hogyoku_Barrier_Limitation",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Self",
+                  "key": "_ABILITY_Hogyoku_Barrier_ElemBallMark",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.GenerateElemBall",
+                  "configID": 2023,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "ratio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "GetElementRatio"
+                  },
+                  "baseEnergy": 9.0
+                },
+                {
+                  "$type": "MoleMole.Config.Randomed",
+                  "chance": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.33
+                  },
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.GenerateElemBall",
+                      "configID": 2023,
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "ratio": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "GetElementRatio"
+                      },
+                      "baseEnergy": 3.0
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Hogyoku_Barrier_ElemBallMark",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Hogyoku_RockDurability_Handler": {
+          "modifierName": "",
+          "elementType": "Rock",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Recover_RockDurability"
+            }
+          ]
+        },
+        "Recover_RockDurability": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              },
+              "modifierName": "Hogyoku_RockDurability_Handler",
+              "elementType": "Rock",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            }
+          ]
+        },
+        "Hogyoku_Barrier_HP": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "BarrierLifeTimeDelta"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 30.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Hogyoku_Barrier_Explode_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.9
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Hogyoku_Barrier_Limitation",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_Hogyoku_Barrier_Limitation",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Player_Rock_UnstablePrime"
+                }
+              ],
+              "modifierName": "Hogyoku_Barrier_Explode"
+            }
+          ]
+        },
+        "Hogyoku_Barrier_Explode": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "useRotation": true
+                  },
+                  "height": 1.5,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Art",
+                  "attenuationTag": "Elemental_Art",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Damage_Explode"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 133.2
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV5",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTime": 0.05,
+                    "hitHaltTimeScale": 0.05,
+                    "canBeDefenceHalt": true
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 0.3,
+                    "shakeTime": 0.15
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Hogyoku_Crystal_Explode"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_Barrier_Explode_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_AttackHandler"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_Barrier_HP"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_RockDurability_Handler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku_Barrier_EndBoom",
+      "abilitySpecials": {
+        "Damage_Explode": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Life_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "useRotation": true
+              },
+              "height": 1.5,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Elemental_Art",
+              "attenuationTag": "Elemental_Art",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Explode"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Rock",
+                "elementRank": 1.5,
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 133.2
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5",
+                "retreatType": "ByHitDirection",
+                "hitHaltTime": 0.05,
+                "hitHaltTimeScale": 0.05,
+                "canBeDefenceHalt": true
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeRange": 0.3,
+                "shakeTime": 0.15
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Hogyoku_Crystal_Explode"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Life_Timer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Hogyoku_Barrier_Material",
+      "modifiers": {
+        "Hogyoku_Barrier_Material_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.05
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Hogyoku_Barrier_Material"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "Start"
+              }
+            }
+          ]
+        },
+        "Hogyoku_Barrier_Material": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Hogyoku_Crystal"
+              }
+            }
+          ]
+        },
+        "Hogyoku_Barrier_Disappear": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByUnlockTalentParam",
+                      "talentParam": "Player_Rock_UnstablePrime"
+                    }
+                  ]
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Hogyoku_Crystal_Disappear"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Hogyoku_Barrier_Material"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_Hogyoku_Crystal_Impact"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_Barrier_Material_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hogyoku_Barrier_Disappear"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_RockTide",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "RockTide"
+          ],
+          "modifierName": "RockTide_Camera_Protection_Ghost"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "RockTide"
+          ],
+          "modifierName": "RockTide_Camera_Protection_Invincible"
+        }
+      ],
+      "modifiers": {
+        "RockTide_Camera_Protection_Ghost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 11002
+            }
+          ]
+        },
+        "RockTide_Camera_Protection_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.KillGadget",
+          "gadgetInfo": {
+            "configID": 41005006
+          }
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          },
+          "gadgetID": 41005005,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.AvatarSkillStart",
+          "skillID": 10078,
+          "cdRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "costStaminaRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_RockTide_AttackWave",
+      "abilitySpecials": {
+        "ReviveElemEnergyRatio": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "GaeaAnthem_TimeDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "GaeaAnthem_EndureDelta": {
+          "type": "float",
+          "dynamicValue": 0.7
+        },
+        "GaeaAnthem_CriticalDelta": {
+          "type": "float",
+          "dynamicValue": 0.1
+        },
+        "AttackWaveDamage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "RockTide_Push": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.WindZoneMixin",
+              "shapeName": "CircleR6",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "strength": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "attenuation": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "innerRadius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "targetType": "All",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ],
+                  "reject": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetWeight",
+                  "logic": "LesserOrEqual",
+                  "weight": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  }
+                }
+              ],
+              "modifierName": ""
+            }
+          ]
+        },
+        "RockTide_Attack_Start": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.25
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Avatar_Player_RockTide_Barrier_Appear"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 1.5,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 6.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Elemental_Burst",
+                  "attenuationTag": "Player_RockTide",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "AttackWaveDamage"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 3.0,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 0.04,
+                    "shakeTime": 0.2
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "RockTide_AttackWave_Material": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "GaeaAnthem_TimeDelta"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 18.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_RockTide_Crest_Move"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "RockTide_AttackWave_StarDustReturn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Burst"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Target",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAvatarElementType",
+                      "target": "Owner",
+                      "elementType": "Rock"
+                    }
+                  ],
+                  "modifierName": "StarDustReturn_Mark"
+                }
+              ]
+            }
+          ]
+        },
+        "StarDustReturn_Mark": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CasterOriginOwner",
+              "modifierName": "StarDustReturn_Restore"
+            }
+          ]
+        },
+        "StarDustReturn_Restore": {
+          "stacking": "Multiple",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.0
+            }
+          },
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ReviveElemEnergyRatio"
+              }
+            }
+          ]
+        },
+        "UNIQUE_RockTide_GaeaAnthem": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "GaeaAnthem_TimeDelta"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 15.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR7",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_GaeaAnthem_PowerUp"
+            }
+          ]
+        },
+        "UNIQUE_GaeaAnthem_PowerUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "GaeaAnthem_EndureDelta"
+            },
+            "Actor_CriticalDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "GaeaAnthem_CriticalDelta"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "RockTide_Push"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "RockTide_Attack_Start"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "RockTide_AttackWave_Material"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "Player_Rock_StarDustReturn"
+            }
+          ],
+          "modifierName": "RockTide_AttackWave_StarDustReturn"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Player_Rock_StarDustReturn"
+                }
+              ]
+            }
+          ],
+          "modifierName": "RockTide_AttackWave_StarDustReturn"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "Player_Rock_GaeaAnthem"
+            }
+          ],
+          "modifierName": "UNIQUE_RockTide_GaeaAnthem"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByUnlockTalentParam",
+                  "talentParam": "Player_Rock_GaeaAnthem"
+                }
+              ]
+            }
+          ],
+          "modifierName": "UNIQUE_RockTide_GaeaAnthem"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_RockTide_Barrier_Appear",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.75
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.67
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+            },
+            "alongGround": true
+          },
+          "gadgetID": 41005006,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.75
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -6.67
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+            },
+            "alongGround": true
+          },
+          "gadgetID": 41005006,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.67
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.75
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+            },
+            "alongGround": true
+          },
+          "gadgetID": 41005006,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -6.67
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.75
+              }
+            },
+            "onGround": true,
+            "onGroundIgnoreWater": true,
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+            },
+            "alongGround": true
+          },
+          "gadgetID": 41005006,
+          "campID": 1001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_RockTide_Barrier",
+      "abilitySpecials": {
+        "BarrierHP": {
+          "type": "float",
+          "dynamicValue": 0.25
+        },
+        "BarrierLifeTimeDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "RockTide_Barrier_RockDurability_Handler": {
+          "modifierName": "",
+          "elementType": "Rock",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Recover_RockDurability"
+            }
+          ]
+        },
+        "Recover_RockDurability": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              },
+              "modifierName": "RockTide_Barrier_RockDurability_Handler",
+              "elementType": "Rock",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            }
+          ]
+        },
+        "Barrier_Stat": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "BarrierLifeTimeDelta"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 15.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BarrierHP"
+            }
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Barrier_Material_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.05
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Barrier_Material"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "Start"
+              }
+            }
+          ]
+        },
+        "Barrier_Material": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_RockTide_RockWall"
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_RockTide_RockWall_Disappear"
+              }
+            }
+          ]
+        },
+        "Barrier_Damage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Barrier_Damage_Modifier": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Caster",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.1
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementRank": 1.5,
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 10.59
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV3",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Barrier_Stat"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_RockTide_RockWall_Impact"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Barrier_Material_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "RockTide_Barrier_RockDurability_Handler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Rock_Avalanche",
+      "abilitySpecials": {
+        "Avalanche_Damage": {
+          "type": "float",
+          "dynamicValue": 0.6
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "Player_Rock_Avalanche"
+            }
+          ],
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.2
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.4
+              }
+            },
+            "attackInfo": {
+              "attackTag": "NormalAttack_05",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Avalanche_Damage"
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Rock",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 13.5,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV2",
+                "hitHaltTimeScale": 0.05
+              },
+              "cameraShake": {
+                "shakeRange": 0.08,
+                "shakeTime": 0.04
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByUnlockTalentParam",
+              "talentParam": "Player_Rock_Avalanche"
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Avatar_RockBlade_Explode"
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Avatar_Player_Rock_Climber",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Climb"
+          ],
+          "modifierName": "Player_Rock_Climber"
+        }
+      ],
+      "abilitySpecials": {
+        "Climber_CostStaminaRatio": {
+          "type": "float",
+          "dynamicValue": -0.08
+        }
+      },
+      "modifiers": {
+        "Player_Rock_Climber": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CostStaminaRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Climber_CostStaminaRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "isDynamicAbility": true
+    }
+  }
+]
