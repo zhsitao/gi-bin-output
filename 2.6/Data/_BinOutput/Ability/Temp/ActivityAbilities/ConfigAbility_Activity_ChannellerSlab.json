@@ -1,0 +1,2727 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Activity_ChannellerSlab_DangerArea",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_DANGERAREA_StateID",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Activity_ChannellerSlab_DangerArea_Active",
+            "Activity_ChannellerSlab_DangerArea_CoolDown"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_DANGERAREA_ActiveEffect",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Activity_ChannellerSlab_DangerArea_ActiveEffect"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.FieldEntityCountChangeMixin",
+          "campTargetType": "Enemy",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            }
+          ],
+          "onFieldEnter": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DANGERAREA_Avatar_Count",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onFieldExit": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_DANGERAREA_Avatar_Count",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "RandomLatency": {
+          "type": "float",
+          "dynamicValue": 0.1
+        }
+      },
+      "modifiers": {
+        "Activity_ChannellerSlab_DangerArea_Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DANGERAREA_Avatar_Count",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "modifierName": "Activity_ChannellerSlab_CountDown"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DANGERAREA_Avatar_Count",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  },
+                  "compareType": "LessAndEqual"
+                }
+              ],
+              "modifierName": "Activity_ChannellerSlab_CountDown"
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Activity_ChannellerSlab_CountDown": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Alert"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Alert_Enhanced"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "target": "Self",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "lifeByOwnerIsAlive": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByWorld",
+                  "eularAngles": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.1
+                  }
+                },
+                "alongGround": true
+              },
+              "gadgetID": 49001018,
+              "campID": 4001
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DANGERAREA_ActiveEffect",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DANGERAREA_StateID",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkIntervalIsFixedUpdate": true,
+          "thinkIntervalIgnoreTimeScale": true
+        },
+        "Activity_ChannellerSlab_DangerArea_CoolDown": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Activity_ChannellerSlab_DangerArea_CoolDown_Recover"
+            }
+          ]
+        },
+        "Activity_ChannellerSlab_DangerArea_CoolDown_Recover": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DANGERAREA_ActiveEffect",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DANGERAREA_StateID",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Activity_ChannellerSlab_DangerArea_ActiveEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "DangerArea_ActiveEffect_Normal",
+                "DangerArea_ActiveEffect_Enhanced"
+              ]
+            }
+          ]
+        },
+        "DangerArea_ActiveEffect_Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Active"
+              }
+            }
+          ]
+        },
+        "DangerArea_ActiveEffect_Enhanced": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Active_Enhanced"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Activity_ChannellerSlab_DangerArea_CoolDown_Recover"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Activity_ChannellerSlab_DangerArea_EnhancedTag",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Activity_ChannellerSlab_DamageArea_Impulse",
+      "abilitySpecials": {
+        "ElementLevelCo": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DamageRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DamageRatioEnhanced": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "ChargeAtk_LatencyGadget": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Owner",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Trigger"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByWorld",
+                  "eularAngles": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.1
+                  }
+                },
+                "alongGround": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Owner",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_ChannellerSlab_DangerArea_Trigger_Enhanced"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByWorld",
+                  "eularAngles": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.1
+                  }
+                },
+                "alongGround": true
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityIsAlive",
+                  "target": "Owner"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Owner",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 20.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 7.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "strikeType": "Default",
+                    "attackType": "Range",
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "ElementLevelCo"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "DamageRatio"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.12,
+                    "shakeTime": 0.12,
+                    "shakeDistance": 30.0,
+                    "shakeDir": {
+                      "z": -1.0
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityIsAlive",
+                  "target": "Owner"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Owner",
+                  "key": "_ACTIVIITY_ChannellerSlab_DangerArea_EnhancedTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 20.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "strikeType": "Default",
+                    "attackType": "Range",
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "ElementLevelCo"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "DamageRatioEnhanced"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.12,
+                    "shakeTime": 0.12,
+                    "shakeDistance": 30.0,
+                    "shakeDir": {
+                      "z": -1.0
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ChargeAtk_LatencyGadget"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "ElementLevelCo",
+          "type": "ElementLevelCo"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv1",
+      "abilitySpecials": {
+        "HPUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv1": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "HPUpRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv1"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv2",
+      "abilitySpecials": {
+        "HPUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv2": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "HPUpRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv2"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv3",
+      "abilitySpecials": {
+        "HPUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv3": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "HPUpRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_HpUp_Lv3"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Monster_AtkUp_Lv1",
+      "abilitySpecials": {
+        "AtkUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_AtkUp_Lv1": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AtkUpRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Monster_AtkUp_Lv1"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_ShieldCostMinusDown",
+      "abilitySpecials": {
+        "ShieldCostMinusRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_ShieldCostMinusDown": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ShieldCostMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "ShieldCostMinusRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_ShieldCostMinusDown"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_MoveSpeedDown",
+      "abilitySpecials": {
+        "MoveSpeedRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_MoveSpeedDown": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "MoveSpeedRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_MoveSpeedDown"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_DashStaminaUp",
+      "abilitySpecials": {
+        "CostStaminaRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_DashStaminaUp": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Sprint",
+                "SprintBS"
+              ],
+              "modifierName": "UNIQUE_ChannellerSlabV2_DashStaminaReduction"
+            }
+          ]
+        },
+        "UNIQUE_ChannellerSlabV2_DashStaminaReduction": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CostStaminaRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "CostStaminaRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_DashStaminaUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_SkillCDIncrement",
+      "abilitySpecials": {
+        "SkillCDMinusRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_SkillCDIncrement": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SkillCDMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "SkillCDMinusRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_SkillCDIncrement"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_RecoverStaminaRatioDown",
+      "abilitySpecials": {
+        "RecoverStaminaRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_RecoverStaminaRatioDown": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_RecoverStaminaRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "RecoverStaminaRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_RecoverStaminaRatioDown"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_NoShieldAtkDown",
+      "abilitySpecials": {
+        "AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_Handler_AS": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_Ability_EnergyDisk_NoShieldAtkDown_Check",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_HasDebuff",
+                "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_NoDebuff"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_Handler"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_Ability_EnergyDisk_NoShieldAtkDown_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_Ability_EnergyDisk_NoShieldAtkDown_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_NoDebuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_EffigyChallenge_NoShieldAtkDown_HasDebuff"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_HasDebuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AttackRatio"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Attack_Down"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "UNIQUE_EnergyDisk_Lv1_NoShieldAtkDown_Handler_AS"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Team_AtkDownLowHP",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.CurLocalAvatarMixin",
+          "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP"
+        }
+      ],
+      "abilitySpecials": {
+        "HpRate_P1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "AtkRate_P2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_EnergyDisk_AtkDownLowHP": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_Del_EnergyDisk_AtkDownLowHP_Sub"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub"
+            }
+          ]
+        },
+        "UNIQUE_Del_EnergyDisk_AtkDownLowHP_Sub": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_AtkDownLowHP_Sub": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AtkRate_P2"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Attack_Down"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Team_SpeedDownLowHP",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.CurLocalAvatarMixin",
+          "modifierName": "UNIQUE_EnergyDisk_SpeedDownLowHP"
+        }
+      ],
+      "abilitySpecials": {
+        "HpRate_P1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "MoveSpeedRatio_P2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_EnergyDisk_SpeedDownLowHP": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "GreaterOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_Del_EnergyDisk_SpeedDownLowHP_Sub"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_SpeedDownLowHP_Sub"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "LesserOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_SpeedDownLowHP_Sub"
+            }
+          ]
+        },
+        "UNIQUE_Del_EnergyDisk_SpeedDownLowHP_Sub": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_SpeedDownLowHP_Sub"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_SpeedDownLowHP_Sub": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "MoveSpeedRatio_P2"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Attack_Down"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_EnergyDisk_SpeedDownLowHP"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_SprintBeHurtDamageUp",
+      "abilitySpecials": {
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "SubHurtDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Check": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "SprintBS"
+              ],
+              "modifierName": "UNIQUE_LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Applier"
+            }
+          ]
+        },
+        "UNIQUE_LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Applier": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Team"
+            }
+          ]
+        },
+        "UNIQUE_LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Team": {
+          "stacking": "RefreshUniqueDurability",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixinV2",
+              "modifierName": "UNIQUE_EnergyDisk_Lv3_SprintBeHurtDamageUp_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_Lv3_SprintBeHurtDamageUp_Avatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "SubHurtDelta"
+            }
+          },
+          "state": "DefenseDown",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "LevelEntity_EnergyDisk_Lv3_SprintBeHurtDamageUp_Check"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Team_BeHurtDamageUpAfterChangeAvatar",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.CurLocalAvatarMixin",
+          "modifierName": "UNIQUE_LevelEntity_EnergyDisk_Lv3_BeHurtDamageUpAfterChangeAvatar"
+        }
+      ],
+      "abilitySpecials": {
+        "BuffMaxCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyDisk_BuffCurCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyDisk_BeHurtSubHurt": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_EnergyDisk_Lv3_BeHurtDamageUpAfterChangeAvatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAvatarIn": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Team",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByIsCombat"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "EnergyDisk_BeHurtDamageUpAfterChangeAvatar_BuffLayer",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "BuffMaxCount"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Team",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "EnergyDisk_BeHurtDamageUpAfterChangeAvatar_BuffLayer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Team",
+                  "globalValueKey": "EnergyDisk_BeHurtDamageUpAfterChangeAvatar_BuffLayer",
+                  "overrideMapKey": "EnergyDisk_BuffCurCount"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "UNIQUE_EnergyDisk_Lv3_BeHurtDamageUpAfterChangeAvatarEffect"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_Lv3_BeHurtDamageUpAfterChangeAvatarEffect": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "EnergyDisk_BeHurtSubHurt"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "EnergyDisk_BuffCurCount"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "state": "DefenseDown",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "EnergyDisk_BeHurtDamageUpAfterChangeAvatar_BuffLayer",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "EnergyDisk_BeHurtDamageUpAfterChangeAvatar_BuffLayer",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT",
+      "abilitySpecials": {
+        "BuffMaxCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyDisk_BuffCurCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyDisk_BeHurtSubHurt": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Manager": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_CastDetect"
+            }
+          ]
+        },
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_CastDetect": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerUltimateSkill": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByIsCombat"
+                    }
+                  ],
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "EnergyDisk_BeHurtDamageUpAfterULT_BuffLayer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "BuffMaxCount"
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Effect"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Team",
+                  "globalValueKey": "EnergyDisk_BeHurtDamageUpAfterULT_BuffLayer",
+                  "overrideMapKey": "EnergyDisk_BuffCurCount"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Effect"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "Reset_CountDown"
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "EnergyDisk_BeHurtDamageUpAfterULT_BuffLayer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "modifierName": "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Effect"
+            }
+          ]
+        },
+        "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Effect": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "EnergyDisk_BeHurtSubHurt"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "EnergyDisk_BuffCurCount"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "state": "DefenseDown",
+          "isLimitedProperties": true
+        },
+        "Reset_CountDown": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DefenseDown",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "EnergyDisk_BeHurtDamageUpAfterULT_BuffLayer",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ChannellerSlabV2_Team_BeHurtDamageUpAfterULT_Manager"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Team_AtkDownLowHP_TwoStages",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.CurLocalAvatarMixin",
+          "modifierName": "UNIQUE_EnergyDisk_Lv2_AtkDownLowHP"
+        }
+      ],
+      "abilitySpecials": {
+        "HpRate_P1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "HpRate_P2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DmgRate_P3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "DmgRate_P4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_EnergyDisk_Lv2_AtkDownLowHP": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "GreaterOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P2"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub1"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P2"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub2"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "onEvent": "HP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "GreaterOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_Del_EnergyDisk_AtkDownLowHP_Sub"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P1"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "GreaterOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P2"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub1"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HpRate_P2"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub2"
+            }
+          ]
+        },
+        "UNIQUE_Del_EnergyDisk_AtkDownLowHP_Sub": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub1"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub2"
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_AtkDownLowHP_Sub1": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "DmgRate_P3"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub2"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Attack_Down"
+              }
+            }
+          ]
+        },
+        "UNIQUE_EnergyDisk_AtkDownLowHP_Sub2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "DmgRate_P4"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "UNIQUE_EnergyDisk_AtkDownLowHP_Sub1"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Attack_Down"
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "MonsterAffix_WeakTimeModify_ForChannellerSlabV2",
+      "abilitySpecials": {
+        "ModifyRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_MonsterAffix_WeakTimeModify_ForChannellerSlabV2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ModifyRatio"
+              },
+              "key": "_MONSTER_WeakTime_ExtraRatio",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ModifyRatio"
+              },
+              "key": "_MONSTER_WeakTime_ExtraRatio",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_MonsterAffix_WeakTimeModify_ForChannellerSlabV2"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "GeneralSkill_SelfHeal_ForChannellerSlabV2",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_MONSTER_GeneralSkill_WaterEnhance_SelfHeal_Times",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Times"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Add"
+                }
+              ]
+            }
+          ],
+          "modifierNameSteps": [
+            "GeneralSkill_WaterEnhance_SelfHeal_Manager",
+            "Blank"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "SelfHealThreshold": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "SelfHealLatency": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "SelfHealRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Times": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "GeneralSkill_WaterEnhance_SelfHeal_Manager": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToHPPercentMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "SelfHealThreshold"
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "GeneralSkill_WaterEnhance_SelfHeal_Trigger"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_GeneralSkill_SelfHeal_FootCircle"
+              }
+            }
+          ]
+        },
+        "GeneralSkill_WaterEnhance_SelfHeal_Trigger": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "modifierName": "GeneralSkill_WaterEnhance_SelfHeal_Latency"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_GeneralSkill_WaterEnhance_SelfHeal_Times",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "GeneralSkill_WaterEnhance_SelfHeal_Latency": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "SelfHealLatency"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_GeneralSkill_SelfHeal_Alert"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityIsAlive"
+                }
+              ],
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "SelfHealRatio"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityIsAlive"
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_GeneralSkill_SelfHeal_HealEffect"
+              }
+            }
+          ]
+        }
+      },
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "GeneralSkill_WaterEnhance_SelfHeal_Manager"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "GeneralSkill_WaterEnhance_SelfHeal_Latency"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "LevelEntity_ChannellerSlabV2_Avatar_ChargeEfficiencyDelta",
+      "abilitySpecials": {
+        "ChargeEfficiencyDelta": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_ChargeEfficiencyDelta": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ChargeEfficiencyDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "ChargeEfficiencyDelta"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_LevelEntity_ChannellerSlabV2_Avatar_ChargeEfficiencyDelta"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

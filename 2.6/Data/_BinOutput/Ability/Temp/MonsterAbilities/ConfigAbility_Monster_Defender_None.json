@@ -1,0 +1,2885 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Born",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAnimatorFloat",
+              "logic": "LesserOrEqual",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              },
+              "parameter": "PoseID"
+            }
+          ],
+          "abilityName": "Defender_None_Weakness"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_PowerOff",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Born",
+            "NormalIdle_PowerOff",
+            "PowerOff_WakeUp",
+            "PowerOff_Warning"
+          ],
+          "modifierName": "UNIQUE_Defender_PowerOff",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAnimatorFloat",
+              "logic": "Equal",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 101.0
+              },
+              "parameter": "PoseID"
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_Defender_PowerOff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Entity_MassRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1000.0
+            },
+            "Entity_WeightRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.0
+            },
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "PowerOff_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "PowerOff_IsGhostToAllied"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "PowerOff_IsGhostToEnemy"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "PowerOff_MuteTaunt"
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "PowerOff",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "PowerOff"
+            }
+          ]
+        },
+        "PowerOff_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "PowerOff_IsGhostToAllied": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "IsGhostToAllied"
+        },
+        "PowerOff_IsGhostToEnemy": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "IsGhostToEnemy"
+        },
+        "PowerOff_MuteTaunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "MuteTaunt"
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Defender_PowerOff"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_PowerOff_WakeUp",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "WakeUpTrigger"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_PowerOff_Remove",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "PowerOff_Warning"
+          ],
+          "modifierName": "EyeEffect_PowerOffEnd"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "PowerOff_WarningAS"
+          ],
+          "modifierName": "PowerOff_WarningAS"
+        }
+      ],
+      "modifiers": {
+        "EyeEffect_PowerOffEnd": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Eye_02"
+              }
+            }
+          ]
+        },
+        "PowerOff_WarningAS": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Defender_None_Weakness"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weakness",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Break"
+          ],
+          "modifierName": "UNIQUE_Defender_BreakState"
+        }
+      ],
+      "abilitySpecials": {
+        "WeaknessDurability": {
+          "type": "float",
+          "dynamicValue": 150.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Defender_Weakness": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "WeaknessDurability"
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "EnergyState",
+              "value": 1
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Eye"
+              },
+              "scale": 0.1
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Active_Back"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_BackSmoke"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HeadBox",
+                "BackBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_MONSTER_AutoMatron_WeakTag",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "WeakStartTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "EnergyState"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Defender_None_Weak"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Eye_03"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Active_Back_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HeadBox",
+                "BackBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_AutoMatron_WeakTag",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "HeadBox",
+                    "BackBox"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitEnBreak",
+                  "logic": "GreaterOrEqual",
+                  "enBreak": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 80.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "BreakTrigger"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitBoxName",
+                      "hitBoxNames": [
+                        "HeadBox"
+                      ]
+                    }
+                  ],
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Defender_None_Weakness_BeHit"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "AimingPoint"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitBoxName",
+                      "hitBoxNames": [
+                        "BackBox"
+                      ]
+                    }
+                  ],
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Defender_None_Weakness_BeHit"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "BackPoint"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddElementDurability",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -50.0
+                  },
+                  "modifierName": "UNIQUE_Defender_Weakness",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 9999.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Defender_BreakState": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_WeakStart"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitBoxName",
+                  "hitBoxNames": [
+                    "HeadBox",
+                    "BackBox"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitEnBreak",
+                  "logic": "GreaterOrEqual",
+                  "enBreak": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 80.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitBoxName",
+                      "hitBoxNames": [
+                        "HeadBox"
+                      ]
+                    }
+                  ],
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Defender_None_Weakness_BeHit"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "AimingPoint"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitBoxName",
+                      "hitBoxNames": [
+                        "BackBox"
+                      ]
+                    }
+                  ],
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Defender_None_Weakness_BeHit"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "BackPoint"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddElementDurability",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -100.0
+                  },
+                  "modifierName": "UNIQUE_Defender_Weakness",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 9999.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetOverrideMapValue",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTERAFFIX_Defender_WeaknessNerf_ForBuoyantCombat",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "forceByCaster": true
+            }
+          ],
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 50.0
+          },
+          "overrideMapKey": "WeaknessDurability"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Defender_Weakness"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weakness_Remove",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Defender_Weakness"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Break_Remove",
+      "abilitySpecials": {
+        "BreakProtectTime": {
+          "type": "float",
+          "dynamicValue": 7.5
+        },
+        "BreakProtectTimeDelta": {
+          "type": "float",
+          "dynamicValue": 1.5
+        }
+      },
+      "modifiers": {
+        "BreakProtect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "BreakProtectTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "BreakProtectEffect"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "EffectTrigger",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Eye"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "EffectTrigger",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Back"
+              }
+            }
+          ]
+        },
+        "BreakProtectEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "BreakProtectTime"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "BreakProtectTimeDelta"
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Eye"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Back"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Defender_BreakState"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "BreakProtect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weak",
+      "abilitySpecials": {
+        "WeakTime_ExtraRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_WeakTimer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 15.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "WeakTime_ExtraRatio"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 15.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "WeakLocked",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "WeakLocked"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTER_WeakTime_ExtraRatio",
+          "overrideMapKey": "WeakTime_ExtraRatio"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_WeakTimer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weak_Effect",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            98,
+            99,
+            202,
+            203
+          ],
+          "modifierName": "WeakEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Weak_Start"
+          ],
+          "modifierName": "Watch_Weak"
+        }
+      ],
+      "modifiers": {
+        "WeakEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_WeakStart"
+              }
+            }
+          ]
+        },
+        "Watch_Weak": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DoWatcherSystemAction",
+              "watcherId": 82013,
+              "inThreatListOnly": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "WeakEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weak_Ground",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_WeakDust"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.2,
+            "shakeTime": 0.15,
+            "shakeDistance": 25.0,
+            "shakeDir": {
+              "y": -1.0
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Weak_End",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Weak_End"
+          ],
+          "modifierName": "EyeEffect_WeakEnd"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Weak_EndAS"
+          ],
+          "modifierName": "Weak_EndAS"
+        }
+      ],
+      "abilitySpecials": {
+        "WeakProtectTime": {
+          "type": "float",
+          "dynamicValue": 15.0
+        },
+        "WeakProtectTimeDelta": {
+          "type": "float",
+          "dynamicValue": 1.5
+        }
+      },
+      "modifiers": {
+        "EyeEffect_WeakEnd": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Eye_02"
+              }
+            }
+          ]
+        },
+        "Weak_EndAS": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Defender_None_Weakness"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "WeakProtect"
+            }
+          ]
+        },
+        "WeakProtect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "WeakProtectTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "WeakProtectEffect"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_DEFENDER_NONE_WEAKNESSPROTECT",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "EffectTrigger",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Eye"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "EffectTrigger",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Back"
+              }
+            }
+          ]
+        },
+        "WeakProtectEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "WeakProtectTime"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "WeakProtectTimeDelta"
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Eye"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Shield_Back"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Whirl",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Whirl_BS",
+            "Whirl_Loop",
+            "Whirl_AS"
+          ],
+          "startNormalizedTime": 0.8,
+          "endNormalizedTime": 0.25,
+          "angularSpeed": 90.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Whirl_BS",
+            "Whirl_Loop"
+          ],
+          "modifierName": "Whirl_State"
+        }
+      ],
+      "modifiers": {
+        "Whirl_Effect_StateCheck": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToAbilityStateMixin",
+              "abilityStates": [
+                "ElementFrozen",
+                "ElementPetrifaction"
+              ],
+              "reject": true,
+              "modifierName": "Whirl_Effect"
+            }
+          ]
+        },
+        "Whirl_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_WhirlLoop"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.16,
+                "shakeTime": 0.2,
+                "shakeDir": {
+                  "y": 1.0
+                },
+                "extension": {
+                  "baseCycle": 0.2,
+                  "cycleDamping": 0.0,
+                  "rangeAttenuation": 1.0
+                }
+              }
+            }
+          ]
+        },
+        "Whirl_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Whirl_Effect_StateCheck"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Whirl_Effect_StateCheck"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Laser_BS",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Laser_BS"
+          ],
+          "endNormalizedTime": 0.08,
+          "angularSpeed": 240.0,
+          "attackTrigger": ""
+        }
+      ],
+      "modifiers": {
+        "Monster_Defender_Laser_Effect_Handler": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.28
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Step"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "LeftHand"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Step"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "RightHand"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ResetAIAttackTarget"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Defender_Laser_Effect_Handler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_CannonEffect",
+      "modifiers": {
+        "UNIQUE_Defender_None_ChaseAim_Effect": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.7
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_ChaseAim"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS1"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS2"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS3"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS4"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS5"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_LaserBS6"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "SelfAttackTarget",
+          "modifierName": "UNIQUE_Defender_None_ChaseAim_Effect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Laser",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke01",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke01"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke02",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke02"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke03",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke03"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke04",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke04"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke05",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke05"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42304015,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttachPoint",
+              "attachPointName": "BackSmoke06",
+              "attachPointTargetType": "Self"
+            },
+            "attachPointName": "BackSmoke06"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Defender_None_ChaseBullet",
+      "modifiers": {
+        "Defender_None_ChaseBullet_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Bullet_Chase"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Defender_None_ChaseBullet_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Formathr_None_ChaseBullet_Hit"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          },
+          "scale": 0.4
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.25
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Default",
+                "enBreak": 100.0,
+                "attackType": "Melee"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV4",
+                "hitHaltTimeScale": 0.05
+              },
+              "cameraShake": {
+                "shakeType": "HitVector",
+                "shakeRange": 0.06,
+                "shakeTime": 0.12,
+                "shakeDir": {
+                  "z": 1.0
+                }
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "Defender_None_ChaseBullet_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "target": "Target",
+          "modifierName": "UNIQUE_Defender_None_ChaseAim_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Turn",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "startNormalizedTime": 0.1,
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "startNormalizedTime": 0.3,
+          "endNormalizedTime": 0.6,
+          "angularSpeed": 360.0,
+          "attackTrigger": ""
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Smash_Turn",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Smash"
+          ],
+          "startNormalizedTime": 0.185,
+          "endNormalizedTime": 0.215,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Smash"
+          ],
+          "startNormalizedTime": 0.32,
+          "endNormalizedTime": 0.35,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Smash"
+          ],
+          "startNormalizedTime": 0.46,
+          "endNormalizedTime": 0.47,
+          "angularSpeed": 900.0,
+          "attackTrigger": ""
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Smash_Atk01",
+      "modifiers": {
+        "Smash_Atk01_Detect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Defender_None_Smash_Atk01"
+                  ]
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Smash_01"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Smash_01_Miss"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              },
+              "fanAngle": 180.0,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.75
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Defender_None_Smash_Atk01",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.4
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 100.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV6",
+                "hitHaltTime": 0.05,
+                "hitHaltTimeScale": 0.01
+              },
+              "cameraShake": {
+                "shakeType": "HitVector",
+                "shakeRange": 0.3,
+                "shakeTime": 0.24,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "x": -1.0,
+                  "y": -1.0
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Smash_Atk01_Detect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Smash_Atk02",
+      "modifiers": {
+        "Smash_Atk02_Detect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Defender_None_Smash_Atk02"
+                  ]
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Defender_None_Smash_02"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Smash_02_Miss"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Defender_None_Smash_Atk02",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.6
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 100.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV6",
+                "hitHaltTime": 0.05,
+                "hitHaltTimeScale": 0.01
+              },
+              "cameraShake": {
+                "shakeType": "HitVector",
+                "shakeRange": 0.3,
+                "shakeTime": 0.24,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "x": -1.0,
+                  "y": -1.0
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Smash_Atk02_Detect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Smash_Alert",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Smash",
+          "modifierName": "Smash_Atk03_Collider",
+          "normalizeStart": 0.468,
+          "normalizeEnd": 0.55
+        }
+      ],
+      "modifiers": {
+        "Smash_Atk03_Collider": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Smash_Alert"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByRushToPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.5
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.12,
+            "shakeTime": 0.15,
+            "shakeDir": {
+              "y": 1.0
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Smash_Atk03",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.8
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV8"
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.36,
+                "shakeTime": 0.36,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": -1.0
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Smash_03"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Stamp",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Stamp"
+          ],
+          "startNormalizedTime": 0.15,
+          "endNormalizedTime": 0.35,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Swipe"
+          ],
+          "endNormalizedTime": 0.12,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "SelfAttackTarget",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+              "logic": "Lesser",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.5
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "SwipeTrigger"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Swipe_Arm_01",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmL02"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmR02"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Swipe_Arm_02",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmL03"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmR03"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Swipe_Arm_03",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmL04"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmR04"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Swipe_Arm_04",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmL05"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Arm"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ArmR05"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Die",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Die"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Die_Ground",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_WeakDust"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.75
+              }
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.36,
+            "shakeTime": 0.36,
+            "shakeDistance": 30.0,
+            "shakeDir": {
+              "y": -1.0
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_WeakDie_Ground",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_WeakDust"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Step_Left",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAnimatorInt",
+              "logic": "Equal",
+              "value": {
+                "isDynamic": false,
+                "fixedValue": 0
+              },
+              "parameter": "SkillID"
+            }
+          ],
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.06,
+            "shakeTime": 0.09,
+            "shakeDir": {
+              "y": -1.0
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Step"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "LeftFoot"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_Step_Right",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAnimatorInt",
+              "logic": "Equal",
+              "value": {
+                "isDynamic": false,
+                "fixedValue": 0
+              },
+              "parameter": "SkillID"
+            }
+          ],
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.06,
+            "shakeTime": 0.09,
+            "shakeDir": {
+              "y": -1.0
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Step"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "RightFoot"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_ReturnToBorn",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            902,
+            903
+          ],
+          "modifierName": "ReturnToBorn_State"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            902
+          ],
+          "modifierName": "ReturnToBorn_Disappear"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            903
+          ],
+          "modifierName": "ReturnToBorn_Appear"
+        }
+      ],
+      "modifiers": {
+        "ReturnToBorn_Disappear": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.StartDither",
+              "duration": 2.0
+            }
+          ]
+        },
+        "ReturnToBorn_Appear": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.StartDither",
+              "duration": 0.2,
+              "reverse": true
+            }
+          ]
+        },
+        "ReturnToBorn_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Defender_Weakness"
+            },
+            {
+              "$type": "MoleMole.Config.ResetAnimatorTrigger",
+              "triggerID": "WeakStartTrigger"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ReturnToBorn_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "ReturnToBorn_DenyLockOn"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_WeakTimer"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Defender_None_Weakness"
+            }
+          ]
+        },
+        "ReturnToBorn_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "ReturnToBorn_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_GearControl",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Weak_Start",
+            "BeHit",
+            "NormalIdle_PowerOff",
+            "NormalIdle_WeakLoop",
+            "PowerOff_WakeUp",
+            "Born"
+          ],
+          "modifierName": "GearControl_Stop"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Weak_End",
+            "Weak_EndAS",
+            "PowerOff_Warning",
+            "PowerOff_WarningAS"
+          ],
+          "modifierName": "GearControl_Active"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Smash",
+            "Stamp",
+            "Swipe",
+            "Whirl_BS",
+            "Whirl_Loop",
+            "Laser_BS",
+            "Laser_Aim"
+          ],
+          "modifierName": "GearControl_Skill"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle",
+            "Turn",
+            "NormalMove",
+            "Whirl_AS",
+            "Laser_Shoot"
+          ],
+          "modifierName": "GearControl_Normal"
+        }
+      ],
+      "modifiers": {
+        "GearControl_Stop": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "GearSpeed",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "GearControl_Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "GearSpeed",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ]
+        },
+        "GearControl_Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "GearSpeed",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ]
+        },
+        "GearControl_Skill": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "GearSpeed",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorFloat",
+          "floatID": "GearSpeed",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorFloat",
+          "floatID": "GearSpeed",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Defender_None_HeadControl",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle_PowerOff",
+            "PowerOff_WakeUp",
+            "Weak_Start",
+            "BeHit",
+            "Break",
+            "Whirl_BS",
+            "Whirl_Loop",
+            "Whirl_AS"
+          ],
+          "modifierName": "HeadControl_Disable"
+        }
+      ],
+      "modifiers": {
+        "HeadControl_Disable": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableHeadControl"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHeadControl",
+              "enable": true
+            }
+          ]
+        }
+      }
+    }
+  }
+]

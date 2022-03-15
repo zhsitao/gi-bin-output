@@ -1,0 +1,1852 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_Avatar_Blocking",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ButtonHoldChargeMixin",
+          "skillID": 20320,
+          "chargeTime": 5.0,
+          "secondChargeTime": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 999999.0
+          },
+          "OnBeginUncharged": [
+            {
+              "$type": "MoleMole.Config.SetSelfAttackTarget",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR15",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "turnToTargetImmediately": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "SkillID",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 80.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "PRIVATE_Blocking_IsHold",
+              "value": true
+            }
+          ],
+          "OnReleaseUncharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "PRIVATE_Blocking_IsHold"
+            }
+          ],
+          "OnBeginCharged": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DoSkill"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "PRIVATE_Blocking_IsHold"
+            }
+          ],
+          "chargeStateIDs": [
+            "Blocking_BS",
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_BS",
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ],
+          "modifierName": "Avatar_Blocking_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_BS",
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ],
+          "modifierName": "Avatar_Blocking_BackUp_ShortDis"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_BS",
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ],
+          "modifierName": "Avatar_Blocking_BackUp_LongDis"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_BS",
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ],
+          "modifierName": "Avatar_Blocking_Defense"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Blocking_Back",
+          "modifierName": "Avatar_Blocking_BackUp_Damage",
+          "normalizeEnd": 0.027
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_Loop",
+            "Blocking_Hit"
+          ],
+          "modifierName": "Avatar_Blocking_EnterCD"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Blocking_Bounce"
+          ],
+          "modifierName": "Avatar_Blocking_Bounce"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Blocking_Bounce",
+          "modifierName": "Avatar_Blocking_Invicible",
+          "normalizeEnd": 0.218
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Blocking_Back",
+          "modifierName": "Avatar_Blocking_Invicible",
+          "normalizeEnd": 0.218
+        }
+      ],
+      "abilitySpecials": {
+        "LevelEntity_SystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Blocking_Back_Value": {
+          "type": "float",
+          "dynamicValue": 22.5
+        },
+        "Blocking_Attack_Up": {
+          "type": "float",
+          "dynamicValue": 4000.0
+        }
+      },
+      "modifiers": {
+        "Avatar_Blocking_AddSkillInfo": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddAvatarSkillInfo",
+              "doOffStage": true,
+              "skillID": 20320
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveAvatarSkillInfo",
+              "doOffStage": true,
+              "skillID": 20320
+            }
+          ]
+        },
+        "Avatar_Blocking_ChangePlayMode": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.SwitchSkillIDMixin",
+              "priority": "Playmode",
+              "skillIndex": 1,
+              "skillID": 20320
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "Team",
+              "modifierName": "Avatar_Blocking_ChangePlayMode_OnTeam"
+            }
+          ]
+        },
+        "Avatar_Blocking_ChangePlayMode_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachActionToModifierMixin",
+              "onAdded": [
+                {
+                  "$type": "MoleMole.Config.ChangePlayMode",
+                  "doOffStage": true,
+                  "muteRemoteAction": true,
+                  "toPlayMode": "Blocking"
+                }
+              ],
+              "onRemoved": [
+                {
+                  "$type": "MoleMole.Config.ChangePlayMode",
+                  "doOffStage": true,
+                  "canBeHandledOnRecover": true,
+                  "muteRemoteAction": true
+                }
+              ]
+            }
+          ]
+        },
+        "Avatar_Blocking_Timer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Blocking_Timer",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Blocking_Timer",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_Blocking_BackUp_ShortDis": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Monster_BladeMaster_BeBlockAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Blocking_Timer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "LessAndEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Caster",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Blocking_IsPerfect",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetSelfAttackTarget",
+                  "target": "Target",
+                  "turnToTargetImmediately": true
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "Caster",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "DoSkill"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorInt",
+                  "target": "Caster",
+                  "intID": "SkillID",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 82.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAttackTags",
+                      "attackTags": [
+                        "Monster_BladeMaster_BeBlockAttack"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAttackTags",
+                      "attackTags": [
+                        "BladeWind_CanBeBlockBack"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Blocking_Timer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "LessAndEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Caster",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Blocking_IsPerfect",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetSelfAttackTarget",
+                  "target": "Target",
+                  "turnToTargetImmediately": true
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "Caster",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "DoSkill"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorInt",
+                  "target": "Caster",
+                  "intID": "SkillID",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 81.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAttackTags",
+                      "attackTags": [
+                        "Monster_BladeMaster_BeBlockAttack"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Blocking_Timer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "LessAndEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Target",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_PARRY_HIT",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "TargetOriginOwner",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_PARRY_HIT",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Avatar_Blocking_BackUp_LongDis": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "BladeWind_CanBeBlockBack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Caster",
+                  "key": "_ABILITY_Blocking_Timer",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "LessAndEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Caster",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_Blocking_IsPerfect",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "Caster",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "DoSkill"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorInt",
+                  "target": "Caster",
+                  "intID": "SkillID",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 81.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Blocking_Hit_Big"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "WeaponL",
+                    "attachPointTargetType": "Caster"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.KillSelf",
+                  "target": "Target"
+                },
+                {
+                  "$type": "MoleMole.Config.SetSelfAttackTarget",
+                  "otherTargets": {
+                    "$type": "MoleMole.Config.SelectTargetsByShape",
+                    "shapeName": "CircleR30",
+                    "campTargetType": "Enemy",
+                    "sizeRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    }
+                  },
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Monster"
+                      ]
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ANIMAL_ENTITY_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "turnToTargetImmediately": true
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerBullet",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Caster",
+                      "key": "_KAIRAGI_BLADEMASTER_BLADEAIR_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "bulletID": 420000016,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                      "GPCDOEONMAL": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 45.0
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerBullet",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Caster",
+                      "key": "_KAIRAGI_BLADEMASTER_BLADEAIR_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      }
+                    }
+                  ],
+                  "bulletID": 420000016,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                      "GPCDOEONMAL": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 55.0
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerBullet",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Caster",
+                      "key": "_KAIRAGI_BLADEMASTER_BLADEAIR_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 3.0
+                      }
+                    }
+                  ],
+                  "bulletID": 420000016,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                      "GPCDOEONMAL": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": -55.0
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerBullet",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Caster",
+                      "key": "_KAIRAGI_BLADEMASTER_BLADEAIR_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 4.0
+                      }
+                    }
+                  ],
+                  "bulletID": 420000016,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByDefault",
+                      "GPCDOEONMAL": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": -90.0
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Avatar_Blocking_BackUp_Damage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.3,
+                "shakeTime": 0.15,
+                "shakeDistance": 30.0,
+                "shakeDir": {
+                  "y": -1.0
+                },
+                "extension": {
+                  "baseOnCamera": true,
+                  "rangeAttenuation": 0.1
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_Weather"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_WitchTime"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_WitchTime"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Avatar_Blocking",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Blocking_Back_Value"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "enBreak": 1000.0,
+                    "bonusCritical": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 2.0
+                    },
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV5",
+                    "hitHaltTime": 0.2,
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.3,
+                    "shakeTime": 0.18,
+                    "shakeDistance": 30.0,
+                    "shakeDir": {
+                      "y": 1.0,
+                      "z": -1.0
+                    },
+                    "extension": {
+                      "baseCycle": 0.3,
+                      "cycleDamping": 0.0,
+                      "rangeAttenuation": 0.3
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_Bounce_AddLevel"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_Bounce_AddLevel"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_Bounce_AddLevel"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Blocking_Strike"
+              }
+            }
+          ]
+        },
+        "Avatar_Blocking_Weather": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWeatherMixin",
+              "type": "Skill",
+              "weatherPattern": "Weather_Kazuha_ElementalBurst",
+              "transDuration": 0.1,
+              "duration": 0.5
+            }
+          ]
+        },
+        "Avatar_Blocking_WitchTime": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.05
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.TriggerWitchTimeMixin",
+              "NHIBKFAJDFM": 0.2,
+              "duration": 0.1,
+              "openEffectPattern": "",
+              "closeEffectPattern": "",
+              "weatherPattern": "Weather_Kazuha_ElementalBurst"
+            }
+          ]
+        },
+        "Avatar_Blocking_EnterCD": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarSkillStart",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Blocking_IsPerfect",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "skillID": 20320,
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "costStaminaRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ]
+        },
+        "Avatar_Blocking_Bounce": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Avatar_Blocking_Bounce_AddLevel"
+            }
+          ]
+        },
+        "Avatar_Blocking_Defense": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Blocking_Timer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.0
+                }
+              ],
+              "modifierNameSteps": [
+                "Blocking_NoDamage",
+                "Blocking_LessDamage"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Blocking_IsPerfect",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Blocking_Ready"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "cameraParam": {
+                "forceRadius": 3.5,
+                "forceRadiusDuration": 10.0,
+                "shouldKeepForceRadius": true
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AvatarCameraParam",
+              "cameraParam": {
+                "forceRadius": 7.0,
+                "forceRadiusDuration": 1.0,
+                "shouldKeepForceRadius": true
+              }
+            }
+          ]
+        },
+        "Blocking_NoDamage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.GlobalMainShieldMixin",
+              "shieldType": "Avatar_Rock",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1000000.0
+              },
+              "shieldHP": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1000000.0
+              },
+              "costShieldRatioName": "",
+              "showDamageText": "INFO_ELITE_DEFENCE",
+              "amountByGetDamage": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1000000.0
+              },
+              "effectPattern": "",
+              "childShieldModifierName": "",
+              "healLimitedByLocalCreatureMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1000000.0
+              }
+            }
+          ],
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster",
+                    "Bullet",
+                    "Gadget"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Blocking_Hit_Big"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "WeaponL",
+                    "attachPointTargetType": "Caster"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Blocking_LessDamage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster",
+                    "Bullet",
+                    "Gadget"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Blocking_Hit_Small"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                    "attachPointName": "WeaponL",
+                    "attachPointTargetType": "Caster"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "Caster",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "DoSkill"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorInt",
+                  "target": "Caster",
+                  "intID": "SkillID",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 84.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Avatar_Blocking_Invicible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 11002
+            }
+          ]
+        },
+        "Avatar_Blocking_Bounce_AddLevel": {
+          "stacking": "MultipleRefreshNoRemove",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.0
+            }
+          },
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Blcoking_Buff_Level",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_Blocking_Buff_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Blcoking_Buff_Level",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "Buff_1",
+                "Buff_2",
+                "Buff_3"
+              ]
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack",
+                    "FallingAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_Blcoking_Buff_Level",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "MoreThan"
+                    }
+                  ],
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Blocking_AttackUp"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ABILITY_Blcoking_Buff_Level",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Buff_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageCountMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06",
+                "ExtraAttack",
+                "FallingAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "damageExtra": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Blocking_Attack_Up"
+              },
+              "bonusCritical": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "ICPMOIEDHKG": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Blocking_Stack_01"
+              }
+            }
+          ]
+        },
+        "Buff_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageCountMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06",
+                "ExtraAttack",
+                "FallingAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "damageExtra": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Blocking_Attack_Up"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  }
+                ]
+              },
+              "bonusCritical": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "ICPMOIEDHKG": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Blocking_Stack_02"
+              }
+            }
+          ]
+        },
+        "Buff_3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageCountMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06",
+                "ExtraAttack",
+                "FallingAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "damageExtra": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Blocking_Attack_Up"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  }
+                ]
+              },
+              "bonusCritical": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "ICPMOIEDHKG": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Blocking_Stack_03"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Avatar_Blocking_AddSkillInfo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Avatar_Blocking_ChangePlayMode"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Avatar_Blocking_Buff_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "LevelEntity_SystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_Avatar_Blocking_Blade",
+      "abilitySpecials": {
+        "LevelEntity_SystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Blocking_Blade_Value": {
+          "type": "float",
+          "dynamicValue": 7.5
+        }
+      },
+      "modifiers": {
+        "Blocking_Blade_Damage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Caster",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Avatar_Blocking_Blade",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Blocking_Blade_Value"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "enBreak": 1000.0,
+                    "bonusCritical": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 2.0
+                    },
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV5",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Samurai_Kairagi_BladeWind"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "LevelEntity_SystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Target",
+          "modifierName": "Blocking_Blade_Damage"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Hit_Electric_Default_Small"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          }
+        }
+      ]
+    }
+  }
+]

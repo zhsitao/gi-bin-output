@@ -1,0 +1,4208 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Drake_DeepSea_DieWithElectric",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpToFit_BS",
+            "JumpToFit_During",
+            "FitAttack_BS",
+            "FitAttack_Loop"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_DoSkillCheckPartner"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Dying"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_FreezePos"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            2
+          ],
+          "modifierName": "Drake_DeepSea_Close_LevelTickAlert"
+        }
+      ],
+      "abilitySpecials": {
+        "dyingDuring": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "backLifeLine1": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "backLifeLine2": {
+          "type": "float",
+          "dynamicValue": 0.4
+        },
+        "backLifeLine3": {
+          "type": "float",
+          "dynamicValue": 0.3
+        },
+        "backLifeLine4": {
+          "type": "float",
+          "dynamicValue": 0.2
+        }
+      },
+      "modifiers": {
+        "Drake_DeepSea_Close_LevelTickAlert": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_WQ_DRAKE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "luaCallType": "FromGroup",
+              "funcName": "SLC_Monster_In_Battle",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_FreezePos": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.RigidBodyFreezeMixin"
+            }
+          ]
+        },
+        "Monster_Drake_End_SPAttack": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "PartnerDying"
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_DoSkillCheckPartner": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_IN_SP_ATTACK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_IN_SP_ATTACK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_DieWithElectric": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToHPPercentMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.012
+                }
+              ],
+              "modifierNameSteps": [
+                "Drake_DeepSea_DieWithElectricEmpty",
+                "Drake_DeepSea_DieWithElectric"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_HpThresholdRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.01
+            }
+          },
+          "state": "Limbo"
+        },
+        "Drake_DeepSea_DieWithElectricEmpty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_DeepSea_DieWithElectric": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_Improve_Timer"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_DieWithElectricTimer"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Limbo_Ghost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "IsGhostToEnemy"
+        },
+        "Monster_Drake_DeepSea_Ice_Reminder_Delay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_REMINDER_ING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_ELECTRIC_DYING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "id": 400380101
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ELECTRIC",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_REMINDER_ING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Monster_Drake_DeepSea_DieWithElectricTimer": {
+          "stacking": "RefreshUniqueDurability",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "dyingDuring"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1000.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_DRAKE_DEEPSEA_ELECTRIC_DYING",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Drake_DeepSea_Ice_DieEmpty",
+                "Drake_DeepSea_Ice_DieTruly"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ChargeBarMixin",
+              "chargeBarIconID": 3,
+              "initialValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            }
+          ],
+          "state": "DenyLockOn",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ELECTRIC",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IN_SP_ATTACK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "Monster_Drake_End_SPAttack"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Dying",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "GoDying"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Limbo",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ELECTRIC",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_ICE_DYING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Ice_Reminder_Delay"
+            },
+            {
+              "$type": "MoleMole.Config.SetUICombatBarSpark",
+              "enable": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Monster_Drake_DeepSea_Limbo_Ghost"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Dying"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Limbo"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ELECTRIC",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_DEEPSEA_ICE_DYING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine3"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine4"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetUICombatBarSpark"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ELECTRIC",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_REMINDER_ING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddChargeBarValue",
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 20.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "dyingDuring"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Div"
+                  }
+                ]
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkIntervalIsFixedUpdate": true,
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DyingReconnect"
+              }
+            }
+          ],
+          "onChangeAuthority": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DyingReconnect"
+              }
+            }
+          ]
+        },
+        "Drake_DeepSea_Ice_DieEmpty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_DeepSea_Ice_DieTruly": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Ice_DieTruly_Action"
+            }
+          ],
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Ice_DieTruly_Action"
+            }
+          ],
+          "onChangeAuthority": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Ice_DieTruly_Action"
+            }
+          ]
+        },
+        "Drake_DeepSea_Ice_DieTruly_Action": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_DieWithElectric"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_DRAKE_BACKTOLIFE_TIME",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_TIME",
+              "overrideMapKey": "dyingDuring"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE1",
+              "overrideMapKey": "backLifeLine1"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE2",
+              "overrideMapKey": "backLifeLine2"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE3",
+              "overrideMapKey": "backLifeLine3"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE4",
+              "overrideMapKey": "backLifeLine4"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Drake_DeepSea_DieWithElectric"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.SetUICombatBarSpark"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Drake_DeepSea_Electric_DieWithIce",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpToFit_BS",
+            "JumpToFit_During",
+            "FitAttack_BS",
+            "FitAttack_Loop"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_DoSkillCheckPartner"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "Dying"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_FreezePos"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            2
+          ],
+          "modifierName": "Monster_Drake_DeepSea_InBattle_LinkEff"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            2
+          ],
+          "modifierName": "Drake_DeepSea_Close_LevelTickAlert"
+        }
+      ],
+      "abilitySpecials": {
+        "dyingDuring": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "backLifeLine1": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "backLifeLine2": {
+          "type": "float",
+          "dynamicValue": 0.4
+        },
+        "backLifeLine3": {
+          "type": "float",
+          "dynamicValue": 0.3
+        },
+        "backLifeLine4": {
+          "type": "float",
+          "dynamicValue": 0.2
+        }
+      },
+      "modifiers": {
+        "Drake_DeepSea_Close_LevelTickAlert": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_WQ_DRAKE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "luaCallType": "FromGroup",
+              "funcName": "SLC_Monster_In_Battle",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_InBattle_LinkEff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_EffForSure"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_FreezePos": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.RigidBodyFreezeMixin"
+            }
+          ]
+        },
+        "Monster_Drake_End_SPAttack": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "PartnerDying"
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_DoSkillCheckPartner": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_IN_SP_ATTACK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_IN_SP_ATTACK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Electric_DieWithIce_Eff_ReconnectDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Electric_DieWithIce_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Drake_DeepSea_LifeLink"
+              },
+              "setSelfAsEffectPluginTarget": true
+            }
+          ],
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff_ReconnectDelay"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff"
+            }
+          ],
+          "onChangeAuthority": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff_ReconnectDelay"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Electric_DieWithIce_EffForSure": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff"
+                }
+              ]
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Electric_DieWithIce": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToHPPercentMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.013
+                }
+              ],
+              "modifierNameSteps": [
+                "Drake_DeepSea_DieWithIceEmpty",
+                "Drake_DeepSea_DieWithIceHandler"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_HpThresholdRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.01
+            }
+          },
+          "state": "Limbo"
+        },
+        "Drake_DeepSea_DieWithIceEmpty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_DeepSea_DieWithIceHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_Improve_Timer"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Drake_DeepSea_Electric_DieWithIceTimer"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Limbo_Ghost": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "IsGhostToEnemy"
+        },
+        "Monster_Drake_DeepSea_Electric_Reminder_Delay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_REMINDER_ING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_ICE_DYING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "id": 400380101
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_REMINDER_ING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Drake_DeepSea_Electric_DieWithIceTimer": {
+          "stacking": "RefreshUniqueDurability",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "dyingDuring"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1000.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_DRAKE_DEEPSEA_ICE_DYING",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Drake_DeepSea_Electric_DieEmpty",
+                "Drake_DeepSea_Electric_DieTruly"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ChargeBarMixin",
+              "chargeBarIconID": 3,
+              "initialValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              }
+            }
+          ],
+          "state": "DenyLockOn",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IN_SP_ATTACK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "Monster_Drake_End_SPAttack"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Dying",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Limbo",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "GoDying"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_DYING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_Reminder_Delay"
+            },
+            {
+              "$type": "MoleMole.Config.SetUICombatBarSpark",
+              "enable": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Monster_Drake_DeepSea_Limbo_Ghost"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Dying"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Limbo"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_DYING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine1"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine2"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine3"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_HEAL_TIMES",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                }
+              ],
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "backLifeLine4"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetUICombatBarSpark"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_REMINDER_ING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddChargeBarValue",
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 20.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "dyingDuring"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Div"
+                  }
+                ]
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkIntervalIsFixedUpdate": true,
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DyingReconnect"
+              }
+            }
+          ],
+          "onChangeAuthority": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DyingReconnect"
+              }
+            }
+          ]
+        },
+        "Drake_DeepSea_Electric_DieEmpty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_DeepSea_Electric_DieTruly": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Electric_DieTruly_Action"
+            }
+          ],
+          "onReconnect": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Electric_DieTruly_Action"
+            }
+          ],
+          "onChangeAuthority": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Drake_DeepSea_Electric_DieTruly_Action"
+            }
+          ]
+        },
+        "Drake_DeepSea_Electric_DieTruly_Action": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_DRAKE_BACKTOLIFE_TIME",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_TIME",
+              "overrideMapKey": "dyingDuring"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE1",
+              "overrideMapKey": "backLifeLine1"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE2",
+              "overrideMapKey": "backLifeLine2"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE3",
+              "overrideMapKey": "backLifeLine3"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_DRAKE_BACKTOLIFE_LINE4",
+              "overrideMapKey": "backLifeLine4"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.SetUICombatBarSpark"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "Monster_Drake_DeepSea_Electric_DieWithIce_Eff"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Drake_DeepSea_BlackBall",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_BLACK_BALL_STATE",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "BlackBall_Empty",
+            "BlackBall_BeEated"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Monster_Drake_DeepSea_Blackball_RemoveDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_BlackBall"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_BlackBall": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Drake_Level_BlackBall"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_IS_DRAKE_BLACKBALL",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "BlackBall_Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_BlackBall_CheckClean": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_BLACKBALL_DYING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "BlackBall_KillSelf_Delay"
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "modifierName": "Monster_Drake_DeepSea_BlackBall"
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Drake_Level_BlackBall_BePurified"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "BlackBall_BeEated": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "BlackBall_KillSelf_Delay"
+            }
+          ]
+        },
+        "BlackBall_KillSelf_Delay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_BLACKBALL_DYING",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Drake_DeepSea_BlackBall"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Drake_BlackBall_CheckClean"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Drake_DeepSea_Blackball_RemoveDelay"
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Drake_Level_BlackBall_BeEated"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Drake_DeepSea_EatBlackBall",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle",
+            "Walk_BS",
+            "Walk_AS",
+            "NormalMove",
+            "Turn"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_CanEatBall"
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackTraceToPosMixin",
+          "steerStateIDs": [
+            "Improve"
+          ],
+          "startNormalizedTime": 0.06,
+          "endNormalizedTime": 0.14,
+          "angularSpeed": 720.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0,
+          "globalPosKey": "_DRAKE_EAT_BLACKBALL_POS"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            2
+          ],
+          "modifierName": "Monster_Drake_DeepSea_CheckAffix"
+        }
+      ],
+      "modifiers": {
+        "Drake_DeepSea_RemoveImproveDying_Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Drake_DeepSea_RemoveImproveDying": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_Improve_Timer"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_CheckAffix": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Monster_Drake_DeepSea_CheckBlackBall_Handler"
+            },
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "canBeHandledOnRecover": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_DRAKE_DEEPSEA_CHALLENGE_LEVEL",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_IS_WQ_DRAKE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "skillEliteSetID": 3
+            },
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "canBeHandledOnRecover": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_IN_TOWER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "skillEliteSetID": 4
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_CheckBlackBall_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "AllExceptSelf",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_BLACKBALL",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_BLACKBALL_DYING",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_DRAKE_CAN_NOT_EATBALL",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "forceByCaster": true,
+                      "compareType": "NoneOrEqual"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_DRAKE_EATBALL_IN_CD",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "forceByCaster": true,
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetAnimatorTrigger",
+                      "triggerID": {
+                        "isDynamic": false,
+                        "fixedValue": "EatBlackBall"
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Drake_Set_BlackBall_Eated"
+                    },
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "target": "Target",
+                      "key": "_DRAKE_EAT_BLACKBALL_POS",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget"
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "modifierName": "Drake_EatBall_CDTimer"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "Drake_Set_BlackBall_Eated": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_BLACK_BALL_STATE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "BlackBall_BeEated_EffectDelay"
+            }
+          ]
+        },
+        "BlackBall_BeEated_EffectDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.83
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Drake_DeepSea_BlackBall"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_CanEatBall": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_CAN_NOT_EATBALL",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_CAN_NOT_EATBALL",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Monster_Drake_DeepSea_Improve_Timer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 15.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ChargeBarMixin",
+              "chargeBarIconID": 2,
+              "initialValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            }
+          ],
+          "properties": {
+            "Actor_SubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.3
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD",
+              "value": 1.5
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Drake_DeepSea_Improve"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "key": "_CLEAN_IMPROVE_TIMES",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Drake_DeepSea_ImpactDamage"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_WQ_DRAKE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": -1.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "height": 5.0,
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 15.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.8
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "strikeType": "Blunt",
+                        "enBreak": 60.0
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV2"
+                      },
+                      "canBeModifiedBy": "OriginOwner"
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": -1.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "height": 5.0,
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 15.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 1.5
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "strikeType": "Blunt",
+                        "enBreak": 60.0
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV2"
+                      },
+                      "canBeModifiedBy": "OriginOwner"
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD",
+              "value": 1.5
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddChargeBarValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "key": "_CLEAN_IMPROVE_TIMES",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_CLEAN_IMPROVE_TIMES",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ],
+                  "modifierName": "UNIQUE_Monster_Drake_DeepSea_Improve_Timer"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Drake_DeepSea_ImpactDamage"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_WQ_DRAKE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": -1.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "height": 5.0,
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 15.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.8
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "strikeType": "Blunt",
+                        "enBreak": 60.0
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV2"
+                      },
+                      "canBeModifiedBy": "OriginOwner"
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": -1.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "height": 5.0,
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 15.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 1.5
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "strikeType": "Blunt",
+                        "enBreak": 60.0
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV2"
+                      },
+                      "canBeModifiedBy": "OriginOwner"
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ]
+        },
+        "Drake_EatBall_CDTimer": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 20.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_EATBALL_IN_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_EATBALL_IN_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Monster_Drake_DeepSea_Improve_Timer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Drake_DeepSea_JumpWall_JumpToStart_Electric_SP",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpWall_Idle",
+            "JumpWall_Attack"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_Boss_JumpWallMuteForce"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpWall_JumpToStart_BS"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_JumpWall_JumpToStart_SetTargetPos"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpWall_JumpToStart_AS"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_JumpWall_CheckWallState"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpWall_BS"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_JumpWall_ShowReminder_Delay"
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackTraceToPosMixin",
+          "steerStateIDs": [
+            "JumpWall_JumpToStart_AS"
+          ],
+          "startNormalizedTime": 0.27,
+          "angularSpeed": 500.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0,
+          "globalPosKey": "_DRAKE_DEEPSEA_ELECTRIC_JUMPWALL_TURN_POS"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "JumpWall_WeakBS"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_RemoveWallAttackTimer"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle",
+            "Walk_BS",
+            "Walk_AS",
+            "NormalMove",
+            "Turn"
+          ],
+          "modifierName": "Monster_Drake_DeepSea_CanFit"
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "JumpWall_WeakBS"
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Watcher_82122_FallDown_Trigger"
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "Watcher_82122_FallDown_Trigger": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.33
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.DoWatcherSystemAction",
+              "watcherId": 82122,
+              "inThreatListOnly": true
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_CanFit": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllPlayerAvatars",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_CanFit_AvatarMark"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "AllPlayerAvatars",
+              "modifierName": "UNIQUE_Monster_Drake_DeepSea_CanFit_AvatarMark"
+            }
+          ]
+        },
+        "UNIQUE_Monster_Drake_DeepSea_CanFit_AvatarMark": {
+          "stacking": "RefreshUniqueDurability",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_NO_WEAK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_NO_WEAK",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_JumpWall_ShowReminder_Delay": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Drake_DeepSea_JumpWall_ShowReminder"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_JumpWall_ShowReminder": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "id": 50050103
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Boss_JumpWallMuteForce": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.VelocityForceMixin",
+              "includeForces": [
+                "FixedRushMoveType"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ExcludeGravityMixin"
+            },
+            {
+              "$type": "MoleMole.Config.AttachActionToModifierMixin",
+              "onAdded": [
+                {
+                  "$type": "MoleMole.Config.EnablePushColliderName",
+                  "pushColliderNames": [
+                    "RockPush"
+                  ]
+                }
+              ],
+              "onRemoved": [
+                {
+                  "$type": "MoleMole.Config.EnablePushColliderName",
+                  "pushColliderNames": [
+                    "RockPush"
+                  ],
+                  "setEnable": true
+                }
+              ]
+            }
+          ],
+          "state": "DenyLockOn",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ResetAIAttackTarget"
+            },
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_IN_TOWER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "luaCallType": "FromGroup",
+              "funcName": "SLC_Deny_Lock_On",
+              "paramNum": 1,
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_DEEPSEA_IN_TOWER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "luaCallType": "FromGroup",
+              "funcName": "SLC_Deny_Lock_On",
+              "paramNum": 1,
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Electric_OnWallState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_ON_WALL",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_IS_DRAKE_DEEPSEA_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_ON_WALL",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Drake_DeepSea_Ice_GoNoFitPose": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElectricOnWall",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElectricOnWall"
+            }
+          ]
+        },
+        "Drake_DeepSea_Ice_BackToNormalPose": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ElectricOnWall"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_RemoveWallAttackTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Drake_DeepSea_Boss_OnWallTimer"
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_Boss_OnWallTimer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 20.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "JumpWallAttackOver"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "JumpWallAttackOver",
+              "value": true
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_JumpWall_CheckWallState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Wall1_State",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_TARGET_UPWALL_NUM",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "WallAlredyBroken"
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Wall2_State",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_TARGET_UPWALL_NUM",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "WallAlredyBroken"
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Wall3_State",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_TARGET_UPWALL_NUM",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "WallAlredyBroken"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_JumpWall_JumpToStart_CloseCollider": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_Alert"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider_Alert"
+              ],
+              "setEnable": true
+            }
+          ]
+        },
+        "SetDrakeDeepseaElectric_Target_ToGadget": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 8.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_TARGET",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllPlayerAvatars",
+              "modifierName": "SetDrakeDeepseaElectric_ResetTarget_ToGadgetAvatar"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_TARGET",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "AllPlayerAvatars",
+              "modifierName": "SetDrakeDeepseaElectric_Target_ToGadgetAvatar"
+            }
+          ]
+        },
+        "SetDrakeDeepseaElectric_ResetTarget_ToGadgetAvatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_TARGET",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "SetDrakeDeepseaElectric_Target_ToGadgetAvatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DRAKE_DEEPSEA_ELECTRIC_TARGET",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Drake_DeepSea_JumpWall_JumpToStart_SetTargetPos": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_WALL_1_READY",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_WALL_2_READY",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DRAKE_WALL_3_READY",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "AllExceptSelf",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_WALL_1",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_DRAKE_WALL_1_READY",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "AllExceptSelf",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_WALL_2",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_DRAKE_WALL_2_READY",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR200",
+                "campTargetType": "AllExceptSelf",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_WALL_3",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_DRAKE_WALL_3_READY",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_Wall1_State",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_DRAKE_WALL_1_READY",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "key": "_DRAKE_DEEPSEA_JUMPWALL_STARTPOS",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                    "actionPointType": "StandbyPoint",
+                    "selectType": {
+                      "$type": "MoleMole.Config.SelectActionPointByID",
+                      "actionPointID": 700500003
+                    }
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "key": "_DRAKE_DEEPSEA_ELECTRIC_JUMPWALL_TURN_POS",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                    "actionPointType": "StandbyPoint",
+                    "selectType": {
+                      "$type": "MoleMole.Config.SelectActionPointByID",
+                      "actionPointID": 700500006
+                    }
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_DRAKE_TARGET_UPWALL_NUM",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_Wall2_State",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_DRAKE_WALL_2_READY",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "key": "_DRAKE_DEEPSEA_JUMPWALL_STARTPOS",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                        "actionPointType": "StandbyPoint",
+                        "selectType": {
+                          "$type": "MoleMole.Config.SelectActionPointByID",
+                          "actionPointID": 700500004
+                        }
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "key": "_DRAKE_DEEPSEA_ELECTRIC_JUMPWALL_TURN_POS",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                        "actionPointType": "StandbyPoint",
+                        "selectType": {
+                          "$type": "MoleMole.Config.SelectActionPointByID",
+                          "actionPointID": 700500007
+                        }
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.SetGlobalValue",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      },
+                      "key": "_DRAKE_TARGET_UPWALL_NUM",
+                      "maxValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "minValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "key": "_Wall3_State",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "compareType": "NoneOrEqual"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "key": "_DRAKE_WALL_3_READY",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 1.0
+                          }
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.SetGlobalPos",
+                          "key": "_DRAKE_DEEPSEA_JUMPWALL_STARTPOS",
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                            "actionPointType": "StandbyPoint",
+                            "selectType": {
+                              "$type": "MoleMole.Config.SelectActionPointByID",
+                              "actionPointID": 700500005
+                            }
+                          },
+                          "setTarget": false
+                        },
+                        {
+                          "$type": "MoleMole.Config.SetGlobalPos",
+                          "key": "_DRAKE_DEEPSEA_ELECTRIC_JUMPWALL_TURN_POS",
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByActionPoint",
+                            "actionPointType": "StandbyPoint",
+                            "selectType": {
+                              "$type": "MoleMole.Config.SelectActionPointByID",
+                              "actionPointID": 700500008
+                            }
+                          },
+                          "setTarget": false
+                        },
+                        {
+                          "$type": "MoleMole.Config.SetGlobalValue",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 3.0
+                          },
+                          "key": "_DRAKE_TARGET_UPWALL_NUM",
+                          "maxValue": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "minValue": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.SetAnimatorTrigger",
+                          "triggerID": {
+                            "isDynamic": false,
+                            "fixedValue": "WallAlredyBroken"
+                          }
+                        },
+                        {
+                          "$type": "MoleMole.Config.SetGlobalValue",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 1.0
+                          },
+                          "key": "_ALL_WALL_BROKE",
+                          "maxValue": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "minValue": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.TurnDirectionToPos",
+              "toPos": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_DRAKE_DEEPSEA_JUMPWALL_STARTPOS",
+                "directionKey": ""
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Drake_DeepSea_JumpDust"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.FixedMonsterRushMove",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "positionKey": "_DRAKE_DEEPSEA_JUMPWALL_STARTPOS",
+            "directionKey": ""
+          },
+          "timeRange": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.96
+          },
+          "maxRange": -1.0,
+          "animatorStateIDs": [
+            "JumpWall_JumpToStart_AS"
+          ],
+          "overrideMoveCollider": "",
+          "isInAir": true,
+          "DHHGNGKDHBJ": true
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Drake_DeepSea_JumpWall_JumpToStart_CloseCollider"
+        }
+      ]
+    }
+  }
+]

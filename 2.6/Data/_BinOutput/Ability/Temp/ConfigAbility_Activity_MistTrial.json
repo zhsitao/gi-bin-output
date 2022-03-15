@@ -1,0 +1,4023 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_FallingBuff",
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.06
+        },
+        "Value_BuffCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_OnceCount": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Value_MaxCount": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Value_Time": {
+          "type": "float",
+          "dynamicValue": 30.0
+        },
+        "Temp_Count": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarHandle": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "FallingAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Caster",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_Ability_SuperTrial_FallingBuff_AttackCount",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Value_OnceCount"
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "doOffStage": true,
+                  "modifierName": "CheckCount"
+                }
+              ]
+            }
+          ]
+        },
+        "CheckCount": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_Ability_SuperTrial_FallingBuff_AttackCount",
+              "overrideMapKey": "Temp_Count"
+            },
+            {
+              "$type": "MoleMole.Config.Repeated",
+              "repeatTimes": {
+                "isDynamic": true,
+                "dynamicKey": "Temp_Count"
+              },
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_Ability_SuperTrial_FallingBuff_BuffCount",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Value_MaxCount"
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "target": "Caster",
+              "doOffStage": true,
+              "globalValueKey": "_Ability_SuperTrial_FallingBuff_BuffCount",
+              "overrideMapKey": "Value_BuffCount"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarBuff"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarBuff"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarBuff_AvatarTimer"
+            },
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "key": "_Ability_SuperTrial_FallingBuff_AttackCount"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_Time"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Value_AttackRate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Value_BuffCount"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ShowBuffEffect"
+            }
+          ]
+        },
+        "ShowBuffEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_SuperTrial_Buff"
+              }
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarBuff_AvatarTimer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_Time"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "doOffStage": true,
+              "key": "_Ability_SuperTrial_FallingBuff_BuffCount"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_FallingBuff_AvatarHandle"
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.ClearGlobalValue",
+          "doOffStage": true,
+          "key": "_Ability_SuperTrial_FallingBuff_BuffCount"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_FallingAreaAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.CurLocalAvatarMixin",
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_FallingAreaAttack_Avatar"
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AreaAttackCD": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 1.2
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_FallingAreaAttack_Avatar": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "FallingAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_DamageRate"
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_ShieldDamageUp",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "_Ability_SuperTrial_ShieldDamageUp_Check",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_NoBuff",
+            "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_HasBuff"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_Ability_SuperTrial_ShieldDamageUp_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_Ability_SuperTrial_ShieldDamageUp_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_NoBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_HasBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_AttackRate"
+              }
+            }
+          ],
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ShowBuffEffect"
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "ShowBuffEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_SuperTrial_Buff"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_ShieldDamageUp_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_GainShieldAreaAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByGainCrystalSeedMixin",
+          "elementTypes": [
+            "Fire",
+            "Water",
+            "Electric",
+            "Ice"
+          ],
+          "actions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_SuperTrial_GainShieldAttack_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "TriggerGainShieldAreaAttack"
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AreaAttackCD": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 4.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "TriggerGainShieldAreaAttack": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_GainShieldAttack_TeamCD"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Stages_GainWave_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Applier",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageRate"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_GainShieldAttack_TeamCD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AreaAttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_SuperTrial_GainShieldAttack_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_SuperTrial_GainShieldAttack_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_HealingDamageUp",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+          "onEvent": "HP",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetHPRatio",
+              "logic": "GreaterOrEqual",
+              "HPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_HpRate"
+              }
+            }
+          ],
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_HealingDamageUp_Buff"
+        }
+      ],
+      "abilitySpecials": {
+        "Value_HpRate": {
+          "type": "float",
+          "dynamicValue": 0.9
+        },
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_HealingDamageUp_Buff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_AttackRate"
+              }
+            }
+          ],
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ShowBuffEffect"
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "ShowBuffEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_SuperTrial_Buff"
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_HealingReviveElemEnergy",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByEventMixin",
+          "type": "Current",
+          "onEvent": "HPUp",
+          "actions": [
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_SuperTrial_HealingReviveElemEnergy_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_ReviveElemEnergy"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_HealingReviveElemEnergy_TeamCD"
+            }
+          ],
+          "costEnergyDeltaName": ""
+        }
+      ],
+      "abilitySpecials": {
+        "Value_ReviveElemEnergy": {
+          "type": "float",
+          "dynamicValue": 3.0
+        },
+        "Value_CD": {
+          "type": "float",
+          "dynamicValue": 1.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_HealingReviveElemEnergy_TeamCD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_CD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_SuperTrial_HealingReviveElemEnergy_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_SuperTrial_HealingReviveElemEnergy_CD"
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_ElementMasteryUp",
+      "abilitySpecials": {
+        "Value_Delta": {
+          "type": "float",
+          "dynamicValue": 300.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_ElementMasteryUp": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Delta"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_ElementMasteryUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_ElementReactionAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+          "entityTypes": [
+            "Monster"
+          ],
+          "reactionTypes": [
+            "Explode",
+            "Stream",
+            "Burning",
+            "Melt",
+            "Freeze",
+            "Shock",
+            "Superconductor",
+            "SwirlFire",
+            "SwirlWater",
+            "SwirlElectric",
+            "SwirlIce",
+            "CrystallizeWater",
+            "CrystallizeElectric",
+            "CrystallizeIce",
+            "CrystallizeFire"
+          ],
+          "actions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Other",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_SuperTrial_ElementReactionAttack_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "modifierName": "TriggerElementReactionAttack"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_ElementReactionAttack_TeamCD"
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 4.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_AreaAttackCD": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "TriggerElementReactionAttack": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Stages_GainWave_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Applier",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageRate"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_ElementReactionAttack_TeamCD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AreaAttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_SuperTrial_ElementReactionAttack_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_SuperTrial_ElementReactionAttack_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_MeleeDamageUp",
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.75
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_MeleeDamageUp_Buff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06",
+                "ExtraAttack",
+                "FallingAttack"
+              ],
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_AttackRate"
+              }
+            }
+          ],
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAvatarWeaponType",
+              "weaponTypes": [
+                "WEAPON_CLAYMORE",
+                "WEAPON_POLE",
+                "WEAPON_SWORD_ONE_HAND"
+              ]
+            }
+          ],
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_MeleeDamageUp_Buff"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_MeleeAreaAttack",
+      "abilitySpecials": {
+        "Value_AreaAttackCD": {
+          "type": "float",
+          "dynamicValue": 2.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 4.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_MeleeAreaAttack_Avatar": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_SuperTrial_MeleeAreaAttack_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "CurLocalAvatar",
+                  "modifierName": "TriggerMeleeAreaAttack"
+                }
+              ]
+            }
+          ]
+        },
+        "TriggerMeleeAreaAttack": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_MeleeAreaAttack_TeamCD"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Stages_GainWave_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Applier",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageRate"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_MeleeAreaAttack_TeamCD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AreaAttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_SuperTrial_MeleeAreaAttack_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_SuperTrial_MeleeAreaAttack_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByAvatarWeaponType",
+              "weaponTypes": [
+                "WEAPON_CLAYMORE",
+                "WEAPON_POLE",
+                "WEAPON_SWORD_ONE_HAND"
+              ]
+            }
+          ],
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_MeleeAreaAttack_Avatar"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RangeNoEnemyAttackUp",
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.75
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_HasEnemy",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR5",
+                "campTargetType": "Enemy",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_HasEnemy",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_HasEnemy",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_AvatarBuff"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_AvatarBuff"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_AvatarBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_AttackRate"
+              }
+            }
+          ],
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ShowBuffEffect"
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "ShowBuffEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Activity_SuperTrial_Buff"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyAttackUp_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction",
+      "abilitySpecials": {
+        "Value_SpeedRate": {
+          "type": "float",
+          "dynamicValue": 0.2
+        },
+        "Value_CostStaminaRatio": {
+          "type": "float",
+          "dynamicValue": -0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_HasEnemy",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR5",
+                "campTargetType": "Enemy",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_HasEnemy",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_HasEnemy",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "forceByCaster": true,
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_AvatarBuff_01"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_AvatarBuff_01"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_AvatarBuff_01": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "SprintBS",
+                "Sprint",
+                "LiquidStrike_BS",
+                "LiquidStrike_BS1",
+                "LiquidStrike_Move",
+                "LiquidStrike_Stand"
+              ],
+              "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_AvatarBuff_02"
+            }
+          ],
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_SpeedRate"
+            }
+          },
+          "state": "SpeedUp",
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_AvatarBuff_02": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CostStaminaRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_CostStaminaRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RangeNoEnemyStaminaReduction_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomRevive",
+      "abilitySpecials": {
+        "Value_Hp": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_RandomRoomRoomRevive": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ReviveDeadAvatar",
+              "target": "AllPlayerAvatars",
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_Hp"
+              },
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "target": "CurTeamAvatars",
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_Hp"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "OnAdded:ActivityAbility_SuperTrial_RandomRoomRevive!!!!!!!!!!!"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RandomRoomRoomRevive"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomAttackUp",
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "ActivityAbility_SuperTrial_RandomRoomAttackUp": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRate"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Caster",
+          "doOffStage": true,
+          "modifierName": "ActivityAbility_SuperTrial_RandomRoomAttackUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomSpeedUp",
+      "abilitySpecials": {
+        "Value_SpeedRate": {
+          "type": "float",
+          "dynamicValue": 0.2
+        }
+      },
+      "modifiers": {
+        "ActivityAbility_SuperTrial_RandomRoomSpeedUp": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_SpeedRate"
+            }
+          },
+          "state": "SpeedUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Caster",
+          "doOffStage": true,
+          "modifierName": "ActivityAbility_SuperTrial_RandomRoomSpeedUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomRevive_Copy",
+      "abilitySpecials": {
+        "Value_Hp": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_SuperTrial_RandomRoomRoomRevive": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ReviveDeadAvatar",
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_Hp"
+              },
+              "cdRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "target": "CurTeamAvatars",
+              "amountByCasterMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_Hp"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "OnAdded:ActivityAbility_SuperTrial_RandomRoomRevive!!!!!!!!!!!"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_SuperTrial_RandomRoomRoomRevive"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomAttackUp_Copy",
+      "abilitySpecials": {
+        "Value_AttackRate": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "ActivityAbility_SuperTrial_RandomRoomAttackUp": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRate"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Caster",
+          "doOffStage": true,
+          "modifierName": "ActivityAbility_SuperTrial_RandomRoomAttackUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_SuperTrial_RandomRoomSpeedUp_Copy",
+      "abilitySpecials": {
+        "Value_SpeedRate": {
+          "type": "float",
+          "dynamicValue": 0.2
+        }
+      },
+      "modifiers": {
+        "ActivityAbility_SuperTrial_RandomRoomSpeedUp": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_SpeedRate"
+            }
+          },
+          "state": "SpeedUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Caster",
+          "doOffStage": true,
+          "modifierName": "ActivityAbility_SuperTrial_RandomRoomSpeedUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_1",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_Level1_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level1_Handler_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level1_Handler_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level1_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Override_Ratio"
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasAbilityState",
+                  "abilityState": "ElementFrozen"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_Level1_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_2",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              },
+              {
+                "$type": "MoleMole.Config.RemoveModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              },
+              {
+                "$type": "MoleMole.Config.AttachModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              },
+              {
+                "$type": "MoleMole.Config.RemoveModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              },
+              {
+                "$type": "MoleMole.Config.AttachModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              },
+              {
+                "$type": "MoleMole.Config.RemoveModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              },
+              {
+                "$type": "MoleMole.Config.AttachModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              },
+              {
+                "$type": "MoleMole.Config.RemoveModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              },
+              {
+                "$type": "MoleMole.Config.AttachModifier",
+                "target": "CurTeamAvatars",
+                "doOffStage": true,
+                "modifierName": "MistTrial_Level2_ShockDamageUp"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CD_Interval": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CD_Minus": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Energy": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_Level2_CdMinus_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level2_CdMinus_Handler_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level2_CdMinus_Handler_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level2_CdMinus_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Shock"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_MistTrial_CdMinus_OnTeam"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_MistTrial_CdMinus_OnTeam": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CD_Interval"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Energy"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ModifyAvatarSkillCD",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "skillSlot": [
+                5
+              ],
+              "cdDelta": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "CD_Minus"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "MistTrial_Level2_ShockDamageUp": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemReactElectricDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_Level2_CdMinus_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_3",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "System_Damage": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CD_Interval": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_Level3_Melt_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level3_Melt_Handler_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level3_Melt_Handler_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level3_Melt_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Melt",
+                "Stream"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Team",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Melt_OnTeam"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_MistTrial_Melt_OnTeam": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CD_Interval"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_EnergyDisk_ElementalBurst_Wave_R40"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "CurLocalAvatar",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "System_Damage"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Override_Ratio"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true,
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "System_Damage",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_Level3_Melt_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_4",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_Level4_Reaction_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level4_Reaction_Handler_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level4_Reaction_Handler_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level4_Reaction_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Explode"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Explode"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Explode"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Superconductor"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Superconductor"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Superconductor"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "SwirlFire",
+                "SwirlWater",
+                "SwirlElectric",
+                "SwirlIce"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Swirl"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Swirl"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "CrystallizeFire",
+                "CrystallizeWater",
+                "CrystallizeElectric",
+                "CrystallizeIce"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Crystal"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Buff_Crystal"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_MistTrial_Buff_Explode": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_MistTrial_Buff_Superconductor": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_MistTrial_Buff_Swirl": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_MistTrial_Buff_Crystal": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_Level4_Reaction_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_5",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ]
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "_ABILITY_MistTrial_BurstLevel",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 9.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 10.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "MistTrial_Level5_FullBurst_OnTeam"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Burst_Level": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "AttackSpeed_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "MoveSpeed_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_Level5_Charge_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level5_Charge_Handler_OnAvatar"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "UNIQUE_MistTrial_BurstDamageUp_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level5_Charge_Handler_OnAvatar"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "UNIQUE_MistTrial_BurstDamageUp_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level5_Charge_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerUltimateSkill": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_MistTrial_BurstLevel",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Team",
+                  "globalValueKey": "_ABILITY_MistTrial_BurstLevel",
+                  "overrideMapKey": "Burst_Level"
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ]
+        },
+        "UNIQUE_MistTrial_BurstDamageUp_OnAvatar": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "Elemental_Burst"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Override_Ratio"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Burst_Level"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "MistTrial_Level5_FullBurst_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level5_FullBurst_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_Level5_FullBurst_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_Level5_FullBurst_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_AttackSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AttackSpeed_Ratio"
+            },
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "MoveSpeed_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_MistTrial_BurstLevel",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_Level5_Charge_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_MistTrial_Level_6",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+          "key": "SGV_ABILITY_Mist_Level",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_ABILITY_Mist_Level",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "Blank",
+            "Blank",
+            "Blank"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv1"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv2"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv3"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetOverrideMapValue",
+                "value": {
+                  "isFormula": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Damage_Ratio_Lv4"
+                },
+                "overrideMapKey": "Override_Ratio"
+              }
+            ]
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv1": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv3": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Damage_Ratio_Lv4": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Duration": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "MistTrial_SwirlAttackUp_Handler_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_SwirlAttackUp_Handler_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "MistTrial_SwirlAttackUp_Handler_OnAvatar"
+            }
+          ]
+        },
+        "MistTrial_SwirlAttackUp_Handler_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "SwirlFire",
+                "SwirlWater",
+                "SwirlElectric",
+                "SwirlIce"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Swirl_AttackUp"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_MistTrial_Swirl_AttackUp"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_MistTrial_Swirl_AttackUp": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Override_Ratio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "MistTrial_SwirlAttackUp_Handler_OnTeam"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "MonsterAffix_Property_HpUp_01_ForMistTrial",
+      "abilitySpecials": {
+        "HPUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_MonsterAffix_Property_HpUp_01_ForMistTrial": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "HPUpRatio"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_MonsterAffix_Property_HpUp_01_ForMistTrial"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "MonsterAffix_Property_HpUp_02_ForMistTrial",
+      "abilitySpecials": {
+        "HPUpRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_MonsterAffix_Property_HpUp_02_ForMistTrial": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "HPUpRatio"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_MonsterAffix_Property_HpUp_02_ForMistTrial"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

@@ -1,0 +1,163 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Brute_None_Turn",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "TurnRight"
+          ],
+          "startNormalizedTime": 0.27,
+          "endNormalizedTime": 0.78,
+          "angularSpeed": 150.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "TurnLeft"
+          ],
+          "startNormalizedTime": 0.15,
+          "endNormalizedTime": 0.71,
+          "angularSpeed": 150.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Brute_None_Alert",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "Sleep"
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "Sit"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Brute_None_RushAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "RushAttack_BS"
+          ],
+          "startNormalizedTime": 0.75,
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "RushAttack_Loop"
+          ],
+          "modifierName": "Rush"
+        },
+        {
+          "$type": "MoleMole.Config.AttackHittingSceneMixin",
+          "onHittingScene": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "CrashTrigger"
+              }
+            }
+          ],
+          "animEventIDs": [
+            "ShieldRush_HitScene"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Rush": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Brute_None_NoWeapon_RushAttack_Dust"
+              }
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ],
+                  "useEventSource": true
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "NextSkillTrigger"
+              }
+            }
+          ]
+        },
+        "RushAttack_Roar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.4
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.04,
+                "shakeTime": 0.24,
+                "shakeDir": {
+                  "y": 1.0,
+                  "z": 0.5
+                }
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "RushAttack_Roar"
+        }
+      ]
+    }
+  }
+]

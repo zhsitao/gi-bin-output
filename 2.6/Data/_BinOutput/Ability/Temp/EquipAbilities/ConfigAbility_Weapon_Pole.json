@@ -1,0 +1,6216 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_NormalAttackUp",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_NormalAttackUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_NormalAttackUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_ExtraDamageWhenCDReady",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Weapon_Pole_ExtraDamageWhenCDReady",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_ExtraDamageWhenCDReady_CD",
+            "UNIQUE_Pole_ExtraDamageWhenCDReady_Handler"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_ExtraDamageWhenCDReady_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEquipAffixReady",
+                  "target": "Self",
+                  "equipAffixDataID": 113302
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.DamageByAttackValue",
+                  "target": "Target",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "attackInfo": {
+                    "attackTag": "",
+                    "attenuationTag": "",
+                    "attenuationGroup": "default",
+                    "attackProperty": {
+                      "damagePercentage": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Rate"
+                      },
+                      "damagePercentageRatio": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "elementDurability": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 100.0
+                      },
+                      "strikeType": "Default",
+                      "enBreak": 50.0
+                    },
+                    "hitPattern": {
+                      "onHitEffectName": "default",
+                      "hitImpulseType": "LV2",
+                      "hitHaltTimeScale": 0.01
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "UNIQUE_Pole_ExtraDamageWhenCDReady_Keep"
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "target": "Target",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Weapon_SpecialHit_Light"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByHitPoint"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_ExtraDamageWhenCDReady_Keep": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.06
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_Weapon_Pole_ExtraDamageWhenCDReady",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_ExtraDamageWhenCDReady_CD": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EquipAffixStart",
+              "CD": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "CDTime"
+              },
+              "equipAffixDataID": 113302
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Weapon_Pole_ExtraDamageWhenCDReady",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_SlimeKiller",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_SlimeKiller_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4002
+                  ]
+                }
+              ]
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4002
+                  ]
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_SpecialHit_Light"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByHitPoint"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_SlimeKiller_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_HealAmountHPonEnemyKilled",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByKillingMixin",
+          "detectWindow": 0.6,
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.HealHP",
+                  "amountByTargetMaxHPRatio": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "HealAmount"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "HealAmount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_DamageUpToWaterEnemy",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_DamageUpToWaterEnemy_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasElement",
+                      "element": "Water"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasElement",
+                      "element": "Fire"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_DamageUpToWaterEnemy_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_NormalAttackExtraDamageWhenGetEnergyBall",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_NormalAttackExtraDamageWhenGetEnergyBall_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByEnergyChangeMixin",
+              "elementTypes": [
+                "Electric",
+                "Fire",
+                "Water",
+                "Grass",
+                "Ice",
+                "Wind",
+                "Rock"
+              ],
+              "doWhenEnergyMax": true,
+              "onGainEnergyByBall": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEquipAffixReady",
+                      "target": "Self",
+                      "equipAffixDataID": 113402
+                    }
+                  ],
+                  "modifierName": "UNIQUE_Pole_NormalAttackExtraDamage"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_NormalAttackExtraDamage": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "AttackUp",
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.DamageByAttackValue",
+                  "target": "Target",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "attackInfo": {
+                    "attackTag": "WeaponSkill",
+                    "attenuationTag": "",
+                    "attenuationGroup": "default",
+                    "attackProperty": {
+                      "damagePercentage": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Rate"
+                      },
+                      "damagePercentageRatio": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "elementDurability": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 100.0
+                      },
+                      "strikeType": "Default"
+                    },
+                    "hitPattern": {
+                      "onHitEffectName": "none",
+                      "hitImpulseType": "Default",
+                      "hitHaltTimeScale": 0.01
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_NormalAttackExtraDamageWhenGetEnergyBall_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_NormalAttackAndExtraAttackUpAfterSkill",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_NormalAttackAndExtraAttackUpAfterSkill_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerSkill": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "UNIQUE_Pole_NormalAttackAndExtraAttackUpAfterSkill"
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ]
+        },
+        "UNIQUE_Pole_NormalAttackAndExtraAttackUpAfterSkill": {
+          "stacking": "MultipleAllRefresh",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.0
+            }
+          },
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 12.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "NormalAttack_01",
+                "NormalAttack_02",
+                "NormalAttack_03",
+                "NormalAttack_04",
+                "NormalAttack_05",
+                "NormalAttack_06",
+                "ExtraAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ]
+            }
+          ],
+          "state": "AttackUp"
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_NormalAttackAndExtraAttackUpAfterSkill_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Blackrock",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_WEAPON_Blackrock_COUNT",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_Blackrock_Buff1",
+            "UNIQUE_Pole_Blackrock_Buff2",
+            "UNIQUE_Pole_Blackrock_Buff3"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByKillingMixin",
+          "detectWindow": 0.6,
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "UNIQUE_Pole_Blackrock_Timer_Ind"
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ABILITY_WEAPON_Blackrock_COUNT",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Dua": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Blackrock_Timer_Ind": {
+          "stacking": "MultipleRefresh",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.0
+            }
+          },
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Dua"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "AttackUp",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ABILITY_WEAPON_Blackrock_COUNT",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Blackrock_Buff1": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Rate"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Blackrock1_Pole"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Blackrock_Buff2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Blackrock2_Pole"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Blackrock_Buff3": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Blackrock3_Pole"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_WEAPON_Blackrock_COUNT",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Dual",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Weapon_Pole_Dual_Enemy",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Count"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Sub"
+                }
+              ]
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 999.0
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_Dual_Atk",
+            "UNIQUE_Pole_Dual_AtkDef"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Count": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Atk": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Def": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Now_Count": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Dual_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ABILITY_Weapon_Pole_Dual_Enemy_Count",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "otherTargets": {
+                    "$type": "MoleMole.Config.SelectTargetsByShape",
+                    "sortType": "Nearest",
+                    "shapeName": "CircleR8",
+                    "campTargetType": "Enemy",
+                    "sizeRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    }
+                  },
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Monster"
+                      ]
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ANIMAL_ENTITY_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "modifierName": "Pole_Dual_Add"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "UNIQUE_Pole_Dual_Timer"
+                }
+              ]
+            }
+          ]
+        },
+        "Pole_Dual_Add": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Caster",
+              "modifierName": "Pole_Dual_AddOnAvatar"
+            }
+          ]
+        },
+        "Pole_Dual_AddOnAvatar": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Caster",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Weapon_Pole_Dual_Enemy_Count",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Dual_Timer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.8
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "doOffStage": true,
+              "globalValueKey": "_ABILITY_Weapon_Pole_Dual_Enemy_Count",
+              "overrideMapKey": "Now_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Now_Count"
+              },
+              "key": "_ABILITY_Weapon_Pole_Dual_Enemy",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Dual_Atk": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Rate"
+            }
+          },
+          "state": "AttackUp"
+        },
+        "UNIQUE_Pole_Dual_AtkDef": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Atk"
+            },
+            "Actor_DefenceRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Def"
+            }
+          },
+          "state": "DefenseUp"
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_Dual_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_HeavyExtra",
+      "abilitySpecials": {
+        "Chance": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Time": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_HeavyExtra_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Randomed",
+                  "chance": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Chance"
+                  },
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "modifierName": "UNIQUE_Pole_HeavyExtra"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_HeavyExtra": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Time"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "attackTags": [
+                "ExtraAttack"
+              ],
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              }
+            }
+          ],
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Attack_ExtraUp_Pole"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "ExtraAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "UNIQUE_Pole_HeavyExtra_Remover"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_HeavyExtra_Remover": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_HeavyExtra"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_HeavyExtra_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Liyue",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByTeamStatusMixin",
+          "actions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByBigTeamHasFeatureTag",
+                  "featureTagID": 1002,
+                  "number": 4,
+                  "logic": "GreaterOrEqual"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "key": "_ABILITY_Pole_Liyue_Num",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByBigTeamHasFeatureTag",
+                  "featureTagID": 1002,
+                  "number": 3,
+                  "logic": "Equal"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "key": "_ABILITY_Pole_Liyue_Num",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByBigTeamHasFeatureTag",
+                  "featureTagID": 1002,
+                  "number": 2,
+                  "logic": "Equal"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "key": "_ABILITY_Pole_Liyue_Num",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByBigTeamHasFeatureTag",
+                  "featureTagID": 1002,
+                  "number": 1,
+                  "logic": "Equal"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Liyue_Num",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByBigTeamHasFeatureTag",
+                  "featureTagID": 1002,
+                  "logic": "LesserOrEqual"
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Liyue_Num",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "doOffStage": true,
+              "globalValueKey": "_ABILITY_Pole_Liyue_Num",
+              "overrideMapKey": "Pole_Liyue_Num"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_LiyueBuff"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_LiyueBuff"
+            }
+          ],
+          "waitTime": 20.0,
+          "NCHNIFILGEL": true,
+          "CIDAALBNDIG": true
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Crit": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Pole_Liyue_Num": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_LiyueBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Pole_Liyue_Num"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            },
+            "Actor_CriticalDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Crit"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Pole_Liyue_Num"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Liyue_Num",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_GenerateBallWhenCritic",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_GenerateBallWhenCritic_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitCritical"
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByEquipAffixReady",
+                  "target": "Self",
+                  "equipAffixDataID": 113407
+                }
+              ],
+              "chance": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Rate"
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "UNIQUE_Pole_GenerateBallWhenCritic"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_GenerateBallWhenCritic": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EquipAffixStart",
+              "CD": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "CDTime"
+              },
+              "equipAffixDataID": 113407
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_ExtraElementBall"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.GenerateElemBall",
+              "configID": 2024,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  }
+                },
+                "bornRandom": {
+                  "$type": "MoleMole.Config.BornRandomFromCenter",
+                  "minRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "maxRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                }
+              },
+              "ratio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "baseEnergy": 6.0
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_GenerateBallWhenCritic_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_CritUpWhenHitNoCrit",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_CritUpWhenHitNoCrit_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHitCritical"
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_CritUpWhenHitNoCrit_CD"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitCritical"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_CritUpWhenHitNoCrit"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_CritUpWhenHitNoCrit_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_CritUpWhenHitNoCrit"
+            }
+          ]
+        },
+        "UNIQUE_Pole_CritUpWhenHitNoCrit": {
+          "stacking": "Multiple",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.0
+            }
+          },
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Rate"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_CritUpWhenHitNoCrit_Handler"
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_Pole_CritUpWhenHitNoCrit"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Dragonfell",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Pole_Dragonfell",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_Dragonfell_CD",
+            "UNIQUE_Pole_Dragonfell_Handler"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "ChanceProb": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "RateToIce": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Dragonfell_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EquipAffixStart",
+              "CD": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "CDTime"
+              },
+              "equipAffixDataID": 113409
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Dragonfell",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Dragonfell_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEquipAffixReady",
+                  "target": "Self",
+                  "equipAffixDataID": 113409
+                }
+              ],
+              "chance": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ChanceProb"
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Target",
+                  "key": "_ABILITY_Weapon_Dragonfell_Pos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByHitPoint",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.CreateGadget",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_ABILITY_Weapon_Dragonfell_Pos",
+                    "directionKey": ""
+                  },
+                  "gadgetID": 40020006,
+                  "campID": 1001,
+                  "campTargetType": "Enemy"
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "key": "_ABILITY_Pole_Dragonfell",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Dragonfell_Gadget",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "WeaponSkill"
+          ],
+          "damagePercentage": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "RateToIce"
+          },
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Monster"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByAny",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Ice"
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Frozen"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "RateToIce": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Dragonfell_Appear": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.4
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Dragonfell_Gadget"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -1.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "height": 2.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "WeaponSkill",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Rate"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "enBreak": 20.0,
+                    "attackType": "Range"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "overrideHitImpulse": {
+                      "hitLevel": "Heavy",
+                      "hitImpulseX": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 500.0
+                      },
+                      "hitImpulseY": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.01
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Dragonfell_Appear"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Homa_MaxHpToAtk",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByEventMixin",
+          "onEvent": "HP",
+          "actions": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "LesserOrEqual",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Handler"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Handler"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Handler"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Handler"
+                }
+              ]
+            }
+          ],
+          "costEnergyDeltaName": ""
+        }
+      ],
+      "abilitySpecials": {
+        "Hp_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "MaxHptoAtk_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "MaxHptoAtk_Extra_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "FIGHT_PROP_MAX_HP"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Change"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FIGHT_PROP_MAX_HP"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Buff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Buff"
+            }
+          ]
+        },
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Change": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FIGHT_PROP_MAX_HP"
+              },
+              "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Buff"
+            }
+          ]
+        },
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "FIGHT_PROP_MAX_HP"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Change"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FIGHT_PROP_MAX_HP"
+                  }
+                }
+              ],
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Buff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Weapon_Pole_Homa_EffectDelay"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Buff"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Weapon_Pole_Homa_Effect"
+            }
+          ]
+        },
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Change": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "FIGHT_PROP_MAX_HP"
+              },
+              "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Buff"
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Homa_EffectDelay": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Weapon_Pole_Homa_Effect"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Weapon_Pole_Homa_Effect"
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Homa_Effect": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "doOffStage": true,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Pole_Homa_Buff"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Buff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FIGHT_PROP_MAX_HP"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "MaxHptoAtk_Factor"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Buff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackExtraDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FIGHT_PROP_MAX_HP"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "MaxHptoAtk_Factor"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "FIGHT_PROP_MAX_HP"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "MaxHptoAtk_Extra_Factor"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Add"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "doOffStage": true,
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetHPRatio",
+              "logic": "LesserOrEqual",
+              "HPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Extra_Handler"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_Pole_Homa_MaxHpToAtk_Handler"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "FIGHT_PROP_MAX_HP"
+          },
+          "key": "_ABILITY_Pole_Homa_Last_MaxHp",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Dvalin",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Weapon_Pole_DvalinWhenCDReady",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_Dvalin_CD",
+            "UNIQUE_Pole_Dvalin_Handler"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Crit_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Speed_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "ChanceProb": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Atk_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Dvalin_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EquipAffixStart",
+              "CD": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "CDTime"
+              },
+              "equipAffixDataID": 113502
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Weapon_Pole_DvalinWhenCDReady",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Dvalin_Handler": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEquipAffixReady",
+                  "target": "Self",
+                  "equipAffixDataID": 113502
+                }
+              ],
+              "chance": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ChanceProb"
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerBullet",
+                  "bulletID": 40010012,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.3
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.4
+                      }
+                    }
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "key": "_ABILITY_Weapon_Pole_DvalinWhenCDReady",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -1.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_Dvalin_AtkSpeedUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_AttackSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Speed_Rate"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_Dvalin_AtkSpeedUp"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Dvalin_Wave_Bullet",
+      "abilitySpecials": {
+        "Atk_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Weapon_Dvalin_Pole_AttackWave"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "MonsterEquip"
+              ]
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "target": "Target",
+              "attackInfo": {
+                "attackTag": "WeaponSkill",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Atk_Rate"
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  },
+                  "enBreak": 50.0,
+                  "bonusCritical": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "bonusCriticalHurt": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "LV2",
+                  "hitHaltTimeScale": 0.01
+                },
+                "canBeModifiedBy": "OriginOwner"
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackBox",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "size": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.1
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.1
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.1
+                    }
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "WeaponSkill",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Atk_Rate"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "enBreak": 50.0,
+                    "bonusCritical": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "bonusCriticalHurt": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    }
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.01
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Kunwu_DamageUpWithShield",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Pole_Kunwu_IsHasShield",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff",
+            "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+          "type": "Current",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByHasShield",
+              "type": "All"
+            }
+          ],
+          "modifierName": "UNIQUE_Weapon_Pole_Kunwu_CheckShield"
+        }
+      ],
+      "abilitySpecials": {
+        "Shield_Up": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Dmg_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Timer": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Weapon_Pole_Kunwu_DamageUpWithShield_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "UNIQUE_Weapon_Pole_Kunwu_AddCount"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_CheckShield": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Pole_Kunwu_IsHasShield",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Pole_Kunwu_IsHasShield",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_AddCount": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Kunwu_BuffLevel",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Weapon_Pole_Kunwu_BuffTimer"
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_BuffTimer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Timer"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Pole_Kunwu_BuffLevel",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Pole_Kunwu_BuffLevel",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Blank",
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level01",
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level02",
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level03",
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level04",
+                "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level05"
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Blank": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level01": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Dmg_Rate"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level02": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level03": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level04": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_NoShieldBuff_Level05": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Pole_Kunwu_BuffLevel",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Blank",
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level01",
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level02",
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level03",
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level04",
+                "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level05"
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Blank": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level01": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level02": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level03": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 6.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level04": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 8.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_HasShieldBuff_Level05": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Dmg_Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Kunwu_BuffEffHandler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Pole_Kunwu_BuffLevel",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Weapon_Pole_Kunwu_Eff_Blank",
+                "Weapon_Pole_Kunwu_Eff_1",
+                "Weapon_Pole_Kunwu_Eff_2",
+                "Weapon_Pole_Kunwu_Eff_3",
+                "Weapon_Pole_Kunwu_Eff_4",
+                "Weapon_Pole_Kunwu_Eff_5"
+              ]
+            }
+          ]
+        },
+        "Weapon_Pole_Kunwu_Eff_Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Weapon_Pole_Kunwu_Eff_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Kunwu_Stack_01"
+              }
+            }
+          ]
+        },
+        "Weapon_Pole_Kunwu_Eff_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Kunwu_Stack_02"
+              }
+            }
+          ]
+        },
+        "Weapon_Pole_Kunwu_Eff_3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Kunwu_Stack_03"
+              }
+            }
+          ]
+        },
+        "Weapon_Pole_Kunwu_Eff_4": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Kunwu_Stack_04"
+              }
+            }
+          ]
+        },
+        "Weapon_Pole_Kunwu_Eff_5": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Kunwu_Stack_05"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Weapon_Pole_Kunwu_DamageUpWithShield_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Weapon_Pole_Kunwu_BuffEffHandler"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Kunwu_BuffLevel",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Kunwu_IsHasShield",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_AttackUpAndSkillDamageUp",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Pole_13502_AttackBuffLevel",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 5.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 6.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 100.0
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank",
+            "UNIQUE_Pole_AttackUpA",
+            "UNIQUE_Pole_AttackUpB",
+            "UNIQUE_Pole_AttackUpA",
+            "UNIQUE_Pole_AttackUpB",
+            "UNIQUE_Pole_AttackUpA",
+            "UNIQUE_Pole_AttackUpB",
+            "UNIQUE_Pole_SkillDamageUp"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Rate2": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Buff_Level": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_Pole_AttackUpAndSkillDamageUp_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "UNIQUE_Pole_AddGlobalValue"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_AddGlobalValue": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Pole_BuffTime"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_ABILITY_Pole_13502_AttackBuffLevel",
+              "overrideMapKey": "Buff_Level"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_13502_AttackBuffLevel",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 7.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_BuffTime": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -100.0
+              },
+              "key": "_ABILITY_Pole_13502_AttackBuffLevel",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 7.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_AttackUpA": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Buff_Level"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Add"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_AttackUpB": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Buff_Level"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Add"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_SkillDamageUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Rate"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 7.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            },
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Rate2"
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_TriggerGreen"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_StackFull"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_StackFull_Loop"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_AttackUpAndSkillDamageUp_Handler"
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_13502_AttackBuffLevel",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_AttacktUpAfterReaction",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_AttacktUpAfterReaction_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Explode",
+                "Stream",
+                "Burning",
+                "Melt",
+                "Shock",
+                "Freeze",
+                "SwirlFire",
+                "SwirlWater"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "modifierName": "UNIQUE_Pole_AttacktUpAfterReaction"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_AttacktUpAfterReaction": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 20.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Rate"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_AttacktUpAfterReaction_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Bakufu",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "Elemental_Art",
+            "Elemental_Art_Hold",
+            "Elemental_Art_Extra"
+          ],
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Rate"
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyCost": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "EnergyPerTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Dura": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Weapon_Pole_Bakufu_CheckArtHit": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Elemental_Art",
+                    "Elemental_Art_Hold",
+                    "Elemental_Art_Extra"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEquipAffixReady",
+                  "target": "Self",
+                  "equipAffixDataID": 113414
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_Weapon_Pole_Bakufu_ReturnEnergy"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Weapon_Pole_Bakufu_ReturnEnergy": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "Dura"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 0.6
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EquipAffixStart",
+              "doOffStage": true,
+              "CD": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "CDTime"
+              },
+              "equipAffixDataID": 113414
+            },
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "doOffStage": true,
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "EnergyCost"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ReviveElemEnergy",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "EnergyPerTime"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Weapon_Pole_Bakufu_CheckArtHit"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Mori",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "Elemental_Burst"
+          ],
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Damage_Rate"
+          },
+          "bonusCritical": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Crit_Rate"
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "Damage_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Crit_Rate": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Maria",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByTeamStatusMixin",
+          "actions": [
+            {
+              "$type": "MoleMole.Config.GetTeamTotalMaxEnergyToOverridemap",
+              "doOffStage": true,
+              "teamType": "BigTeam",
+              "overrideMapKey": "Pole_Maria_TeamEnergy"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Pole_Maria_TeamEnergy"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "Ratio"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Div"
+                  }
+                ]
+              },
+              "key": "_ABILITY_Pole_Maria_BuffValue",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Max_Value"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "doOffStage": true,
+              "globalValueKey": "_ABILITY_Pole_Maria_BuffValue",
+              "overrideMapKey": "Pole_Maria_BuffValue"
+            }
+          ],
+          "waitTime": 20.0,
+          "NCHNIFILGEL": true,
+          "CIDAALBNDIG": true
+        },
+        {
+          "$type": "MoleMole.Config.ModifyDamageMixin",
+          "attackTags": [
+            "Elemental_Burst"
+          ],
+          "damagePercentageRatio": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Pole_Maria_BuffValue"
+          }
+        }
+      ],
+      "abilitySpecials": {
+        "Ratio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Max_Value": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Pole_Maria_TeamEnergy": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Pole_Maria_BuffValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Maria_BuffValue",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Narukami",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToPredicateMixin",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByNot",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Pole_Narukami_Last_ChargeEfficiency",
+                  "value": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "FIGHT_PROP_NONEXTRA_CHARGE_EFFICIENCY"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Sub"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "modifierName": "UNIQUE_Pole_Narukami_ChargeToAtk_Refresh"
+        },
+        {
+          "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+          "onTriggerUltimateSkill": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_Weapon_Pole_Narukami_ChargeUp"
+            }
+          ],
+          "OIIDACCCPKO": 0.2
+        }
+      ],
+      "abilitySpecials": {
+        "ChargetoAtk_Factor": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "MaxAttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "ChargeEfficiency": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Dura": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Narukami_ChargeToAtk_Refresh": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FIGHT_PROP_NONEXTRA_CHARGE_EFFICIENCY"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              },
+              "key": "_ABILITY_Pole_Narukami_Last_ChargeEfficiency",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "ChargetoAtk_Factor"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "FIGHT_PROP_NONEXTRA_CHARGE_EFFICIENCY"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Mul"
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "ChargetoAtk_Factor"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              },
+              "key": "_ABILITY_Pole_Narukami_AttackRatio",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "doOffStage": true,
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_Pole_Narukami_AttackRatio",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "MaxAttackRatio"
+                  },
+                  "compareType": "MoreThan"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetOverrideMapValue",
+                  "doOffStage": true,
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": true,
+                    "dynamicKey": "MaxAttackRatio"
+                  },
+                  "overrideMapKey": "AttackRatio"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "doOffStage": true,
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ABILITY_Pole_Narukami_AttackRatio",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "LessAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetOverrideMapValue",
+                      "doOffStage": true,
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "overrideMapKey": "AttackRatio"
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetOverrideMapValue",
+                      "doOffStage": true,
+                      "value": {
+                        "isFormula": true,
+                        "formula": [
+                          {
+                            "isOperator": false,
+                            "isDynamic": true,
+                            "dynamicKey": "ChargetoAtk_Factor"
+                          },
+                          {
+                            "isOperator": false,
+                            "isDynamic": true,
+                            "dynamicKey": "FIGHT_PROP_NONEXTRA_CHARGE_EFFICIENCY"
+                          },
+                          {
+                            "isOperator": true,
+                            "operation": "Mul"
+                          },
+                          {
+                            "isOperator": false,
+                            "isDynamic": true,
+                            "dynamicKey": "ChargetoAtk_Factor"
+                          },
+                          {
+                            "isOperator": true,
+                            "operation": "Sub"
+                          }
+                        ]
+                      },
+                      "overrideMapKey": "AttackRatio"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "doOffStage": true,
+              "abilityName": "Weapon_Pole_Narukami"
+            }
+          ]
+        },
+        "UNIQUE_Pole_Narukami_ChargeToAtk_Buff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Weapon_Pole_Narukami_ChargeUp": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Dura"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ChargeEfficiencyDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "ChargeEfficiency"
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02",
+                  "sheathPoint"
+                ]
+              },
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_NarukamiBuff_Pole"
+              }
+            }
+          ],
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Narukami_Last_ChargeEfficiency",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_Pole_Narukami_ChargeToAtk_Buff"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_Pole_Narukami_ChargeToAtk_Buff"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Weapon_Pole_Santika",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Pole_Santika_IsOffStage",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_Pole_Santika_Buff_OnStage",
+            "UNIQUE_Pole_Santika_Buff_OffStage"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+          "onTriggerSkill": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_Pole_Santika_Timer"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Weapon_Santika_Buff"
+              }
+            }
+          ],
+          "OIIDACCCPKO": 0.2
+        }
+      ],
+      "abilitySpecials": {
+        "BaseBuff": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Interval": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Dura": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Buff_Level": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Pole_Santika_WeaponBaseBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElecAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_FireAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_WindAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_IceAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_WaterAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_GrassAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            },
+            "Actor_RockAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "BaseBuff"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_Timer": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Dura"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Interval"
+          },
+          "state": "AttackUp",
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Pole_Santika_AttackBuffLevel",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Santika_AttackBuffLevel",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_Pole_Santika_Buff_OnStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Pole_Santika_AttackBuffLevel",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_Pole_Santika_AttackUp1",
+                "UNIQUE_Pole_Santika_AttackUp2",
+                "UNIQUE_Pole_Santika_AttackUp3",
+                "UNIQUE_Pole_Santika_AttackUp4",
+                "UNIQUE_Pole_Santika_AttackUp5",
+                "UNIQUE_Pole_Santika_AttackUp6"
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_Santika_AttackUp1": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp3": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp4": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp5": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp6": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 6.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_Buff_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ABILITY_Pole_Santika_AttackBuffLevel",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_Pole_Santika_AttackUp1_OffStage",
+                "UNIQUE_Pole_Santika_AttackUp2_OffStage",
+                "UNIQUE_Pole_Santika_AttackUp3_OffStage",
+                "UNIQUE_Pole_Santika_AttackUp4_OffStage",
+                "UNIQUE_Pole_Santika_AttackUp5_OffStage",
+                "UNIQUE_Pole_Santika_AttackUp6_OffStage"
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Pole_Santika_AttackUp1_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp2_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 4.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp3_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 6.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp4_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 8.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp5_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_Pole_Santika_AttackUp6_OffStage": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "AttackRatio"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": false,
+                  "fixedValue": 12.0
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Pole_Santika_WeaponBaseBuff"
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByIsLocalAvatar",
+              "target": "Self"
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Pole_Santika_IsOffStage",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Pole_Santika_IsOffStage",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Santika_AttackBuffLevel",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAvatarIn": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ABILITY_Pole_Santika_IsOffStage",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAvatarOut": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "doOffStage": true,
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ABILITY_Pole_Santika_IsOffStage",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

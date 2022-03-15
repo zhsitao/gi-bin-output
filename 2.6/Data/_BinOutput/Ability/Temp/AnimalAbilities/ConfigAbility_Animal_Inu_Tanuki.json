@@ -1,0 +1,546 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_IgnoreControlState",
+      "modifiers": {
+        "Animal_Inu_Tanuki_IgnoreControlState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 15001
+            },
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 15002
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Animal_Inu_Tanuki_IgnoreControlState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_BlinkState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Blink_BS",
+            "End_BS"
+          ],
+          "modifierName": "Blink_State"
+        }
+      ],
+      "modifiers": {
+        "Blink_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Inu_Tanuki_Blink_Actions"
+            }
+          ]
+        },
+        "UNIQUE_Inu_Tanuki_Blink_Actions": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Inu_Tanuki_Blink_Actions"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_FindNextPathPoint",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            1,
+            2,
+            3
+          ],
+          "modifierName": "InitializeModifier"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            100
+          ],
+          "modifierName": "FindingNextPoint"
+        }
+      ],
+      "abilitySpecials": {
+        "NextPathPointFlag": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "InitializeModifier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_TANUKI_NEXTPATHPOINTFLAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseInt",
+              "intID": "NextPointType"
+            },
+            {
+              "$type": "MoleMole.Config.SetOverrideMapValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "overrideMapKey": "NextPathPointFlag"
+            }
+          ]
+        },
+        "FindingNextPoint": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsBySelfGroup",
+                "operation": "XOR",
+                "JMDBALDCOAC": {
+                  "isDynamic": true,
+                  "dynamicKey": "NextPathPointFlag"
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_TANUKI_PATHPOINT_END_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetPoseInt",
+                  "intID": "NextPointType",
+                  "value": 2
+                },
+                {
+                  "$type": "MoleMole.Config.TryFindBlinkPoint",
+                  "target": "Target",
+                  "forwardAngle": 360.0
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "otherTargets": {
+                    "$type": "MoleMole.Config.SelectTargetsBySelfGroup",
+                    "operation": "XOR",
+                    "JMDBALDCOAC": {
+                      "isDynamic": true,
+                      "dynamicKey": "NextPathPointFlag"
+                    }
+                  },
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_TANUKI_PATHPOINT_BLINK_",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetPoseInt",
+                      "intID": "NextPointType",
+                      "value": 1
+                    },
+                    {
+                      "$type": "MoleMole.Config.TryFindBlinkPoint",
+                      "target": "Target",
+                      "forwardAngle": 360.0
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetPoseInt",
+                      "intID": "NextPointType",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsBySelfGroup",
+                "operation": "XOR",
+                "JMDBALDCOAC": {
+                  "isDynamic": true,
+                  "dynamicKey": "NextPathPointFlag"
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_TANUKI_PATHPOINT_END_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetPoseInt",
+                  "intID": "NextPointType",
+                  "value": 2
+                },
+                {
+                  "$type": "MoleMole.Config.TryFindBlinkPoint",
+                  "target": "Target",
+                  "forwardAngle": 360.0
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "otherTargets": {
+                    "$type": "MoleMole.Config.SelectTargetsBySelfGroup",
+                    "operation": "XOR",
+                    "JMDBALDCOAC": {
+                      "isDynamic": true,
+                      "dynamicKey": "NextPathPointFlag"
+                    }
+                  },
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_TANUKI_PATHPOINT_BLINK_",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetPoseInt",
+                      "intID": "NextPointType",
+                      "value": 1
+                    },
+                    {
+                      "$type": "MoleMole.Config.TryFindBlinkPoint",
+                      "target": "Target",
+                      "forwardAngle": 360.0
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetPoseInt",
+                      "intID": "NextPointType",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_TANUKI_NEXTPATHPOINTFLAG_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FixedMove"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_TANUKI_NEXTPATHPOINTFLAG_",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 99.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_TANUKI_NEXTPATHPOINTFLAG_",
+          "overrideMapKey": "NextPathPointFlag"
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseInt",
+          "intID": "NextPointType"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_DoBlink",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAbility",
+          "abilityName": "Animal_Inu_Tanuki_FindNextPathPoint"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_Attraction",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Alert",
+            "Alert_AS",
+            "Attraction",
+            "Attraction_AS"
+          ],
+          "modifierName": "Inu_Tanuki_AttractionEffect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Alert",
+            "Alert_AS"
+          ],
+          "modifierName": "Inu_Tanuki_AlertBehitModifier"
+        }
+      ],
+      "modifiers": {
+        "Inu_Tanuki_AttractionEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Animal_Inu_Tanuki_Attraction"
+              }
+            }
+          ]
+        },
+        "Inu_Tanuki_AlertBehitModifier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "AlertHitTrigger"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_KillSelf",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_KillSelf_Escape",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "banDrop": true,
+          "banExp": true,
+          "killSelfType": "Disappear"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Inu_Tanuki_Steer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Blink_BS"
+          ],
+          "endNormalizedTime": 0.5,
+          "angularSpeed": 540.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "End"
+          ],
+          "endNormalizedTime": 0.5,
+          "angularSpeed": 540.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Alert"
+          ],
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 540.0,
+          "attackTrigger": "",
+          "attackDistance": 2.0
+        }
+      ]
+    }
+  }
+]

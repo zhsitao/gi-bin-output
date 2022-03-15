@@ -1,0 +1,5346 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_FireBase",
+      "abilitySpecials": {
+        "Value_TempCount": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_Buff": {
+          "type": "float",
+          "dynamicValue": 0.1
+        },
+        "Value_BuffCount": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_BuffCD": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireBase": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Melt"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Other",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_BuoyantCombat_FireBase_Count",
+                      "value": {
+                        "isFormula": true,
+                        "formula": [
+                          {
+                            "isOperator": false,
+                            "isDynamic": true,
+                            "dynamicKey": "Value_BuffCount"
+                          },
+                          {
+                            "isOperator": false,
+                            "isDynamic": false,
+                            "fixedValue": 1.0
+                          },
+                          {
+                            "isOperator": true,
+                            "operation": "Sub"
+                          }
+                        ]
+                      },
+                      "compareType": "LessAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property_CD_Team"
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "target": "Other",
+                      "key": "_Ability_BuoyantCombat_FireBasePos",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        },
+                        "onGround": true
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Caster",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "target": "Team",
+                          "key": "_ActivityAbility_BuoyantCombat_FireBase_CD",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "compareType": "NoneOrEqual"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Team",
+                          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_CD_Team"
+                        },
+                        {
+                          "$type": "MoleMole.Config.FireEffect",
+                          "effectPattern": {
+                            "isDynamic": false,
+                            "fixedValue": "Eff_Avatar_ShockWave_Expand_Fire_Level_01"
+                          },
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_BuoyantCombat_FireBasePos",
+                            "directionKey": ""
+                          }
+                        },
+                        {
+                          "$type": "MoleMole.Config.TriggerAttackEvent",
+                          "target": "Caster",
+                          "attackEvent": {
+                            "attackPattern": {
+                              "$type": "MoleMole.Config.ConfigAttackSphere",
+                              "triggerType": "TriggerNoRepeat",
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_FireBasePos",
+                                "directionKey": ""
+                              },
+                              "radius": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 5.0
+                              }
+                            },
+                            "attackInfo": {
+                              "attackTag": "",
+                              "attenuationTag": "",
+                              "attenuationGroup": "default",
+                              "attackProperty": {
+                                "damagePercentageRatio": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 0.0
+                                },
+                                "elementType": "Fire",
+                                "elementDurability": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 20.0
+                                },
+                                "ignoreAttackerProperty": true,
+                                "enBreak": 0.0,
+                                "damageExtra": {
+                                  "isFormula": true,
+                                  "formula": [
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageRate"
+                                    },
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageSystemValue"
+                                    },
+                                    {
+                                      "isOperator": true,
+                                      "operation": "Mul"
+                                    }
+                                  ]
+                                },
+                                "trueDamage": true,
+                                "ignoreModifyDamage": true
+                              },
+                              "hitPattern": {
+                                "onHitEffectName": "",
+                                "hitImpulseType": "LV1"
+                              }
+                            }
+                          },
+                          "targetType": "Enemy"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FireAddHurtDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Value_Buff"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Value_TempCount"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_FireBase_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_FireBase_CD"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_BuffCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Team",
+              "doOffStage": true,
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_FireBase_Count",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_BuffCount"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.CopyGlobalValue",
+              "doOffStage": true,
+              "srcTarget": "Team",
+              "dstTarget": "CurLocalAvatar",
+              "srcKey": "_ActivityAbility_BuoyantCombat_FireBase_Count",
+              "dstKey": "_ActivityAbility_BuoyantCombat_FireBase_Count"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "globalValueKey": "_ActivityAbility_BuoyantCombat_FireBase_Count",
+              "overrideMapKey": "Value_TempCount"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_FireBase_Count",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_BuffCount"
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_FireBase_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_FireLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "target": "CurTeamAvatars",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireBase_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_FireLv1",
+      "abilitySpecials": {
+        "Value_Attack": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireLv1": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Attack"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireLv1"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_FireLv2",
+      "abilitySpecials": {
+        "Value_Attack": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireLv2": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Attack"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireLv2"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_FireLv3",
+      "abilitySpecials": {
+        "Value_Attack": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 8.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireLv3": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "Melt"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Caster",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_BuoyantCombat_FireLv3_CD",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireLv3_CD_Team"
+                    },
+                    {
+                      "$type": "MoleMole.Config.FireEffect",
+                      "effectPattern": {
+                        "isDynamic": false,
+                        "fixedValue": "Eff_Avatar_ShockWave_Expand_Fire_Level_02"
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.TriggerAttackEvent",
+                      "attackEvent": {
+                        "attackPattern": {
+                          "$type": "MoleMole.Config.ConfigAttackSphere",
+                          "triggerType": "TriggerNoRepeat",
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornBySelf",
+                            "offset": {
+                              "x": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 0.0
+                              },
+                              "y": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 0.0
+                              },
+                              "z": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 0.0
+                              }
+                            },
+                            "onGround": true
+                          },
+                          "radius": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 10.0
+                          }
+                        },
+                        "attackInfo": {
+                          "attackTag": "",
+                          "attenuationTag": "",
+                          "attenuationGroup": "default",
+                          "attackProperty": {
+                            "damagePercentageRatio": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 0.0
+                            },
+                            "elementType": "Fire",
+                            "elementDurability": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 50.0
+                            },
+                            "ignoreAttackerProperty": true,
+                            "enBreak": 0.0,
+                            "damageExtra": {
+                              "isFormula": true,
+                              "formula": [
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageRate"
+                                },
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageSystemValue"
+                                },
+                                {
+                                  "isOperator": true,
+                                  "operation": "Mul"
+                                }
+                              ]
+                            },
+                            "trueDamage": true,
+                            "ignoreModifyDamage": true
+                          },
+                          "hitPattern": {
+                            "onHitEffectName": "",
+                            "hitImpulseType": "LV1"
+                          }
+                        }
+                      },
+                      "targetType": "Enemy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Attack"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_FireLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_FireLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_FireLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_FireLv3"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_FireLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_IceBase",
+      "abilitySpecials": {
+        "Value_ReactionUp": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_IceBase_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemReactSConductDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_ReactionUp"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_IceBase_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_IceLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_IceLv1",
+      "abilitySpecials": {
+        "Value_Ice": {
+          "type": "float",
+          "dynamicValue": 0.25
+        },
+        "Value_Physical": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_IceLv1_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_IceAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Ice"
+            },
+            "Actor_PhysicalAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Physical"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_IceLv1_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_IceLv2",
+      "abilitySpecials": {
+        "Value_Ice": {
+          "type": "float",
+          "dynamicValue": 0.3
+        },
+        "Value_Physical": {
+          "type": "float",
+          "dynamicValue": 0.3
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_IceLv2_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_IceAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Ice"
+            },
+            "Actor_PhysicalAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Physical"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_IceLv2_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_IceLv3",
+      "abilitySpecials": {
+        "Value_Ice": {
+          "type": "float",
+          "dynamicValue": 0.55
+        },
+        "Value_Physical": {
+          "type": "float",
+          "dynamicValue": 0.55
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 3.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 8.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_IceLv3_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_IceAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Ice"
+            },
+            "Actor_PhysicalAddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_Physical"
+            }
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_IceLv3_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_IceLv3_CD_Team"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Other",
+                  "key": "_Ability_BuoyantCombat_IceLv3Pos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Stages_GainWave_01"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_Ability_BuoyantCombat_IceLv3Pos",
+                    "directionKey": ""
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Ability_BuoyantCombat_IceLv3Pos",
+                        "directionKey": ""
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 5.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "ignoreAttackerProperty": true,
+                        "enBreak": 0.0,
+                        "damageExtra": {
+                          "isFormula": true,
+                          "formula": [
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageRate"
+                            },
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageSystemValue"
+                            },
+                            {
+                              "isOperator": true,
+                              "operation": "Mul"
+                            }
+                          ]
+                        },
+                        "trueDamage": true,
+                        "ignoreModifyDamage": true
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "",
+                        "hitImpulseType": "LV1"
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_IceLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_IceLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_IceLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_IceLv3_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_IceLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WaterBase",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.StageReadyMixin",
+          "onStageReady": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "doOffStage": true,
+              "luaCallType": "CurGalleryControlGroup",
+              "funcName": "SLC_Recover_BuoyantCombat_Water_Level",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_Interval": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "Value_ElementDurability": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "BuoyantCombat_Water_Level": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WaterBase": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_Interval"
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_ShockWave_Expand_Water_Loop"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_ShockWave_Expand_Water_Once"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "onGround": true,
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByGroundNormalRange",
+                  "range": 3
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "target": "Team",
+              "globalValueKey": "BuoyantCombat_Water_Level",
+              "overrideMapKey": "BuoyantCombat_Water_Level"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "CurLocalAvatar",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true,
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigBornDirectionType"
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "BuoyantCombat_Water_Level"
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Water",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": true,
+                      "dynamicKey": "Value_ElementDurability"
+                    },
+                    "enBreak": 0.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_WaterBase_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "BuoyantCombat_Water_Level",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "BuoyantCombat_Water_Level",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_BuoyantCombat_Water_SLC",
+                "Blank"
+              ]
+            }
+          ]
+        },
+        "UNIQUE_BuoyantCombat_Water_SLC": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "doOffStage": true,
+              "luaCallType": "CurGalleryControlGroup",
+              "funcName": "SLC_Recover_BuoyantCombat_Water_Level",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WaterBase"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "BuoyantCombat_Water_Level",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WaterBase_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WaterLv1",
+      "abilitySpecials": {
+        "Value_AddHurt": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv1_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AddHurt"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv1_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WaterLv2",
+      "abilitySpecials": {
+        "Value_AddHurt": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv2_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AddHurt"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv2_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WaterLv3",
+      "abilitySpecials": {
+        "Value_AddHurt": {
+          "type": "float",
+          "dynamicValue": 2.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv3_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AddHurt"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WaterLv3_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WindBase",
+      "abilitySpecials": {
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindBase": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "SwirlFire",
+                "SwirlElectric",
+                "SwirlWater",
+                "SwirlIce"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Other",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_BuoyantCombat_WindBase_CD",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "target": "Other",
+                      "key": "_Ability_BuoyantCombat_WindBasePos",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        },
+                        "onGround": true
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindBase_CD_Team"
+                    },
+                    {
+                      "$type": "MoleMole.Config.SetGlobalValue",
+                      "target": "Team",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "key": "_ActivityAbility_BuoyantCombat_WindBase_Type",
+                      "useLimitRange": true,
+                      "randomInRange": true,
+                      "maxValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 4.0
+                      },
+                      "minValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "target": "Team",
+                          "key": "_ActivityAbility_BuoyantCombat_WindBase_Type",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 1.0
+                          },
+                          "compareType": "LessAndEqual"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.FireEffect",
+                          "effectPattern": {
+                            "isDynamic": false,
+                            "fixedValue": "Eff_Avatar_ShockWave_Fire"
+                          },
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                            "directionKey": ""
+                          }
+                        },
+                        {
+                          "$type": "MoleMole.Config.TriggerAttackEvent",
+                          "attackEvent": {
+                            "attackPattern": {
+                              "$type": "MoleMole.Config.ConfigAttackSphere",
+                              "triggerType": "TriggerNoRepeat",
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                "directionKey": ""
+                              },
+                              "radius": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 5.0
+                              }
+                            },
+                            "attackInfo": {
+                              "attackTag": "",
+                              "attenuationTag": "",
+                              "attenuationGroup": "default",
+                              "attackProperty": {
+                                "damagePercentageRatio": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 0.0
+                                },
+                                "elementType": "Fire",
+                                "elementDurability": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 20.0
+                                },
+                                "ignoreAttackerProperty": true,
+                                "enBreak": 0.0,
+                                "damageExtra": {
+                                  "isFormula": true,
+                                  "formula": [
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageRate"
+                                    },
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageSystemValue"
+                                    },
+                                    {
+                                      "isOperator": true,
+                                      "operation": "Mul"
+                                    }
+                                  ]
+                                },
+                                "ignoreModifyDamage": true
+                              },
+                              "hitPattern": {
+                                "onHitEffectName": "",
+                                "hitImpulseType": "LV1"
+                              }
+                            }
+                          },
+                          "targetType": "Enemy"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.Predicated",
+                          "targetPredicates": [
+                            {
+                              "$type": "MoleMole.Config.ByTargetGlobalValue",
+                              "target": "Team",
+                              "key": "_ActivityAbility_BuoyantCombat_WindBase_Type",
+                              "value": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 2.0
+                              },
+                              "compareType": "LessAndEqual"
+                            }
+                          ],
+                          "successActions": [
+                            {
+                              "$type": "MoleMole.Config.FireEffect",
+                              "effectPattern": {
+                                "isDynamic": false,
+                                "fixedValue": "Eff_Avatar_ShockWave_Electric"
+                              },
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                "directionKey": ""
+                              }
+                            },
+                            {
+                              "$type": "MoleMole.Config.TriggerAttackEvent",
+                              "attackEvent": {
+                                "attackPattern": {
+                                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                                  "triggerType": "TriggerNoRepeat",
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                    "directionKey": ""
+                                  },
+                                  "radius": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 5.0
+                                  }
+                                },
+                                "attackInfo": {
+                                  "attackTag": "",
+                                  "attenuationTag": "",
+                                  "attenuationGroup": "default",
+                                  "attackProperty": {
+                                    "damagePercentageRatio": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 0.0
+                                    },
+                                    "elementType": "Electric",
+                                    "elementDurability": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 20.0
+                                    },
+                                    "ignoreAttackerProperty": true,
+                                    "enBreak": 0.0,
+                                    "damageExtra": {
+                                      "isFormula": true,
+                                      "formula": [
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageRate"
+                                        },
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageSystemValue"
+                                        },
+                                        {
+                                          "isOperator": true,
+                                          "operation": "Mul"
+                                        }
+                                      ]
+                                    },
+                                    "trueDamage": true,
+                                    "ignoreModifyDamage": true
+                                  },
+                                  "hitPattern": {
+                                    "onHitEffectName": "",
+                                    "hitImpulseType": "LV1"
+                                  }
+                                }
+                              },
+                              "targetType": "Enemy"
+                            }
+                          ],
+                          "failActions": [
+                            {
+                              "$type": "MoleMole.Config.Predicated",
+                              "targetPredicates": [
+                                {
+                                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                                  "target": "Team",
+                                  "key": "_ActivityAbility_BuoyantCombat_WindBase_Type",
+                                  "value": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 3.0
+                                  },
+                                  "compareType": "LessAndEqual"
+                                }
+                              ],
+                              "successActions": [
+                                {
+                                  "$type": "MoleMole.Config.FireEffect",
+                                  "effectPattern": {
+                                    "isDynamic": false,
+                                    "fixedValue": "Eff_Avatar_ShockWave_Water"
+                                  },
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                    "directionKey": ""
+                                  }
+                                },
+                                {
+                                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                                  "attackEvent": {
+                                    "attackPattern": {
+                                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                                      "triggerType": "TriggerNoRepeat",
+                                      "born": {
+                                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                        "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                        "directionKey": ""
+                                      },
+                                      "radius": {
+                                        "isFormula": false,
+                                        "isDynamic": false,
+                                        "fixedValue": 5.0
+                                      }
+                                    },
+                                    "attackInfo": {
+                                      "attackTag": "",
+                                      "attenuationTag": "",
+                                      "attenuationGroup": "default",
+                                      "attackProperty": {
+                                        "damagePercentageRatio": {
+                                          "isFormula": false,
+                                          "isDynamic": false,
+                                          "fixedValue": 0.0
+                                        },
+                                        "elementType": "Water",
+                                        "elementDurability": {
+                                          "isFormula": false,
+                                          "isDynamic": false,
+                                          "fixedValue": 20.0
+                                        },
+                                        "ignoreAttackerProperty": true,
+                                        "enBreak": 0.0,
+                                        "damageExtra": {
+                                          "isFormula": true,
+                                          "formula": [
+                                            {
+                                              "isOperator": false,
+                                              "isDynamic": true,
+                                              "dynamicKey": "Value_DamageRate"
+                                            },
+                                            {
+                                              "isOperator": false,
+                                              "isDynamic": true,
+                                              "dynamicKey": "Value_DamageSystemValue"
+                                            },
+                                            {
+                                              "isOperator": true,
+                                              "operation": "Mul"
+                                            }
+                                          ]
+                                        },
+                                        "trueDamage": true,
+                                        "ignoreModifyDamage": true
+                                      },
+                                      "hitPattern": {
+                                        "onHitEffectName": "",
+                                        "hitImpulseType": "LV1"
+                                      }
+                                    }
+                                  },
+                                  "targetType": "Enemy"
+                                }
+                              ],
+                              "failActions": [
+                                {
+                                  "$type": "MoleMole.Config.FireEffect",
+                                  "effectPattern": {
+                                    "isDynamic": false,
+                                    "fixedValue": "Eff_Avatar_ShockWave_Ice"
+                                  },
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                    "directionKey": ""
+                                  }
+                                },
+                                {
+                                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                                  "attackEvent": {
+                                    "attackPattern": {
+                                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                                      "triggerType": "TriggerNoRepeat",
+                                      "born": {
+                                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                        "positionKey": "_Ability_BuoyantCombat_WindBasePos",
+                                        "directionKey": ""
+                                      },
+                                      "radius": {
+                                        "isFormula": false,
+                                        "isDynamic": false,
+                                        "fixedValue": 5.0
+                                      }
+                                    },
+                                    "attackInfo": {
+                                      "attackTag": "",
+                                      "attenuationTag": "",
+                                      "attenuationGroup": "default",
+                                      "attackProperty": {
+                                        "damagePercentageRatio": {
+                                          "isFormula": false,
+                                          "isDynamic": false,
+                                          "fixedValue": 0.0
+                                        },
+                                        "elementType": "Ice",
+                                        "elementDurability": {
+                                          "isFormula": false,
+                                          "isDynamic": false,
+                                          "fixedValue": 20.0
+                                        },
+                                        "ignoreAttackerProperty": true,
+                                        "enBreak": 0.0,
+                                        "damageExtra": {
+                                          "isFormula": true,
+                                          "formula": [
+                                            {
+                                              "isOperator": false,
+                                              "isDynamic": true,
+                                              "dynamicKey": "Value_DamageRate"
+                                            },
+                                            {
+                                              "isOperator": false,
+                                              "isDynamic": true,
+                                              "dynamicKey": "Value_DamageSystemValue"
+                                            },
+                                            {
+                                              "isOperator": true,
+                                              "operation": "Mul"
+                                            }
+                                          ]
+                                        },
+                                        "trueDamage": true,
+                                        "ignoreModifyDamage": true
+                                      },
+                                      "hitPattern": {
+                                        "onHitEffectName": "",
+                                        "hitImpulseType": "LV1"
+                                      }
+                                    }
+                                  },
+                                  "targetType": "Enemy"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindBase_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_WindBase_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_WindBase_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindBase"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_WindBase_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_WindLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WindLv1",
+      "abilitySpecials": {
+        "Value_ElemMasteryDelta": {
+          "type": "float",
+          "dynamicValue": 100.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindLv1_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_ElemMasteryDelta"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindLv1_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WindLv2",
+      "abilitySpecials": {
+        "Value_ElemMasteryDelta": {
+          "type": "float",
+          "dynamicValue": 200.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindLv2_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_ElemMasteryDelta"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindLv2_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WindLv3",
+      "abilitySpecials": {
+        "Value_ElemMasteryDelta": {
+          "type": "float",
+          "dynamicValue": 400.0
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 10.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindLv3_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByElementReactionMixin",
+              "entityTypes": [
+                "Monster"
+              ],
+              "reactionTypes": [
+                "SwirlFire",
+                "SwirlElectric",
+                "SwirlWater",
+                "SwirlIce"
+              ],
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Other",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_BuoyantCombat_WindLv3_CD",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalPos",
+                      "target": "Other",
+                      "key": "_Ability_BuoyantCombat_WindLv3Pos",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        },
+                        "onGround": true
+                      },
+                      "setTarget": false
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindLv3_CD_Team"
+                    },
+                    {
+                      "$type": "MoleMole.Config.CreateGadget",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Ability_BuoyantCombat_WindLv3Pos",
+                        "directionKey": ""
+                      },
+                      "gadgetID": 44000009,
+                      "campID": 1001,
+                      "campTargetType": "Enemy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_ElemMasteryDelta"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_WindLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_WindLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_WindLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_WindLv3_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_WindLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_WindLv3GadgetSkill_WindZone",
+      "modifiers": {
+        "ActivityAbility_BuoyantCombat_WindLv3_WindZone": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.WindZoneMixin",
+              "shapeName": "CircleR5",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.8
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "alongGround": true
+              },
+              "strength": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.5
+              },
+              "attenuation": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              },
+              "innerRadius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "reverse": true,
+              "targetType": "All",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ],
+                  "reject": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetWeight",
+                  "logic": "LesserOrEqual",
+                  "weight": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  }
+                }
+              ],
+              "modifierName": ""
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Shrink_Wind"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "banDrop": true,
+              "banExp": true,
+              "killSelfType": "Disappear"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": false,
+                          "fixedValue": 5.0
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true,
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ActivityAbility_BuoyantCombat_WindLv3_WindZone"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_GatherBase",
+      "abilitySpecials": {
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "Value_ElementDurability": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_DamagePercentage": {
+          "type": "float",
+          "dynamicValue": 2.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherBase": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack",
+                    "Elemental_Art",
+                    "Elemental_Art_Hold",
+                    "Elemental_Art_Extra",
+                    "Elemental_Burst"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_GatherBase_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherBase_CD_Team"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Other",
+                  "key": "_Temp_POS",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget"
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "target": "Other",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Shrink_Wind_Once"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_LevelEntity_TowerBuff_SwirlDoFieldPos",
+                    "directionKey": ""
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "target": "Caster",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Temp_POS",
+                        "directionKey": ""
+                      },
+                      "height": 6.0,
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 6.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamagePercentage"
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "enBreak": 100.0
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV4",
+                        "retreatType": "ByHitDirectionInverse",
+                        "hitHaltTimeScale": 0.05
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherBase_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_GatherBase_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_GatherBase_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherBase"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_GatherBase_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_GatherLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_GatherLv1",
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv1_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv1_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_GatherLv2",
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv2_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv2_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_GatherLv3",
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 8.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv3_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_GatherLv3_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Other",
+                  "key": "_Ability_BuoyantCombat_GatherLv3Pos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv3_CD_Team"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_GatherLv3_Type",
+                  "useLimitRange": true,
+                  "randomInRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_BuoyantCombat_GatherLv3_Type",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "compareType": "LessAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.FireEffect",
+                      "effectPattern": {
+                        "isDynamic": false,
+                        "fixedValue": "Eff_Avatar_ShockWave_Fire"
+                      },
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                        "directionKey": ""
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.TriggerAttackEvent",
+                      "attackEvent": {
+                        "attackPattern": {
+                          "$type": "MoleMole.Config.ConfigAttackSphere",
+                          "triggerType": "TriggerNoRepeat",
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                            "directionKey": ""
+                          },
+                          "radius": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 5.0
+                          }
+                        },
+                        "attackInfo": {
+                          "attackTag": "",
+                          "attenuationTag": "",
+                          "attenuationGroup": "default",
+                          "attackProperty": {
+                            "damagePercentageRatio": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 0.0
+                            },
+                            "elementType": "Fire",
+                            "elementDurability": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 50.0
+                            },
+                            "ignoreAttackerProperty": true,
+                            "enBreak": 0.0,
+                            "damageExtra": {
+                              "isFormula": true,
+                              "formula": [
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageRate"
+                                },
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageSystemValue"
+                                },
+                                {
+                                  "isOperator": true,
+                                  "operation": "Mul"
+                                }
+                              ]
+                            },
+                            "trueDamage": true,
+                            "ignoreModifyDamage": true
+                          },
+                          "hitPattern": {
+                            "onHitEffectName": "",
+                            "hitImpulseType": "LV1"
+                          }
+                        }
+                      },
+                      "targetType": "Enemy"
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "target": "Team",
+                          "key": "_ActivityAbility_BuoyantCombat_GatherLv3_Type",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 2.0
+                          },
+                          "compareType": "LessAndEqual"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.FireEffect",
+                          "effectPattern": {
+                            "isDynamic": false,
+                            "fixedValue": "Eff_Avatar_ShockWave_Electric"
+                          },
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                            "directionKey": ""
+                          }
+                        },
+                        {
+                          "$type": "MoleMole.Config.TriggerAttackEvent",
+                          "attackEvent": {
+                            "attackPattern": {
+                              "$type": "MoleMole.Config.ConfigAttackSphere",
+                              "triggerType": "TriggerNoRepeat",
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                                "directionKey": ""
+                              },
+                              "radius": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 5.0
+                              }
+                            },
+                            "attackInfo": {
+                              "attackTag": "",
+                              "attenuationTag": "",
+                              "attenuationGroup": "default",
+                              "attackProperty": {
+                                "damagePercentageRatio": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 0.0
+                                },
+                                "elementType": "Electric",
+                                "elementDurability": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 50.0
+                                },
+                                "ignoreAttackerProperty": true,
+                                "enBreak": 0.0,
+                                "damageExtra": {
+                                  "isFormula": true,
+                                  "formula": [
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageRate"
+                                    },
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageSystemValue"
+                                    },
+                                    {
+                                      "isOperator": true,
+                                      "operation": "Mul"
+                                    }
+                                  ]
+                                },
+                                "trueDamage": true,
+                                "ignoreModifyDamage": true
+                              },
+                              "hitPattern": {
+                                "onHitEffectName": "",
+                                "hitImpulseType": "LV1"
+                              }
+                            }
+                          },
+                          "targetType": "Enemy"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.Predicated",
+                          "targetPredicates": [
+                            {
+                              "$type": "MoleMole.Config.ByTargetGlobalValue",
+                              "target": "Team",
+                              "key": "_ActivityAbility_BuoyantCombat_GatherLv3_Type",
+                              "value": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 3.0
+                              },
+                              "compareType": "LessAndEqual"
+                            }
+                          ],
+                          "successActions": [
+                            {
+                              "$type": "MoleMole.Config.FireEffect",
+                              "effectPattern": {
+                                "isDynamic": false,
+                                "fixedValue": "Eff_Avatar_ShockWave_Water"
+                              },
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                                "directionKey": ""
+                              }
+                            },
+                            {
+                              "$type": "MoleMole.Config.TriggerAttackEvent",
+                              "attackEvent": {
+                                "attackPattern": {
+                                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                                  "triggerType": "TriggerNoRepeat",
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                                    "directionKey": ""
+                                  },
+                                  "radius": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 5.0
+                                  }
+                                },
+                                "attackInfo": {
+                                  "attackTag": "",
+                                  "attenuationTag": "",
+                                  "attenuationGroup": "default",
+                                  "attackProperty": {
+                                    "damagePercentageRatio": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 0.0
+                                    },
+                                    "elementType": "Water",
+                                    "elementDurability": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 50.0
+                                    },
+                                    "ignoreAttackerProperty": true,
+                                    "enBreak": 0.0,
+                                    "damageExtra": {
+                                      "isFormula": true,
+                                      "formula": [
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageRate"
+                                        },
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageSystemValue"
+                                        },
+                                        {
+                                          "isOperator": true,
+                                          "operation": "Mul"
+                                        }
+                                      ]
+                                    },
+                                    "trueDamage": true,
+                                    "ignoreModifyDamage": true
+                                  },
+                                  "hitPattern": {
+                                    "onHitEffectName": "",
+                                    "hitImpulseType": "LV1"
+                                  }
+                                }
+                              },
+                              "targetType": "Enemy"
+                            }
+                          ],
+                          "failActions": [
+                            {
+                              "$type": "MoleMole.Config.FireEffect",
+                              "effectPattern": {
+                                "isDynamic": false,
+                                "fixedValue": "Eff_Avatar_ShockWave_Ice"
+                              },
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                                "directionKey": ""
+                              }
+                            },
+                            {
+                              "$type": "MoleMole.Config.TriggerAttackEvent",
+                              "attackEvent": {
+                                "attackPattern": {
+                                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                                  "triggerType": "TriggerNoRepeat",
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_BuoyantCombat_GatherLv3Pos",
+                                    "directionKey": ""
+                                  },
+                                  "radius": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 5.0
+                                  }
+                                },
+                                "attackInfo": {
+                                  "attackTag": "",
+                                  "attenuationTag": "",
+                                  "attenuationGroup": "default",
+                                  "attackProperty": {
+                                    "damagePercentageRatio": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 0.0
+                                    },
+                                    "elementType": "Ice",
+                                    "elementDurability": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 50.0
+                                    },
+                                    "ignoreAttackerProperty": true,
+                                    "enBreak": 0.0,
+                                    "damageExtra": {
+                                      "isFormula": true,
+                                      "formula": [
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageRate"
+                                        },
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageSystemValue"
+                                        },
+                                        {
+                                          "isOperator": true,
+                                          "operation": "Mul"
+                                        }
+                                      ]
+                                    },
+                                    "trueDamage": true,
+                                    "ignoreModifyDamage": true
+                                  },
+                                  "hitPattern": {
+                                    "onHitEffectName": "",
+                                    "hitImpulseType": "LV1"
+                                  }
+                                }
+                              },
+                              "targetType": "Enemy"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_GatherLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_GatherLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_GatherLv3_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_GatherLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_CriticalBase",
+      "abilitySpecials": {
+        "Value_BonusCriticalHurt": {
+          "type": "float",
+          "dynamicValue": 0.25
+        },
+        "Value_BonusCritical": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalBase_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_BonusCriticalHurt"
+            }
+          },
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalBase": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ModifyDamageMixin",
+              "ignoreEventInfo": true,
+              "damagePercentageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "bonusCritical": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Value_BonusCritical"
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_AutoMatron_WeakTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalBase_Property"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalBase"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_CriticalLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_CriticalLv1",
+      "abilitySpecials": {
+        "Value_CriticalHurt": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv1_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_CriticalHurt"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv1_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_CriticalLv2",
+      "abilitySpecials": {
+        "Value_CriticalHurt": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv2_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_CriticalHurt"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv2_Property"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_CriticalLv3",
+      "abilitySpecials": {
+        "Value_CriticalHurt": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "Value_AttackCD": {
+          "type": "float",
+          "dynamicValue": 3.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv3_Property": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_CriticalHurtDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_CriticalHurt"
+            }
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_CriticalLv3_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv3_CD_Team"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Other",
+                  "key": "_Ability_BuoyantCombat_CriticalLv3Pos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "target": "Other",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Stages_GainWave_01"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_Ability_BuoyantCombat_CriticalLv3Pos",
+                    "directionKey": ""
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "target": "Caster",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Ability_BuoyantCombat_CriticalLv3Pos",
+                        "directionKey": ""
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 5.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "ignoreAttackerProperty": true,
+                        "enBreak": 0.0,
+                        "damageExtra": {
+                          "isFormula": true,
+                          "formula": [
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageRate"
+                            },
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageSystemValue"
+                            },
+                            {
+                              "isOperator": true,
+                              "operation": "Mul"
+                            }
+                          ]
+                        },
+                        "trueDamage": true,
+                        "ignoreModifyDamage": true
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "",
+                        "hitImpulseType": "LV1"
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_CriticalLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_CriticalLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_CriticalLv3_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_CriticalLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_ShieldBase",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ActivityAbility_BuoyantCombat_ShieldBase_Check",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_NoBuff",
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_HasBuff"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 3.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_ShieldCostMinusRatio": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "Value_CD": {
+          "type": "float",
+          "dynamicValue": 3.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldBase_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldBase_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_NoBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_HasBuff"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_HasBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldBase_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "target": "Self",
+                  "type": "All"
+                }
+              ],
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster",
+                    "Gadget"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "ActivityAbility_BuoyantCombat_ShieldBase_DoDamage"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_CD_Team"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Bullet"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "TargetOriginOwner",
+                      "modifierName": "ActivityAbility_BuoyantCombat_ShieldBase_DoDamage"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_CD_Team"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "ActivityAbility_BuoyantCombat_ShieldBase_DoDamage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.05
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Stages_ShieldOnBeingHit"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "target": "Applier",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "strikeType": "Default",
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageRate"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true,
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "cameraShake": {}
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_CD_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_CD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_ShieldBase_CD",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_ShieldBase_CD"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_Property": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ShieldCostMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_ShieldCostMinusRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldBase_Property"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_ShieldBase_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_ShieldLv1",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ActivityAbility_BuoyantCombat_ShieldLv1_Check",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_NoBuff",
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_HasBuff"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv1_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv1_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_NoBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_HasBuff"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_HasBuff": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv1_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_ShieldLv2",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ActivityAbility_BuoyantCombat_ShieldLv2_Check",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_NoBuff",
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_HasBuff"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv2_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv2_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_NoBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_HasBuff"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_HasBuff": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv2_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_BuoyantCombat_ShieldLv3",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ActivityAbility_BuoyantCombat_ShieldLv3_Check",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_NoBuff",
+            "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_HasBuff"
+          ]
+        }
+      ],
+      "abilitySpecials": {
+        "Value_AttackRatio": {
+          "type": "float",
+          "dynamicValue": 0.5
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_Interval": {
+          "type": "float",
+          "dynamicValue": 2.0
+        },
+        "Value_DamageCD": {
+          "type": "float",
+          "dynamicValue": 8.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShield",
+                  "type": "All"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_Check",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_NoBuff": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_HasBuff"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_HasBuff": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Value_AttackRatio"
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 1,
+                "sortType": "Random",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "Enemy",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_DamageModifier"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_CD_Team"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 1,
+                "sortType": "Random",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "Enemy",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ANIMAL_ENTITY_TYPE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_DamageModifier"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_CD_Team"
+                }
+              ]
+            }
+          ],
+          "isLimitedProperties": true
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_DamageModifier": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "chance": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.5
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "target": "Caster",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Burst_Down_Ice"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "target": "Caster",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf"
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.5
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementType": "Ice",
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "ignoreAttackerProperty": true,
+                        "enBreak": 0.0,
+                        "damageExtra": {
+                          "isFormula": true,
+                          "formula": [
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageRate"
+                            },
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageSystemValue"
+                            },
+                            {
+                              "isOperator": true,
+                              "operation": "Mul"
+                            }
+                          ]
+                        },
+                        "trueDamage": true,
+                        "ignoreModifyDamage": true
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "",
+                        "hitImpulseType": "LV1"
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Avatar_Burst_Down_Lightning"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "target": "Caster",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf"
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.5
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementType": "Electric",
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 50.0
+                        },
+                        "ignoreAttackerProperty": true,
+                        "enBreak": 0.0,
+                        "damageExtra": {
+                          "isFormula": true,
+                          "formula": [
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageRate"
+                            },
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Value_DamageSystemValue"
+                            },
+                            {
+                              "isOperator": true,
+                              "operation": "Mul"
+                            }
+                          ]
+                        },
+                        "trueDamage": true,
+                        "ignoreModifyDamage": true
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "",
+                        "hitImpulseType": "LV1"
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_CD_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Value_DamageCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ClearGlobalValue",
+              "key": "_ActivityAbility_BuoyantCombat_ShieldLv3_CD"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_BuoyantCombat_ShieldLv3_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

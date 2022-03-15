@@ -1,0 +1,4119 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Bullet_WhiteBox",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_SceneObj_RayLaunchEquipmen_Bullet"
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "GV_IsMirror",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "Target Is Mirror！！！！！"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "ignoreMassive": true,
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "MichiaeMatsuri_Ray",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 0.0,
+                    "trueDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV1",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Alliance"
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "Target IS NOT MIRROR！！！！！！！"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_RayShooter",
+      "modifiers": {
+        "Reminder_NotHost": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600098
+            }
+          ]
+        },
+        "ShootController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByAvatarIsHost"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.TriggerBullet",
+                      "bulletID": 70330133,
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                        "attachPointName": "ShootPoint"
+                      }
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NotHost"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_SceneObj_RayLaunchEquipmen_Active"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ShootController"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_RayPuzzle_Base",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Eff"
+        }
+      ],
+      "modifiers": {
+        "Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayReflexEquipment_Base"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_HuaRongDaoPlat",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Glow_0"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Glow_A"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 203,
+          "modifierName": "Wait"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_HUARONGDAO_MOVE",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Huarongdao_Select"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Glow_0": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "Huarongdao",
+              "patternName": "_EmissionStrength",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Wait": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Huarongdao_Select": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_MuralPuzzlePiece_01"
+              }
+            }
+          ]
+        },
+        "Glow_A": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "Huarongdao",
+              "patternName": "_EmissionStrength",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 20.0
+              }
+            }
+          ]
+        }
+      },
+      "onFieldEnter": [
+        {
+          "$type": "MoleMole.Config.ServerLuaCall",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGadgetState",
+              "gadgetState": 203
+            }
+          ],
+          "luaCallType": "FromGroup",
+          "funcName": "SLC_Huarongdao_Selecte",
+          "paramNum": 1,
+          "param1": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "param2": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "param3": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onFieldExit": [
+        {
+          "$type": "MoleMole.Config.ServerLuaCall",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGadgetState",
+              "gadgetState": 203
+            }
+          ],
+          "luaCallType": "FromGroup",
+          "funcName": "SLC_Huarongdao_Selecte",
+          "paramNum": 1,
+          "param1": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "param2": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "param3": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_HuaRongDaoPlat_Base",
+      "modifiers": {
+        "LifeTime": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_SceneObj_MuralPuzzle_Show"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "LifeTime"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_HuaRongDaoPlat_CreateEff",
+      "modifiers": {
+        "LifeTime": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "LifeTime"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Hurarongdao_Interact",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Normal_Eff"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "Normal_Eff_2"
+        }
+      ],
+      "modifiers": {
+        "Normal_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_MuralPuzzle_Idle"
+              }
+            }
+          ]
+        },
+        "Normal_Eff_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_MuralPuzzle_Idle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Mirror",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Reflex"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Refraction"
+        }
+      ],
+      "modifiers": {
+        "Reflex": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayReflexEquipment_Ice_Idle"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_Ray"
+                  ]
+                }
+              ],
+              "bulletID": 70330133,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByReflection"
+                },
+                "attachPointName": "ShootPoint",
+                "attachPointTargetType": "Self"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Fire"
+                }
+              ],
+              "param1": 201
+            }
+          ]
+        },
+        "Refraction": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayReflexEquipment_Water_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayReflexEquipment_Water_Dis"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.TriggerBullet",
+              "target": "Target",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_Ray"
+                  ]
+                }
+              ],
+              "bulletID": 70330133,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByRefraction",
+                  "LEBCKKLNIIO": 90.0
+                },
+                "attachPointName": "ShootPoint",
+                "attachPointTargetType": "Self"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Ice"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "GV_IsMirror",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Absorb",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Normal"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Active"
+        }
+      ],
+      "modifiers": {
+        "Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayAbsorbEquipment_P_Idle"
+              }
+            }
+          ]
+        },
+        "Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RayAbsorbEquipment_Y_Idle"
+              }
+            }
+          ]
+        },
+        "AbsorbController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_Ray"
+                  ]
+                }
+              ],
+              "param1": 201
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "GV_IsMirror",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "AbsorbController"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Challengestarter_Circle",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "removeEff"
+        }
+      ],
+      "modifiers": {
+        "AddEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState"
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 201
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 201,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 202
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "removeEff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AddEffect"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AddEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Challengestarter_01",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 204,
+          "modifierName": "Lock"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "removeEff"
+        }
+      ],
+      "modifiers": {
+        "AddEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState"
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 201
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 201,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 202
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "Eff_Default": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "State",
+              "type": "Int",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "Eff_GearSart": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "State",
+              "type": "Int",
+              "value": 201,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "removeEff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AddEffect"
+            }
+          ]
+        },
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkChallenge_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkChallenge_Dis"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        },
+        "Reminder_NotHost": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600098
+            }
+          ]
+        },
+        "Reminder_NoLevel": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600097
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AddEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Challengestarter_02",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 204,
+          "modifierName": "Lock"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "removeEff"
+        }
+      ],
+      "modifiers": {
+        "AddEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState"
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 201
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 201,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 202
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "removeEff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AddEffect"
+            }
+          ]
+        },
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Idle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Open"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 6.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        },
+        "Reminder_NotHost": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600098
+            }
+          ]
+        },
+        "Reminder_NoLevel": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600097
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AddEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Challengestarter_03",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 204,
+          "modifierName": "Lock"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "removeEff"
+        }
+      ],
+      "modifiers": {
+        "AddEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState"
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 201
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 201,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGadgetState",
+                  "gadgetState": 202
+                }
+              ],
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ]
+        },
+        "removeEff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "State",
+              "type": "Int",
+              "value": 202,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Challengestarter_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AddEffect"
+            }
+          ]
+        },
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Idle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Open"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffectPoint"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 11.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        },
+        "Reminder_NotHost": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600098
+            }
+          ]
+        },
+        "Reminder_NoLevel": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600097
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AddEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Chest_01",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "CanOpen"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 103,
+          "modifierName": "Lock_LV1"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 104,
+          "modifierName": "Lock_LV2"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 105,
+          "modifierName": "Lock_LV3"
+        }
+      ],
+      "modifiers": {
+        "CanOpen": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnableGadgetIntee",
+              "enable": true
+            }
+          ]
+        },
+        "Reminder_NotHost": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600098
+            }
+          ]
+        },
+        "Reminder_NoLevel": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowReminder",
+              "muteRemoteAction": true,
+              "id": 600097
+            }
+          ]
+        },
+        "Lock_LV1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_01_Idle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableGadgetIntee"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_01_Open"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        },
+        "Lock_LV2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Idle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableGadgetIntee"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Open"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 6.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        },
+        "Lock_LV3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Idle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.EnableGadgetIntee"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Open"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "TargetTeam",
+                      "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 11.0
+                      },
+                      "compareType": "MoreThanAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Target",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByAvatarIsHost"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.ExecuteGadgetLua"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.DebugLog",
+                          "content": "CRYSTALLOG: U R NOT HOST!"
+                        },
+                        {
+                          "$type": "MoleMole.Config.ApplyModifier",
+                          "target": "Target",
+                          "modifierName": "Reminder_NotHost"
+                        }
+                      ]
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "CRYSTALLOG: LEVEL TO LOW!"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Target",
+                      "modifierName": "Reminder_NoLevel"
+                    }
+                  ]
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.DebugLog",
+                  "content": "CRYSTALLOG: NOT WIDGET ATTACK!"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Chest_02",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 101,
+          "modifierName": "Lock"
+        }
+      ],
+      "modifiers": {
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_02_Open"
+              }
+            }
+          ]
+        },
+        "OpenSwitch": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAvatarIsHost"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "TargetTeam",
+                  "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "OpenSwitch"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Chest_03",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 101,
+          "modifierName": "Lock"
+        }
+      ],
+      "modifiers": {
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightChest_03_Open"
+              }
+            }
+          ]
+        },
+        "OpenSwitch": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAvatarIsHost"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "TargetTeam",
+                  "key": "SGV_MichiaeMatsuri_CrystalLevel",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "MoreThan"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "OpenSwitch"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Ore",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Gather_Ore"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Unlock"
+        }
+      ],
+      "modifiers": {
+        "Unlock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Limbo",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "param1": 1
+            }
+          ]
+        },
+        "Gather_Ore": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Limbo",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkMineral_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkMineral_Dis"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAvatarIsHost"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ExecuteGadgetLua",
+                  "param1": 201
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkPlant",
+      "abilitySpecials": {
+        "tempValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "AnimatorController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "GV_SHOW_MODEL",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "ShowModel"
+              ]
+            }
+          ]
+        },
+        "ShowModel": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "param1": 1
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Item_Hint_Small"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkPlant_01_Show"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "DarkPlant",
+              "patternName": "_DissolveValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "KLFPNAEMEBH": true,
+              "EJCIIHGMEHL": 1,
+              "lerpTime": 1.0
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "doOffStage": true,
+              "renderNames": [
+                "Property_Prop_DarkPlant_Shader_01_Vo"
+              ]
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua"
+            },
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "DarkPlant",
+              "patternName": "_DissolveValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "KLFPNAEMEBH": true,
+              "EJCIIHGMEHL": 1,
+              "lerpTime": 1.0
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "doOffStage": true,
+              "renderNames": [
+                "Property_Prop_DarkPlant_Shader_01_Vo"
+              ],
+              "setEnable": true
+            }
+          ]
+        },
+        "CheckPlayer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "GV_AROUND_PLAYER",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR5H4",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "TargetTeam",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "SGV_MichiaeMatsuri_CrystalEnergy",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "MoreThan"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_GV_Has_MichiaecasketCrystal",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.AddGlobalValue",
+                      "target": "Caster",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "key": "GV_AROUND_PLAYER",
+                      "maxValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "minValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "GV_AROUND_PLAYER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "GV_SHOW_MODEL",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "GV_SHOW_MODEL",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "AnimatorController"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "CheckPlayer"
+        },
+        {
+          "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+          "matName": "DarkPlant",
+          "patternName": "_DissolveValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+          "doOffStage": true,
+          "renderNames": [
+            "Property_Prop_DarkPlant_Shader_01_Vo"
+          ],
+          "setEnable": true
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "GV_AROUND_PLAYER",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_RotatingStair",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Angle_1"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Angle_2"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "Angle_3"
+        }
+      ],
+      "modifiers": {
+        "StairController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "luaCallType": "FromGroup",
+              "funcName": "SLC_DarkStair_SetState",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Angle_1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider1"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider2"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider3"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RotatingStair_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint1"
+              }
+            }
+          ]
+        },
+        "Angle_2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider1"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider2"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider3"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RotatingStair_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint2"
+              }
+            }
+          ]
+        },
+        "Angle_3": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider1"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider2"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider3"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RotatingStair_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "AttachPoint3"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "StairController"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkPlatform",
+      "abilitySpecials": {
+        "tempValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "HideDefault": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "DarkPlatform",
+              "patternName": "_DissolveValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "doOffStage": true,
+              "renderNames": [
+                "Property_Ani_Prop_InvisiblePlatform_Shader_01_Vo"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider"
+              ]
+            }
+          ]
+        },
+        "AnimatorController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "GV_SHOW_MODEL",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "ShowModel"
+              ]
+            }
+          ]
+        },
+        "ShowModel": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "DarkPlatform",
+              "patternName": "_DissolveValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "KLFPNAEMEBH": true,
+              "EJCIIHGMEHL": 1,
+              "lerpTime": 1.0
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "doOffStage": true,
+              "renderNames": [
+                "Property_Ani_Prop_InvisiblePlatform_Shader_01_Vo"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAudio",
+              "operation": {
+                "$type": "MoleMole.Config.ConfigAudioEventOp",
+                "operation": {
+                  "text": "Play_amb_sceneObj_gear_invisiblePlatform_01_in"
+                }
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "param1": 201
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetMaterialParamFloatByTransform",
+              "matName": "DarkPlatform",
+              "patternName": "_DissolveValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "KLFPNAEMEBH": true,
+              "EJCIIHGMEHL": 1,
+              "lerpTime": 1.0
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "Collider"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "doOffStage": true,
+              "renderNames": [
+                "Property_Ani_Prop_InvisiblePlatform_Shader_01_Vo"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua"
+            }
+          ]
+        },
+        "CheckPlayer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "GV_AROUND_PLAYER",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR15H30",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "TargetTeam",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "SGV_MichiaeMatsuri_CrystalEnergy",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "MoreThan"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_GV_Has_MichiaecasketCrystal",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.AddGlobalValue",
+                      "target": "Caster",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "key": "GV_AROUND_PLAYER",
+                      "maxValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "minValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "GV_AROUND_PLAYER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "GV_SHOW_MODEL",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "GV_SHOW_MODEL",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "GV_AROUND_PLAYER",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "HideDefault"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "AnimatorController"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "CheckPlayer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_BrightArea",
+      "modifiers": {
+        "LifeTime": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BrightArea_Born"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BrightArea_Idle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR5H4",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ReviveCrystalEnergy"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BrightArea_Die"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR5H4",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ReviveCrystalEnergy"
+            }
+          ]
+        },
+        "ReviveCrystalEnergy": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddRegionalPlayVarValue",
+              "BBBPHHMNIBL": "MichiaeMatsuriCrystalEnergy",
+              "EDKFOOIMGOL": 5.0
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddRegionalPlayVarValue",
+              "BBBPHHMNIBL": "MichiaeMatsuriCrystalEnergy",
+              "EDKFOOIMGOL": 5.0
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "LifeTime"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_SBuff_Energy",
+      "modifiers": {
+        "SERVER_revive_crystalenergy": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddRegionalPlayVarValue",
+              "BBBPHHMNIBL": "MichiaeMatsuriCrystalEnergy",
+              "EDKFOOIMGOL": 10.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_TransPoint_Interact",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Lock"
+        }
+      ],
+      "modifiers": {
+        "Lock": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AnchorCorruption_01_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AnchorCorruption_01_Disappear"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkNightTowerPassword",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "PassWord_A"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "PassWord_B"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "PassWord_C"
+        }
+      ],
+      "modifiers": {
+        "PassWord_A": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "PassWord_B": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "PassWord_C": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_TopBeamTransmitter",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Smoke"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Light"
+        }
+      ],
+      "modifiers": {
+        "Smoke": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_TopBeamTransmitter_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_TopBeamTransmitter_Dis"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAvatarIsHost"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ExecuteGadgetLua",
+                  "param1": 201
+                }
+              ]
+            }
+          ]
+        },
+        "Light": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_TopBeamTransmitter_Dis_Idle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_EnergySrouce",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_EnergySource_Idle"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_EnergySource_Dis"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkNightTower_Base",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightTower_P_Idle"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightTower_Seal"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -2.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightTower_P_Dis"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightTower_SealDis"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": -2.5
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_BeamTransmitter",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Active"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BeamTransmitter_Idle"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "MichiaeMatsuri_CrystalAttack"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ExecuteGadgetLua",
+                  "param1": 201
+                }
+              ]
+            }
+          ]
+        },
+        "Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BeamTransmitter_Pured"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BeamTransmitter_Goacross"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_ResurrectionCircle",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_SceneObj_BeamTransmitter_Goacross"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkNightOperationBranch",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Active"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightOperationBranch_P_Idle"
+              }
+            }
+          ]
+        },
+        "Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DarkNightOperationBranch_Y_Idle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DarkNightOperationBranch_Light",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Active"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DirectionSign_Straight_P"
+              }
+            }
+          ]
+        },
+        "Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DirectionSign_Straight_Y"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_DiplodermaSpecialBornBS",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Idle"
+        }
+      ],
+      "modifiers": {
+        "Idle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DiplodermaSpecialBornBS_01_Appear"
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_DiplodermaSpecialBornBS_01_Disappear"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Offering",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "ShowEff"
+        }
+      ],
+      "modifiers": {
+        "ShowEff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_OfferingLampStatue_Recover"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Ritual_Lamp",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "Normal"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Active"
+        }
+      ],
+      "modifiers": {
+        "Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.ExecuteGadgetLua",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHitElement",
+                  "element": "Electric"
+                }
+              ],
+              "param1": 201
+            }
+          ]
+        },
+        "Active": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RitualLantern_01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_Possession",
+      "modifiers": {
+        "Eff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Possession_01_Active"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Eff"
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_SceneObj_Possession_01_Buff"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_MichiaeMatsuri_ReviveCircle",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_FAKE_REVIVE_GADGET",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  }
+]

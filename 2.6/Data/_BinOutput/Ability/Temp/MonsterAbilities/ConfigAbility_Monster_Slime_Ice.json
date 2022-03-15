@@ -1,0 +1,1459 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_02_IceState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.IceFloorMixin",
+          "width": 0.75,
+          "height": 0.75,
+          "doAction": {
+            "$type": "MoleMole.Config.AttachModifier",
+            "target": "Other",
+            "modifierName": "UNIQUE_IceSurface"
+          }
+        }
+      ],
+      "modifiers": {
+        "IceState": {
+          "modifierName": "",
+          "elementType": "Frozen",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 50.0
+          },
+          "isElementDurabilityMutable": false,
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachAbilityStateResistance",
+              "resistanceListID": 14002
+            }
+          ]
+        },
+        "UNIQUE_IceSurface": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Ice",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 80.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "IceState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_03_IceState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_JUMPATTACK_FLAG",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.0
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.9
+            }
+          ],
+          "modifierNameSteps": [
+            "IceFloor_Trigger"
+          ]
+        }
+      ],
+      "modifiers": {
+        "IceState": {
+          "modifierName": "",
+          "elementType": "Frozen",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 50.0
+          },
+          "isElementDurabilityMutable": false
+        },
+        "IceFloor_Trigger": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.IceFloorMixin",
+              "width": 1.5,
+              "height": 1.5,
+              "doAction": {
+                "$type": "MoleMole.Config.AttachModifier",
+                "target": "Other",
+                "modifierName": "UNIQUE_IceSurface"
+              }
+            }
+          ]
+        },
+        "UNIQUE_IceSurface": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementType": "Ice",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 80.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "IceState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_03_Shield",
+      "abilitySpecials": {
+        "ElementShield_DurabilityImprove": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "ElementShield_GapReduce": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Shield": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Frozen",
+          "elementDurability": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 200.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "ElementShield_DurabilityImprove"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 200.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ElementShieldMixin",
+              "elementType": "Ice",
+              "showDamageText": "",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "useMutiPlayerFixData": true,
+              "updateShieldByMaxHp": true
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToElementDurabilityMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": true,
+                  "formula": [
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 60.0
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": true,
+                      "dynamicKey": "ElementShield_DurabilityImprove"
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Mul"
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 60.0
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Add"
+                    }
+                  ]
+                },
+                {
+                  "isFormula": true,
+                  "formula": [
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 120.0
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": true,
+                      "dynamicKey": "ElementShield_DurabilityImprove"
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Mul"
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 120.0
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Add"
+                    }
+                  ]
+                },
+                {
+                  "isFormula": true,
+                  "formula": [
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 200.0
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": true,
+                      "dynamicKey": "ElementShield_DurabilityImprove"
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Mul"
+                    },
+                    {
+                      "isOperator": false,
+                      "isDynamic": false,
+                      "fixedValue": 201.0
+                    },
+                    {
+                      "isOperator": true,
+                      "operation": "Add"
+                    }
+                  ]
+                }
+              ],
+              "modifierNameSteps": [
+                "Shield_Stage03",
+                "Shield_Stage02",
+                "Shield_Stage01"
+              ]
+            }
+          ],
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.4
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ShieldState",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBoxShield"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "MonsterAffix_ElementRecovery_Ice"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBoxShield"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "ShieldState"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "ShieldReborn"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_ShieldHit"
+              }
+            }
+          ]
+        },
+        "MonsterAffix_ElementRecovery_Ice": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTERAFFIX_ELEMENTRECOVERY_ICE",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "forceByCaster": true
+                }
+              ],
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 30.0
+              },
+              "modifierName": "UNIQUE_Shield",
+              "elementType": "Frozen",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 300.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "ShieldReborn": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 18.0
+              },
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "ElementShield_GapReduce"
+              },
+              {
+                "isOperator": true,
+                "operation": "Mul"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 18.0
+              },
+              {
+                "isOperator": true,
+                "operation": "Add"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "RebornGCD",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "RebornGCD"
+            }
+          ]
+        },
+        "Shield_Stage01": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice01"
+              ],
+              "setEnable": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice01"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_ShieldDestroy_Stage01"
+              }
+            }
+          ]
+        },
+        "Shield_Stage02": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice02"
+              ],
+              "setEnable": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice02"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_ShieldDestroy_Stage02"
+              }
+            }
+          ]
+        },
+        "Shield_Stage03": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice03"
+              ],
+              "setEnable": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetRenderersEnable",
+              "renderNames": [
+                "Ice03"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_ShieldDestroy_Stage03"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTERAFFIX_ELEMENTSHIELD_DURABILITYIMPROVE",
+          "overrideMapKey": "ElementShield_DurabilityImprove"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_MONSTERAFFIX_ELEMENTSHIELD_GAPREDUCE",
+          "overrideMapKey": "ElementShield_GapReduce"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Shield"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Shield"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_TestTool_ShieldDestroy",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Shield"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_JumpGround_castShadow",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerSetCastShadow"
+        },
+        {
+          "$type": "MoleMole.Config.EnablePushColliderName",
+          "pushColliderNames": [
+            "PushCollider"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_JUMPATTACK_FLAG",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ActCameraShake",
+          "cameraShake": {
+            "shakeType": "CustomVector",
+            "shakeRange": 0.06,
+            "shakeTime": 0.15,
+            "shakeDir": {
+              "y": 1.0
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_JumpGround_Alert",
+      "modifiers": {
+        "JumpGround_Alert": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Fire_JumpGround_Alert"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByRushToPoint"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerSetCastShadow",
+              "castShadow": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "JumpGround_Alert"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_JumpGround_Attack",
+      "modifiers": {
+        "UNIQUE_MonsterEliteAffix_DefaultState": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "GV_TD_MONSTER_SLIME_SHIELDREBORN",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "skillEliteSetID": 1
+            },
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "GV_TD_MONSTER_SLIME_SHIELDREBORN",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "skillEliteSetID": 3
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_ELITEAFFIX_TAG",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "modifierName": "UNIQUE_MonsterEliteAffix_DefaultState"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackCircle",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "height": 1.5,
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 200.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV5",
+                "hitHaltTimeScale": 0.01
+              },
+              "forceCameraShake": true,
+              "cameraShake": {
+                "shakeType": "CustomVector",
+                "shakeRange": 0.12,
+                "shakeTime": 0.15,
+                "shakeDistance": 25.0,
+                "shakeDir": {
+                  "y": -1.0
+                }
+              }
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -1.0
+          },
+          "key": "_JUMPATTACK_FLAG",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_ThrowAtk",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "ThrowAttack_BS_01",
+            "ThrowAttack_BS_02",
+            "ThrowAttack_BS_03"
+          ],
+          "modifierName": "ThrowAttack_BS_01"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "ThrowAttack_BS_02",
+            "ThrowAttack_BS_03"
+          ],
+          "modifierName": "ThrowAttack_BS_02"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "ThrowAttack_BS_03"
+          ],
+          "modifierName": "ThrowAttack_BS_03"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "ThrowAttack_BS",
+            "ThrowAttack_BS_01",
+            "ThrowAttack_BS_02",
+            "ThrowAttack_BS_03"
+          ],
+          "modifierName": "ThrowAttack_BS"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "ThrowAttack_AS"
+          ],
+          "modifierName": "SetAimPoint"
+        }
+      ],
+      "modifiers": {
+        "SetAimPoint": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "target": "SelfAttackTarget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "onGround": true
+              },
+              "gadgetID": 42001001,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ResetAIAttackTarget"
+            }
+          ]
+        },
+        "ThrowAttack_BS_01": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_01"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_Missile_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_01"
+              }
+            }
+          ]
+        },
+        "ThrowAttack_BS_02": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_Missile_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_02"
+              }
+            }
+          ]
+        },
+        "ThrowAttack_BS_03": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_03"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_Missile_BS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "IceCone_03"
+              }
+            }
+          ]
+        },
+        "ThrowAttack_BS": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "ThrowAttack_BS_01"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "ThrowAttack_BS_02"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "ThrowAttack_BS_03"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetSelfAttackTarget",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "topLimit": 1,
+            "sortType": "Reversed",
+            "configID": 42001001
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42001004,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            },
+            "attachPointName": "IceCone_01"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42001004,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            },
+            "attachPointName": "IceCone_02"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42001004,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget"
+            },
+            "attachPointName": "IceCone_03"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_Cone_Loop",
+      "modifiers": {
+        "UNIQUE_IceCone_Loop": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Frozen",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Cone_Missile"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_IceCone_Loop"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_Cone_Explode",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Slime_Ice_Cone_AS"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_IceCone_Loop"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.25
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Ice",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Blunt",
+                "enBreak": 100.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV3",
+                "hitHaltTimeScale": 0.05
+              },
+              "cameraShake": {
+                "shakeRange": 0.06,
+                "shakeTime": 0.09
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_BlowAtk",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.CreateGadget",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            },
+            "onGround": true,
+            "alongGround": true
+          },
+          "gadgetID": 42001005,
+          "campID": 4001,
+          "campTargetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_Fog",
+      "modifiers": {
+        "Ice_Fog": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Slime_Ice_Fog"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "target": "Owner",
+              "boolID": "Protected",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "target": "Owner",
+              "boolID": "Protected"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    }
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "Group1",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.3
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "enBreak": 0.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Ice_Fog"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_02_AnimationSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAttack"
+          ],
+          "endNormalizedTime": 0.25,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Slime_Ice_03_AnimationSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "endNormalizedTime": 0.54,
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "JumpAttack"
+          ],
+          "endNormalizedTime": 0.2,
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ThrowAttack"
+          ],
+          "endNormalizedTime": 0.56,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "BlowAttack"
+          ],
+          "endNormalizedTime": 0.24,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  }
+]

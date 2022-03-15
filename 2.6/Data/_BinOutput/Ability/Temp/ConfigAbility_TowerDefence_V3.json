@@ -1,0 +1,167 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Ability_TowerDefence_V3_Avatar_SkillCDMinus",
+      "abilitySpecials": {
+        "SkillCDMinusRatio": {
+          "type": "float",
+          "dynamicValue": 0.35
+        }
+      },
+      "modifiers": {
+        "M_SkillCDMinus": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_SkillCDMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "SkillCDMinusRatio"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "M_SkillCDMinus"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Ability_TowerDefence_V3_Avatar_Strengthen",
+      "modifiers": {
+        "M_Strengthen": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_FlyForwardSpeedMaxRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.25
+            },
+            "Animator_AttackSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.25
+            },
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.25
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "M_Strengthen"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Ability_TowerDefence_V3_Avatar_Weaken_Monster_Health_Recover",
+      "modifiers": {
+        "M_Weaken_Monster_Health_Recover": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR4",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Target",
+                  "modifierName": "M_Monster_Health_Recover"
+                }
+              ]
+            }
+          ]
+        },
+        "M_Monster_Health_Recover": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_HealedAddDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DebugLog",
+              "content": "TD_V3: 给怪物上血量回复减弱Modifier"
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_AbyssCarpet_Enhanced"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "M_Weaken_Monster_Health_Recover"
+        }
+      ]
+    }
+  }
+]

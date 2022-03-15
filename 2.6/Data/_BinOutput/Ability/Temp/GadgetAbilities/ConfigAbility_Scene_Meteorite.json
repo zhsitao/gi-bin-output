@@ -1,0 +1,6237 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_Collision_MeteoriteDebuffController",
+      "modifiers": {
+        "AddDebuff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "DebuffTimer"
+            }
+          ]
+        },
+        "DebuffTimer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Element_Crystal_Ice_Shield"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_BombBarrel_01_Explode"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 70900360,
+              "campID": 5001
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "AddDebuff"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Environment_Collision_MeteoriteSeal",
+      "abilitySpecials": {
+        "DebuffDuration": {
+          "type": "float",
+          "dynamicValue": 20.0
+        }
+      },
+      "modifiers": {
+        "Timmer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "DebuffDuration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Eff_Barrier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 150.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ShieldBarMixin",
+              "showDamageText": ""
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01_Imprison"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -10.0
+              },
+              "modifierName": "Eff_Barrier",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 150.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalDir",
+              "key": "_AVATAR_HIT_DIR",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByHitPoint",
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByBackToHitBoxCenter"
+                }
+              },
+              "setTarget": false
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01_ImprisonHit"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByHitPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "direction": {
+                  "$type": "MoleMole.Config.ConfigDirectionByBackToHitBoxCenter"
+                }
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01_ImprisonBroken"
+              }
+            }
+          ]
+        },
+        "DeBuffController": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR6",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "AttackDebuff"
+            }
+          ]
+        },
+        "AttackDebuff": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "DebuffDuration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.8
+            }
+          },
+          "state": "SpeedDown",
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Eff_Barrier"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "DeBuffController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Timmer"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_BigAster",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "modifierName": "GearDefault"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 201,
+          "modifierName": "Mode1"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToGadgetStateMixin",
+          "gadgetState": 202,
+          "modifierName": "Mode2"
+        }
+      ],
+      "abilitySpecials": {
+        "curteamscore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Mode1": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "Blend",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Idle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "attachPoint"
+              }
+            }
+          ]
+        },
+        "Mode2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "Blend",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ]
+        },
+        "GearDefault": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "Blend",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "IS_BIG_ASTER",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "MonsterAffix_Aster_Score",
+      "modifiers": {
+        "AddScore_To_CurAvatar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "key": "AVATAR_ASTER_SCORE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 100.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "sortType": "Nearest",
+            "shapeName": "CircleR5",
+            "campTargetType": "Enemy",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            }
+          ],
+          "modifierName": "AddScore_To_CurAvatar"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_UpLoader",
+      "modifiers": {
+        "SetAbilityEnableT": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable",
+              "enable": true
+            }
+          ]
+        },
+        "SetAbilityEnableF": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ]
+        }
+      },
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "shapeName": "CircleR5",
+            "campTargetType": "Enemy",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            }
+          ],
+          "modifierName": "SetAbilityEnableF"
+        }
+      ],
+      "onFieldEnter": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Target",
+          "modifierName": "SetAbilityEnableT"
+        }
+      ],
+      "onFieldExit": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Target",
+          "modifierName": "SetAbilityEnableF"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_UpLoader_Small",
+      "modifiers": {
+        "SetAbilityEnableT": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable",
+              "enable": true
+            }
+          ]
+        },
+        "SetAbilityEnableF": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ]
+        }
+      },
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "shapeName": "CircleR2",
+            "campTargetType": "Enemy",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            }
+          ],
+          "modifierName": "SetAbilityEnableF"
+        }
+      ],
+      "onFieldEnter": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Target",
+          "modifierName": "SetAbilityEnableT"
+        }
+      ],
+      "onFieldExit": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Target",
+          "modifierName": "SetAbilityEnableF"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_ScoreDummy",
+      "abilitySpecials": {
+        "dummyscore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Dummy_Ready": {
+          "modifierName": "",
+          "elementType": "Wind",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 101.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ShieldBarMixin",
+              "revert": true,
+              "showDamageText": ""
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValueToTarget",
+              "srcTarget": "Team",
+              "dstTarget": "Self",
+              "srcKey": "AVATAR_ASTER_SCORE",
+              "dstKey": "DUMMY_ASTER_SCORE"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "ASTER_CUR",
+              "overrideMapKey": "curteamscore"
+            },
+            {
+              "$type": "MoleMole.Config.AddElementDurability",
+              "doOffStage": true,
+              "value": {
+                "isFormula": true,
+                "formula": [
+                  {
+                    "isOperator": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  {
+                    "isOperator": false,
+                    "isDynamic": true,
+                    "dynamicKey": "dummyscore"
+                  },
+                  {
+                    "isOperator": true,
+                    "operation": "Sub"
+                  }
+                ]
+              },
+              "modifierName": "Dummy_Ready",
+              "elementType": "Wind",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 101.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  },
+                  "damageExtra": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Dummy_Ready"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "IS_SCOREDUMMY",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "DUMMY_ASTER_SCORE",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_PlayEntity_Esay",
+      "abilitySpecials": {
+        "MaxScore": {
+          "type": "float",
+          "dynamicValue": 200.0
+        },
+        "SubScore": {
+          "type": "float",
+          "dynamicValue": -0.3
+        },
+        "CurScore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Init": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "AVATAR_ASTER_SCORE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_SkillButtonController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility",
+              "skillID": 20003
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility"
+            }
+          ]
+        },
+        "UNIQUE_TuntController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "AVATAR_ASTER_SCORE",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 99.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "SetTaunt"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "SetTaunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "Avatar_Taunt"
+            }
+          ]
+        },
+        "Avatar_Taunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerTaunt",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR25",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "careValue": 50.0
+            }
+          ]
+        },
+        "UNIQUE_PlayerNotify": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "clear_energy",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_DamageUp_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 2,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ChannelBlock_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 3,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ScoreMult_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 4,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_DebuffTimer_Team"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 5,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_UperScoreMult_Arua"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_DebuffTimer_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyModifierWithSharedDurabilityMixin",
+              "modifierName": "DebuffTimer"
+            }
+          ]
+        },
+        "DebuffTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 70900360,
+              "campID": 5001,
+              "byServer": true
+            }
+          ]
+        },
+        "UNIQUE_Team_DamageUp_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 120.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_DamageUp_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ]
+        },
+        "Team_DamageUp_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "DamageUp": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            }
+          ],
+          "isLimitedProperties": true,
+          "buffID": 10001
+        },
+        "UNIQUE_Team_ChannelBlock_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ChannelBlock_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ]
+        },
+        "ChannelBlock": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 10.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ChannelBlock_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_ScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 120.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ]
+        },
+        "ScoreMult": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Circle"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_UperScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 120.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_UperScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_UperScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_AvatarStateController": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_State"
+            },
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "AVATAR_ASTER_SCORE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "MaxScore"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Channel_Loop",
+                "Channel_AS",
+                "Channel_BS"
+              ],
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "AvatarInChannel": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "target": "Caster"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "LineEff_FindAster"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Active"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "state": "Interrupt"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "CurLocalAvatar",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "CHANNEL_BLOCK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.CopyGlobalValue",
+                  "srcTarget": "Team",
+                  "dstTarget": "Caster",
+                  "srcKey": "AVATAR_ASTER_SCORE",
+                  "dstKey": "AVATAR_ASTER_SCORE"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Caster",
+                  "globalValueKey": "AVATAR_ASTER_SCORE",
+                  "overrideMapKey": "CurScore"
+                },
+                {
+                  "$type": "MoleMole.Config.ServerLuaCall",
+                  "target": "Team",
+                  "luaCallType": "CurScenePlay",
+                  "funcName": "UpdateAsterInterrupt",
+                  "param1": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param2": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param3": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.7
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "CurScore"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "CurLocalAvatar",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "EndChannelTrigger"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "target": "CurLocalAvatar",
+                  "modifierName": "AvatarInChannel"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_RecevieFinish"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "target": "Team",
+              "luaCallType": "CurScenePlay",
+              "funcName": "UpdateAsterProgress",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "LineEff_FindAster": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Applier",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Recevie"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffPoint",
+                "attachPointTargetType": "Self"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "Init"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_AvatarStateController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_PlayerNotify"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_TuntController"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "AVATAR_ASTER_SCORE",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "target": "CurLocalAvatar",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "StartChannelTrigger"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "AvatarInChannel"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_PlayEntity_Normal",
+      "abilitySpecials": {
+        "MaxScore": {
+          "type": "float",
+          "dynamicValue": 200.0
+        },
+        "SubScore": {
+          "type": "float",
+          "dynamicValue": -0.5
+        },
+        "CurScore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Init": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "AVATAR_ASTER_SCORE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_SkillButtonController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility",
+              "skillID": 20004
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility"
+            }
+          ]
+        },
+        "UNIQUE_TuntController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "AVATAR_ASTER_SCORE",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 99.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "SetTaunt"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "SetTaunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "Avatar_Taunt"
+            }
+          ]
+        },
+        "Avatar_Taunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerTaunt",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR25",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "careValue": 50.0
+            }
+          ]
+        },
+        "UNIQUE_PlayerNotify": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "clear_energy",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_DamageUp_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 2,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ChannelBlock_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 3,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ScoreMult_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 4,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_DebuffTimer_Team"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 5,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_UperScoreMult_Arua"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_DebuffTimer_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyModifierWithSharedDurabilityMixin",
+              "modifierName": "DebuffTimer"
+            }
+          ]
+        },
+        "DebuffTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 70900360,
+              "campID": 5001,
+              "byServer": true
+            }
+          ]
+        },
+        "UNIQUE_Team_DamageUp_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_DamageUp_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ]
+        },
+        "Team_DamageUp_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "DamageUp": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            }
+          ],
+          "isLimitedProperties": true,
+          "buffID": 10001
+        },
+        "UNIQUE_Team_ChannelBlock_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ChannelBlock_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ]
+        },
+        "ChannelBlock": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 10.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ChannelBlock_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_ScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ]
+        },
+        "ScoreMult": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Circle"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_UperScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_UperScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_UperScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_AvatarStateController": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_State"
+            },
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "AVATAR_ASTER_SCORE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "MaxScore"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Channel_Loop",
+                "Channel_AS",
+                "Channel_BS"
+              ],
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "AvatarInChannel": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "target": "Caster"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "LineEff_FindAster"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Active"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "state": "Interrupt"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "CurLocalAvatar",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "CHANNEL_BLOCK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.CopyGlobalValue",
+                  "srcTarget": "Team",
+                  "dstTarget": "Caster",
+                  "srcKey": "AVATAR_ASTER_SCORE",
+                  "dstKey": "AVATAR_ASTER_SCORE"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Caster",
+                  "globalValueKey": "AVATAR_ASTER_SCORE",
+                  "overrideMapKey": "CurScore"
+                },
+                {
+                  "$type": "MoleMole.Config.ServerLuaCall",
+                  "target": "Team",
+                  "luaCallType": "CurScenePlay",
+                  "funcName": "UpdateAsterInterrupt",
+                  "param1": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param2": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param3": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.5
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "CurScore"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "CurLocalAvatar",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "EndChannelTrigger"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "target": "CurLocalAvatar",
+                  "modifierName": "AvatarInChannel"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_RecevieFinish"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "target": "Team",
+              "luaCallType": "CurScenePlay",
+              "funcName": "UpdateAsterProgress",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "LineEff_FindAster": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Applier",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Recevie"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffPoint",
+                "attachPointTargetType": "Self"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "Init"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_AvatarStateController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_PlayerNotify"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_TuntController"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "AVATAR_ASTER_SCORE",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "target": "CurLocalAvatar",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "StartChannelTrigger"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "AvatarInChannel"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_PlayEntity_Hard",
+      "abilitySpecials": {
+        "MaxScore": {
+          "type": "float",
+          "dynamicValue": 300.0
+        },
+        "SubScore": {
+          "type": "float",
+          "dynamicValue": -1.0
+        },
+        "CurScore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Init": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "AVATAR_ASTER_SCORE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_SkillButtonController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility",
+              "skillID": 20005
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility"
+            }
+          ]
+        },
+        "UNIQUE_TuntController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "AVATAR_ASTER_SCORE",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 99.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "SetTaunt"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "SetTaunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "Avatar_Taunt"
+            }
+          ]
+        },
+        "Avatar_Taunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerTaunt",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR25",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "careValue": 50.0
+            }
+          ]
+        },
+        "UNIQUE_PlayerNotify": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "clear_energy",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_DamageUp_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 2,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ChannelBlock_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 3,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ScoreMult_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 4,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_DebuffTimer_Team"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 5,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_UperScoreMult_Arua"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_DebuffTimer_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyModifierWithSharedDurabilityMixin",
+              "modifierName": "DebuffTimer"
+            }
+          ]
+        },
+        "DebuffTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 70900360,
+              "campID": 5001,
+              "byServer": true
+            }
+          ]
+        },
+        "UNIQUE_Team_DamageUp_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_DamageUp_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ]
+        },
+        "Team_DamageUp_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "DamageUp": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            }
+          ],
+          "isLimitedProperties": true,
+          "buffID": 10001
+        },
+        "UNIQUE_Team_ChannelBlock_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ChannelBlock_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ]
+        },
+        "ChannelBlock": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 10.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ChannelBlock_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_ScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ]
+        },
+        "ScoreMult": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Circle"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_UperScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_UperScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_UperScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_AvatarStateController": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_State"
+            },
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "AVATAR_ASTER_SCORE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "MaxScore"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Channel_Loop",
+                "Channel_AS",
+                "Channel_BS"
+              ],
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "AvatarInChannel": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "target": "Caster"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "LineEff_FindAster"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Active"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "state": "Interrupt"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "CurLocalAvatar",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "CHANNEL_BLOCK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ServerLuaCall",
+                  "target": "Team",
+                  "luaCallType": "CurScenePlay",
+                  "funcName": "UpdateAsterInterrupt",
+                  "param1": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param2": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param3": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "CurLocalAvatar",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "EndChannelTrigger"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "target": "CurLocalAvatar",
+                  "modifierName": "AvatarInChannel"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_RecevieFinish"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "target": "Team",
+              "luaCallType": "CurScenePlay",
+              "funcName": "UpdateAsterProgress",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "LineEff_FindAster": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Applier",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Recevie"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffPoint",
+                "attachPointTargetType": "Self"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "Init"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_AvatarStateController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_PlayerNotify"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_TuntController"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "AVATAR_ASTER_SCORE",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "target": "CurLocalAvatar",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "StartChannelTrigger"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "AvatarInChannel"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "SceneObj_Aster_PlayEntity_Single",
+      "abilitySpecials": {
+        "MaxScore": {
+          "type": "float",
+          "dynamicValue": 400.0
+        },
+        "SubScore": {
+          "type": "float",
+          "dynamicValue": -0.3
+        },
+        "CurScore": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Init": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "AVATAR_ASTER_SCORE",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_SkillButtonController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility",
+              "skillID": 20006
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityEnable"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ShowExtraAbility"
+            }
+          ]
+        },
+        "UNIQUE_TuntController": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "AVATAR_ASTER_SCORE",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 99.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 100.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "SetTaunt"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "SetTaunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "Avatar_Taunt"
+            }
+          ]
+        },
+        "Avatar_Taunt": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerTaunt",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR25",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                }
+              ],
+              "careValue": 50.0
+            }
+          ]
+        },
+        "UNIQUE_PlayerNotify": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "clear_energy",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 1,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_DamageUp_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 2,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ChannelBlock_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 3,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_ScoreMult_Arua"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 4,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_DebuffTimer_Team"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.PlayerUidNotifyMixin",
+              "opParam": "random_buff_aster",
+              "opType": 5,
+              "logic": "Equal",
+              "actions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_Team_UperScoreMult_Arua"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_DebuffTimer_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ApplyModifierWithSharedDurabilityMixin",
+              "modifierName": "DebuffTimer"
+            }
+          ]
+        },
+        "DebuffTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Debuff_01"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 70900360,
+              "campID": 5001,
+              "byServer": true
+            }
+          ]
+        },
+        "UNIQUE_Team_DamageUp_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_DamageUp_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "DamageUp"
+            }
+          ]
+        },
+        "Team_DamageUp_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "DamageUp": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "state": "AttackUp",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            }
+          ],
+          "isLimitedProperties": true,
+          "buffID": 10001
+        },
+        "UNIQUE_Team_ChannelBlock_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ChannelBlock_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ChannelBlock"
+            }
+          ]
+        },
+        "ChannelBlock": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 10.0
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_MQ1002_XueyueBuff"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHANNEL_BLOCK",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ChannelBlock_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_ScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_ScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Wave"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "All",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "modifierName": "ScoreMult"
+            }
+          ]
+        },
+        "ScoreMult": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_PROGRESS_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_ScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_02_Circle"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Team_UperScoreMult_Arua": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Team_UperScoreMult_Arua_Eff"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "ASTER_ENERGY_RATIO",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Team_UperScoreMult_Arua_Eff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Aster_Buff_01"
+              }
+            }
+          ]
+        },
+        "UNIQUE_AvatarStateController": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Avatar_State"
+            },
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "AVATAR_ASTER_SCORE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "MaxScore"
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Avatar_State": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Channel_Loop",
+                "Channel_AS",
+                "Channel_BS"
+              ],
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "AvatarInChannel": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "target": "Caster"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "modifierName": "LineEff_FindAster"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Active"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetExtraAbilityState",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "CurLocalAvatar",
+                  "key": "CHARGE_SUCCESS",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ],
+              "state": "Interrupt"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "CurLocalAvatar",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "CHANNEL_BLOCK",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.CopyGlobalValue",
+                  "srcTarget": "Team",
+                  "dstTarget": "Caster",
+                  "srcKey": "AVATAR_ASTER_SCORE",
+                  "dstKey": "AVATAR_ASTER_SCORE"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                  "target": "Caster",
+                  "globalValueKey": "AVATAR_ASTER_SCORE",
+                  "overrideMapKey": "CurScore"
+                },
+                {
+                  "$type": "MoleMole.Config.ServerLuaCall",
+                  "target": "Team",
+                  "luaCallType": "CurScenePlay",
+                  "funcName": "UpdateAsterInterrupt",
+                  "param1": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param2": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "param3": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.7
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "CurScore"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "key": "AVATAR_ASTER_SCORE",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "target": "CurLocalAvatar",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "EndChannelTrigger"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "target": "CurLocalAvatar",
+                  "modifierName": "AvatarInChannel"
+                }
+              ]
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "CurLocalAvatar",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "CHARGE_SUCCESS",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR50",
+                "centerBasedOn": "CurLocalAvatar",
+                "campTargetType": "AllExceptSelf",
+                "campBasedOn": "CurLocalAvatar",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "IS_BIG_ASTER",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_RecevieFinish"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "target": "Team",
+              "luaCallType": "CurScenePlay",
+              "funcName": "UpdateAsterProgress",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "CurLocalAvatar",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "EndChannelTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "AvatarInChannel"
+            }
+          ]
+        },
+        "LineEff_FindAster": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Applier",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_AsterLarge_Recevie"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "EffPoint",
+                "attachPointTargetType": "Self"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "Init"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_AvatarStateController"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_PlayerNotify"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_TuntController"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "AVATAR_ASTER_SCORE",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "target": "CurLocalAvatar",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "StartChannelTrigger"
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_SkillButtonController"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "AvatarInChannel"
+        }
+      ]
+    }
+  }
+]

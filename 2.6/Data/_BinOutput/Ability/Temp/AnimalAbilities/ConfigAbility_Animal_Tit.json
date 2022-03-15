@@ -1,0 +1,300 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_Activity_SPecial_01",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Special_Hit"
+          ],
+          "startNormalizedTime": 0.13,
+          "endNormalizedTime": 0.51,
+          "angularSpeed": 540.0,
+          "attackTrigger": ""
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_Activity_Tit_Invincible": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible",
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar",
+                    "Monster",
+                    "Gadget",
+                    "Bullet"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "BeHitTrigger"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Activity_Tit_Invincible"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_AIStateInitial",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            1
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                202
+              ]
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.DoActionByPoseIDMixin",
+          "poseIDs": [
+            2
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                101,
+                102,
+                103,
+                104,
+                201
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_Random",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "FlyDown",
+            "TakeOff",
+            "FlyUp",
+            "Disappear"
+          ],
+          "modifierName": "Random_MoveSpeedRatio"
+        }
+      ],
+      "abilitySpecials": {
+        "RandomSpeed": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "Random_MoveSpeedRatio": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_MoveSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "RandomSpeed"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetRandomOverrideMapValue",
+          "valueRangeMax": 0.1,
+          "valueRangeMin": -0.1,
+          "overrideMapKey": "RandomSpeed"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_FlyDown",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FlyDown"
+          ],
+          "modifierName": "FlyState_Down"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Land"
+          ],
+          "modifierName": "FlyDown_Land"
+        }
+      ],
+      "modifiers": {
+        "FlyState_Down": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FlyState",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "FlyState"
+            }
+          ]
+        },
+        "FlyDown_Land": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddGravityScale": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -1.99
+            }
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FlyState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_FlyUp",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "FlyState",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_ToWander",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "WanderState",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_ToIdle",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "WanderState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Animal_Tit_Disappear",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAnimatorStateIDMixin",
+          "stateIDs": [
+            "Disappear"
+          ],
+          "modifierName": "DisappearTimer"
+        }
+      ],
+      "modifiers": {
+        "DisappearTimer": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.StartDither",
+              "duration": 4.0
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "Disappear",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "duration": 3.5,
+              "banDrop": true,
+              "banExp": true,
+              "killSelfType": "Disappear"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

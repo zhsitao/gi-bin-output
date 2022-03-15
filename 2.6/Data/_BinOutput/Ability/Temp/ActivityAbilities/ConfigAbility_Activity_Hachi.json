@@ -1,0 +1,89 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Activity_Hachi_TeamAbility",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueNoInitMixin",
+          "globalValueKey": "SGV_CAN_CLEAR_THREAT",
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Blank"
+          ]
+        }
+      ],
+      "modifiers": {
+        "IsInHachiSneak": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "PlayerDieHandle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "doOffStage": true,
+              "luaCallType": "CurChallengeGroup",
+              "funcName": "SLC_PlayerDie_DuringQuest",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "IsInHachiSneak"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "AllPlayerAvatars",
+          "modifierName": "PlayerDieHandle"
+        }
+      ]
+    }
+  }
+]

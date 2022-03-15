@@ -1,0 +1,1142 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_Rock_Spike",
+      "modifiers": {
+        "Spike_Damage_Timer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackBox",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.25
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.75
+                      }
+                    },
+                    "positionKey": "_MONSTER_SHAMAN_ROCK_SPIKE_POS",
+                    "directionKey": ""
+                  },
+                  "size": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.25
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 2.5
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.25
+                    }
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Rock",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Default",
+                    "enBreak": 50.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeType": "CustomVector",
+                    "shakeRange": 0.04,
+                    "shakeTime": 0.09,
+                    "shakeDistance": 7.5,
+                    "shakeDir": {
+                      "y": 1.0
+                    }
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "SelfAttackTarget",
+          "key": "_MONSTER_SHAMAN_ROCK_SPIKE_POS",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByPredicatePoint",
+            "onGround": true,
+            "alongGround": true,
+            "timeForPredictive": 0.75
+          },
+          "setTarget": false
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Shaman_Rock_NormalAttack_Spike"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "positionKey": "_MONSTER_SHAMAN_ROCK_SPIKE_POS",
+            "directionKey": ""
+          }
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Spike_Damage_Timer"
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_SHAMAN_ROCK_SPIKE",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_SHAMAN_ROCK_SPIKE",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -10.0
+              },
+              "key": "_MONSTER_SHAMAN_ROCK_SPIKE",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "NormalAttackTrigger"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_Rock_CreatePillar",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "CreatePillar_BS",
+            "CreatePillar"
+          ],
+          "modifierName": "CreatePillar_BS"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            901
+          ],
+          "modifierName": "ReturnToBorn_DestoryPillar"
+        }
+      ],
+      "modifiers": {
+        "ReturnToBorn_DestoryPillar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42103011
+              },
+              "modifierName": "UNIQUE_RockPillar_Element"
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                401
+              ]
+            }
+          ]
+        },
+        "CreatePillar_BS": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR10",
+                "campTargetType": "SelfCamp",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasFeatureTag",
+                      "featureTagIDs": [
+                        4001,
+                        4901
+                      ]
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasFeatureTag",
+                      "featureTagIDs": [
+                        4004,
+                        4901
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Target",
+                  "modifierName": "CreatePillar_Ready"
+                }
+              ]
+            }
+          ]
+        },
+        "CreatePillar_Ready": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_MONSTER_SHAMAN_ROCK_CREATEPILLAR",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_CreateBS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -10.0
+              },
+              "key": "_MONSTER_SHAMAN_ROCK_CREATEPILLAR",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "shapeName": "CircleR15",
+            "campTargetType": "SelfCamp",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Monster"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByAny",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4001,
+                    4901
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4004,
+                    4901
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_MONSTER_SHAMAN_ROCK_CREATEPILLAR",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "target": "Target",
+              "lifeByOwnerIsAlive": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget",
+                "onGround": true
+              },
+              "gadgetID": 42103011,
+              "byServer": true
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "CreatePillar_BS"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42103011
+          },
+          "modifierName": "UNIQUE_RockPillar_Element"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_RockPillar_Element",
+      "modifiers": {
+        "UNIQUE_RockPillar_Element": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementType": "Rock",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 300.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ElementShieldMixin",
+              "elementType": "Rock",
+              "showDamageText": "",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "onShieldSuccess": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_BeHitFailed"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                }
+              ],
+              "onShieldFailed": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_BeHitSuccess"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_MONSTER_SHAMAN_ROCK_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToElementDurabilityMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 300.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 600.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Empty",
+                "RockPillar_Stage01"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Create"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "target": "Owner",
+              "boolID": "OnPillar",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "target": "Owner",
+              "boolID": "OnPillar"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "Owner",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "StopSupportAtk"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasElement",
+                  "element": "Rock"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Disappear"
+                  }
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Explosion"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackCircle",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "offset": {
+                          "x": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          },
+                          "y": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 2.5
+                          },
+                          "z": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 0.0
+                          }
+                        }
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentage": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 100.0
+                        },
+                        "strikeType": "Blunt",
+                        "enBreak": 200.0,
+                        "attackType": "Melee"
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV7"
+                      },
+                      "forceCameraShake": true,
+                      "cameraShake": {
+                        "shakeType": "CustomVector",
+                        "shakeRange": 0.36,
+                        "shakeTime": 0.3,
+                        "shakeDistance": 10.0,
+                        "shakeDir": {
+                          "y": -1.0
+                        }
+                      }
+                    }
+                  },
+                  "targetType": "Alliance"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "duration": 1.0,
+              "hideEntity": true
+            }
+          ]
+        },
+        "Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "RockPillar_Stage01": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "Normal",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Create"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Damaged"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "Damaged",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Create"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_RockPillar_Element"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Rock_EscapeState",
+      "modifiers": {
+        "Shaman_Rock_EscapeState": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.75
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EscapeState",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EscapeState"
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Shaman_Rock_EscapeState"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+              "logic": "Lesser",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            }
+          ],
+          "modifierName": "Shaman_Rock_EscapeState"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_Rock_AnimationSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAttack_BS"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SupportAttack_BS"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "MeleeAttack"
+          ],
+          "endNormalizedTime": 0.15,
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "startNormalizedTime": 0.2,
+          "endNormalizedTime": 0.75,
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Rock_SupportAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "SupportAttack"
+          ],
+          "modifierName": "SupportAttackState"
+        }
+      ],
+      "modifiers": {
+        "SupportAttackState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "WeaponEffect_SupportAttack"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42103011
+              },
+              "modifierName": "Shaman_RockPillar_Resonance"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "SelfAttackTarget",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "logic": "Lesser",
+                  "compareType": "XYZ",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "otherTargets": {
+                    "$type": "MoleMole.Config.SelectTargetsByChildren",
+                    "configID": 42103011
+                  },
+                  "modifierName": "Shaman_RockPillar_Resonance"
+                }
+              ],
+              "failActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "StopSupportAtk"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "WeaponEffect_SupportAttack": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_WeaponElement_Resonance"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_SupportAttack_Gather"
+              }
+            }
+          ]
+        },
+        "Shaman_RockPillar_Resonance": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Shaman_RockPillar_Resonance_Effect"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Impulse"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "modifierName": "UNIQUE_Shaman_RockPillar_Resonance_Damage"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Shaman_RockPillar_Resonance_Effect"
+            }
+          ],
+          "thinkIntervalIgnoreTimeScale": true
+        },
+        "Shaman_RockPillar_Resonance_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Rock_Pillar_Resonance"
+              }
+            }
+          ]
+        },
+        "UNIQUE_Shaman_RockPillar_Resonance_Damage": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.0
+                  },
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Rock",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 50.0
+                  },
+                  "strikeType": "Default",
+                  "enBreak": 0.0
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "LV4"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

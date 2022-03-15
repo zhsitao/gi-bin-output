@@ -1,0 +1,3037 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_FallingDamage_Aoe",
+      "abilitySpecials": {
+        "Rate": {
+          "type": "float",
+          "dynamicValue": 0.35
+        },
+        "Damage_Rate": {
+          "type": "float",
+          "dynamicValue": 80.0
+        },
+        "DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_FallingDamage_Challenge_Init": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ELECTRIC_CORE_TRIGGER_COUNT",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_FallingDamage_Handler_Challenge": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByStateIDMixin",
+              "stateIDs": [
+                "FallingAnthem_AS_1"
+              ],
+              "exitActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "doOffStage": true,
+                  "modifierName": "UNIQUE_ArenaChallenge2_FallingDamage_Effect_Challenge"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_FallingDamage_Effect_Challenge": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Team",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ELECTRIC_CORE_TRIGGER_COUNT",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "compareType": "MoreThanAndEqual"
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_SceneObj_Arenashake_01"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.TriggerAttackEvent",
+                  "attackEvent": {
+                    "attackPattern": {
+                      "$type": "MoleMole.Config.ConfigAttackSphere",
+                      "triggerType": "TriggerNoRepeat",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf"
+                      },
+                      "radius": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 20.0
+                      }
+                    },
+                    "attackInfo": {
+                      "attackTag": "",
+                      "attenuationTag": "",
+                      "attenuationGroup": "default",
+                      "attackProperty": {
+                        "damagePercentageRatio": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "elementDurability": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "ignoreAttackerProperty": true,
+                        "enBreak": 0.0,
+                        "attackType": "Melee",
+                        "damageExtra": {
+                          "isFormula": true,
+                          "formula": [
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "Damage_Rate"
+                            },
+                            {
+                              "isOperator": false,
+                              "isDynamic": true,
+                              "dynamicKey": "DamageSystemValue"
+                            },
+                            {
+                              "isOperator": true,
+                              "operation": "Mul"
+                            }
+                          ]
+                        },
+                        "trueDamage": true
+                      },
+                      "hitPattern": {
+                        "onHitEffectName": "default",
+                        "hitImpulseType": "LV1"
+                      }
+                    }
+                  },
+                  "targetType": "Enemy"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ELECTRIC_CORE_TRIGGER_COUNT",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ArenaChallenge2_FallingDamage_Handler_Challenge"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_FallingDamage_Challenge_Init"
+        }
+      ],
+      "onRemoved": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "target": "CurTeamAvatars",
+          "modifierName": "UNIQUE_ArenaChallenge2_Atkup_Avatar"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_ELECTRIC_CORE_TRIGGER_COUNT",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT",
+      "abilitySpecials": {
+        "EfficiencyDelta": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "TickTime": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Damage": {
+          "type": "float",
+          "dynamicValue": 80.0
+        },
+        "DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Mixin_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "UNIQUE_ArenaChallenge2_AddEfficiency_Team"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_AddEfficiency_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_TriggerAoeAfterULT_Avatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerUltimateSkill": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "Team",
+                  "modifierName": "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Count"
+                },
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Team",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      },
+                      "compareType": "MoreThan"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "##triggerthunder"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "ActivityAbility_ArenaChallenge2_AOEHandler_TeamAoe"
+                    }
+                  ]
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ]
+        },
+        "ActivityAbility_ArenaChallenge2_AOEHandler_TeamAoe": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "ActivityAbility_ArenaChallenge2_AOEHandler_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Avatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ChargeEfficiencyDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "EfficiencyDelta"
+            }
+          }
+        },
+        "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Count": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "TickTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "ActivityAbility_ArenaChallenge2_AOEHandler_Avatar": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 5,
+                "sortType": "Random",
+                "shapeName": "CircleR12",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Monster"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Monster": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RaioTrunk_01_ThunderFall"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Electric",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "ignoreAttackerProperty": true,
+                  "enBreak": 0.0,
+                  "damageExtra": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Damage"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "DamageSystemValue"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "trueDamage": true,
+                  "ignoreModifyDamage": true
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "Default",
+                  "hitHaltTimeScale": 0.01
+                }
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_AddEfficiency_Mixin_Team"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ArenaChallenge2_TriggerAoeAfterULT_Avatar"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Challenge",
+      "abilitySpecials": {
+        "EfficiencyDelta": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "TickTime": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Damage": {
+          "type": "float",
+          "dynamicValue": 80.0
+        },
+        "Damage_Avatar": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Mixin_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "UNIQUE_ArenaChallenge2_AddEfficiency_Team"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_AddEfficiency_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_TriggerAoeAfterULT_Avatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerUltimateSkill": [
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 10.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Count"
+                },
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Team",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 2.0
+                      },
+                      "compareType": "MoreThan"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.DebugLog",
+                      "content": "##triggerthunder"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "Team",
+                      "modifierName": "ActivityAbility_ArenaChallenge2_AOEHandler_TeamAoe"
+                    }
+                  ]
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ]
+        },
+        "ActivityAbility_ArenaChallenge2_AOEHandler_TeamAoe": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "CurLocalAvatar",
+              "modifierName": "ActivityAbility_ArenaChallenge2_AOEHandler_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_AddEfficiency_Avatar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ChargeEfficiencyDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "EfficiencyDelta"
+            }
+          }
+        },
+        "ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Count": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "TickTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "ActivityAbility_ArenaChallenge2_AOEHandler_Avatar": {
+          "stacking": "Multiple",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 3,
+                "sortType": "Random",
+                "shapeName": "CircleR12",
+                "campTargetType": "Enemy",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Monster"
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "target": "CurLocalAvatar",
+              "key": "ArenaChallenge2_ThunderPos",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "target": "CurLocalAvatar",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              },
+              "gadgetID": 44000308,
+              "campID": 1001,
+              "campTargetType": "SelfCamp"
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Monster": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_RaioTrunk_01_ThunderFall"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementType": "Electric",
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 25.0
+                  },
+                  "ignoreAttackerProperty": true,
+                  "enBreak": 0.0,
+                  "damageExtra": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Damage"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "DamageSystemValue"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "trueDamage": true,
+                  "ignoreModifyDamage": true
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "Default",
+                  "hitHaltTimeScale": 0.01
+                }
+              }
+            }
+          ]
+        },
+        "Thunder_Hit": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Ambor_AlertCircle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "ArenaChallenge2_ThunderPos",
+                "directionKey": ""
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_ThunderFall_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "ArenaChallenge2_ThunderPos",
+                "directionKey": ""
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "ArenaChallenge2_ThunderPos",
+                    "directionKey": ""
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Damage_Avatar"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true,
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "Default"
+                  }
+                }
+              },
+              "targetType": "SelfCamp"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_ArenaChallenge2_TriggerAoeAfterULT_Layer",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_AddEfficiency_Mixin_Team"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ArenaChallenge2_TriggerAoeAfterULT_Avatar"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ArenaChallenge2_Thunder_Gadget",
+      "abilitySpecials": {
+        "Damage_Avatar": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "ArenaChallenge2_ThunderAttack": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Ambor_AlertCircle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_ThunderFall_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget"
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Damage_Avatar"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true,
+                    "ignoreModifyDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "Default"
+                  }
+                }
+              },
+              "targetType": "SelfCamp"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "key": "DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ArenaChallenge2_ThunderAttack"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_AtkSpeedAndCDdec",
+      "abilitySpecials": {
+        "AttackSpeed": {
+          "type": "float",
+          "dynamicValue": 0.25
+        },
+        "SkillCDMinusRatio": {
+          "type": "float",
+          "dynamicValue": 0.25
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Mixin_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                }
+              ],
+              "modifierNameSteps": [
+                "Blank",
+                "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Team"
+              ]
+            }
+          ]
+        },
+        "Blank": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Team": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Avatar"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Avatar": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Animator_AttackSpeedRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "AttackSpeed"
+            },
+            "Actor_SkillCDMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "SkillCDMinusRatio"
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_AtkSpeedAndCDdec_Mixin_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_AtkTiggerAoe",
+      "abilitySpecials": {
+        "AttackCD": {
+          "type": "float",
+          "dynamicValue": 2.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 20.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ActivityAbility_ArenaChallenge2_TiggerAoe": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "NormalAttack_01",
+                    "NormalAttack_02",
+                    "NormalAttack_03",
+                    "NormalAttack_04",
+                    "NormalAttack_05",
+                    "NormalAttack_06",
+                    "ExtraAttack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "compareType": "NoneOrEqual"
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Other",
+                  "key": "_Ability_ArenaChallenge2_AoePos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ActivityAbility_ArenaChallenge2_TiggerAoe_CD"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_Type",
+                  "useLimitRange": true,
+                  "randomInRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 4.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Team",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "target": "Team",
+                      "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_Type",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "compareType": "LessAndEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.FireEffect",
+                      "effectPattern": {
+                        "isDynamic": false,
+                        "fixedValue": "Eff_Avatar_ShockWave_Fire"
+                      },
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                        "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                        "directionKey": ""
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.TriggerAttackEvent",
+                      "attackEvent": {
+                        "attackPattern": {
+                          "$type": "MoleMole.Config.ConfigAttackSphere",
+                          "triggerType": "TriggerNoRepeat",
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                            "directionKey": ""
+                          },
+                          "radius": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 5.0
+                          }
+                        },
+                        "attackInfo": {
+                          "attackTag": "",
+                          "attenuationTag": "",
+                          "attenuationGroup": "default",
+                          "attackProperty": {
+                            "damagePercentageRatio": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 0.0
+                            },
+                            "elementType": "Fire",
+                            "elementDurability": {
+                              "isFormula": false,
+                              "isDynamic": false,
+                              "fixedValue": 100.0
+                            },
+                            "ignoreAttackerProperty": true,
+                            "enBreak": 0.0,
+                            "damageExtra": {
+                              "isFormula": true,
+                              "formula": [
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageRate"
+                                },
+                                {
+                                  "isOperator": false,
+                                  "isDynamic": true,
+                                  "dynamicKey": "Value_DamageSystemValue"
+                                },
+                                {
+                                  "isOperator": true,
+                                  "operation": "Mul"
+                                }
+                              ]
+                            }
+                          },
+                          "hitPattern": {
+                            "onHitEffectName": "",
+                            "hitImpulseType": "LV1"
+                          }
+                        }
+                      },
+                      "targetType": "Enemy"
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.Predicated",
+                      "target": "Team",
+                      "targetPredicates": [
+                        {
+                          "$type": "MoleMole.Config.ByTargetGlobalValue",
+                          "target": "Team",
+                          "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_Type",
+                          "value": {
+                            "isFormula": false,
+                            "isDynamic": false,
+                            "fixedValue": 2.0
+                          },
+                          "compareType": "LessAndEqual"
+                        }
+                      ],
+                      "successActions": [
+                        {
+                          "$type": "MoleMole.Config.FireEffect",
+                          "effectPattern": {
+                            "isDynamic": false,
+                            "fixedValue": "Eff_Avatar_ShockWave_Electric"
+                          },
+                          "born": {
+                            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                            "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                            "directionKey": ""
+                          }
+                        },
+                        {
+                          "$type": "MoleMole.Config.TriggerAttackEvent",
+                          "attackEvent": {
+                            "attackPattern": {
+                              "$type": "MoleMole.Config.ConfigAttackSphere",
+                              "triggerType": "TriggerNoRepeat",
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                                "directionKey": ""
+                              },
+                              "radius": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 5.0
+                              }
+                            },
+                            "attackInfo": {
+                              "attackTag": "",
+                              "attenuationTag": "",
+                              "attenuationGroup": "default",
+                              "attackProperty": {
+                                "damagePercentageRatio": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 0.0
+                                },
+                                "elementType": "Electric",
+                                "elementDurability": {
+                                  "isFormula": false,
+                                  "isDynamic": false,
+                                  "fixedValue": 100.0
+                                },
+                                "ignoreAttackerProperty": true,
+                                "enBreak": 0.0,
+                                "damageExtra": {
+                                  "isFormula": true,
+                                  "formula": [
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageRate"
+                                    },
+                                    {
+                                      "isOperator": false,
+                                      "isDynamic": true,
+                                      "dynamicKey": "Value_DamageSystemValue"
+                                    },
+                                    {
+                                      "isOperator": true,
+                                      "operation": "Mul"
+                                    }
+                                  ]
+                                },
+                                "trueDamage": true
+                              },
+                              "hitPattern": {
+                                "onHitEffectName": "",
+                                "hitImpulseType": "LV1"
+                              }
+                            }
+                          },
+                          "targetType": "Enemy"
+                        }
+                      ],
+                      "failActions": [
+                        {
+                          "$type": "MoleMole.Config.Predicated",
+                          "targetPredicates": [
+                            {
+                              "$type": "MoleMole.Config.ByTargetGlobalValue",
+                              "target": "Team",
+                              "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_Type",
+                              "value": {
+                                "isFormula": false,
+                                "isDynamic": false,
+                                "fixedValue": 3.0
+                              },
+                              "compareType": "LessAndEqual"
+                            }
+                          ],
+                          "successActions": [
+                            {
+                              "$type": "MoleMole.Config.FireEffect",
+                              "effectPattern": {
+                                "isDynamic": false,
+                                "fixedValue": "Eff_Avatar_ShockWave_Water"
+                              },
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                                "directionKey": ""
+                              }
+                            },
+                            {
+                              "$type": "MoleMole.Config.TriggerAttackEvent",
+                              "attackEvent": {
+                                "attackPattern": {
+                                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                                  "triggerType": "TriggerNoRepeat",
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                                    "directionKey": ""
+                                  },
+                                  "radius": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 5.0
+                                  }
+                                },
+                                "attackInfo": {
+                                  "attackTag": "",
+                                  "attenuationTag": "",
+                                  "attenuationGroup": "default",
+                                  "attackProperty": {
+                                    "damagePercentageRatio": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 0.0
+                                    },
+                                    "elementType": "Water",
+                                    "elementDurability": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 100.0
+                                    },
+                                    "ignoreAttackerProperty": true,
+                                    "enBreak": 0.0,
+                                    "damageExtra": {
+                                      "isFormula": true,
+                                      "formula": [
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageRate"
+                                        },
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageSystemValue"
+                                        },
+                                        {
+                                          "isOperator": true,
+                                          "operation": "Mul"
+                                        }
+                                      ]
+                                    },
+                                    "trueDamage": true
+                                  },
+                                  "hitPattern": {
+                                    "onHitEffectName": "",
+                                    "hitImpulseType": "LV1"
+                                  }
+                                }
+                              },
+                              "targetType": "Enemy"
+                            }
+                          ],
+                          "failActions": [
+                            {
+                              "$type": "MoleMole.Config.FireEffect",
+                              "effectPattern": {
+                                "isDynamic": false,
+                                "fixedValue": "Eff_Avatar_ShockWave_Ice"
+                              },
+                              "born": {
+                                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                                "directionKey": ""
+                              }
+                            },
+                            {
+                              "$type": "MoleMole.Config.TriggerAttackEvent",
+                              "attackEvent": {
+                                "attackPattern": {
+                                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                                  "triggerType": "TriggerNoRepeat",
+                                  "born": {
+                                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                                    "positionKey": "_Ability_ArenaChallenge2_AoePos",
+                                    "directionKey": ""
+                                  },
+                                  "radius": {
+                                    "isFormula": false,
+                                    "isDynamic": false,
+                                    "fixedValue": 5.0
+                                  }
+                                },
+                                "attackInfo": {
+                                  "attackTag": "",
+                                  "attenuationTag": "",
+                                  "attenuationGroup": "default",
+                                  "attackProperty": {
+                                    "damagePercentageRatio": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 0.0
+                                    },
+                                    "elementType": "Ice",
+                                    "elementDurability": {
+                                      "isFormula": false,
+                                      "isDynamic": false,
+                                      "fixedValue": 100.0
+                                    },
+                                    "ignoreAttackerProperty": true,
+                                    "enBreak": 0.0,
+                                    "damageExtra": {
+                                      "isFormula": true,
+                                      "formula": [
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageRate"
+                                        },
+                                        {
+                                          "isOperator": false,
+                                          "isDynamic": true,
+                                          "dynamicKey": "Value_DamageSystemValue"
+                                        },
+                                        {
+                                          "isOperator": true,
+                                          "operation": "Mul"
+                                        }
+                                      ]
+                                    },
+                                    "trueDamage": true
+                                  },
+                                  "hitPattern": {
+                                    "onHitEffectName": "",
+                                    "hitImpulseType": "LV1"
+                                  }
+                                }
+                              },
+                              "targetType": "Enemy"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ActivityAbility_ArenaChallenge2_TiggerAoe_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "AttackCD"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_TiggerAoe_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "doOffStage": true,
+          "modifierName": "UNIQUE_ActivityAbility_ArenaChallenge2_TiggerAoe"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_KillMonster",
+      "abilitySpecials": {
+        "Damage": {
+          "type": "float",
+          "dynamicValue": 120.0
+        },
+        "DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 8.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_ActivityAbility_ArenaChallenge2_KillMonster_Layer",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 2.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                }
+              ],
+              "modifierNameSteps": [
+                "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv1",
+                "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv2",
+                "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv3"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_KillMonster_Layer",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv1": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv1"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv2"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team_Lv3": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv3"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv1": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.3
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster_CD"
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_KillMonster_Layer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv2": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.4
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster_CD"
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_KillMonster_Layer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Handler_Avatar_Lv3": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Other",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "logic": "Lesser",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.5
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Team",
+                  "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Monster_CD"
+                },
+                {
+                  "$type": "MoleMole.Config.AddGlobalValue",
+                  "target": "Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  },
+                  "key": "_ActivityAbility_ArenaChallenge2_KillMonster_Layer",
+                  "useLimitRange": true,
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Monster": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_EnergyDisk_ExtraAtkWave"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTarget"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.DamageByAttackValue",
+              "attackInfo": {
+                "attackTag": "",
+                "attenuationTag": "",
+                "attenuationGroup": "default",
+                "attackProperty": {
+                  "damagePercentageRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "elementDurability": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 100.0
+                  },
+                  "ignoreAttackerProperty": true,
+                  "strikeType": "Default",
+                  "enBreak": 25.0,
+                  "damageExtra": {
+                    "isFormula": true,
+                    "formula": [
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Damage"
+                      },
+                      {
+                        "isOperator": false,
+                        "isDynamic": true,
+                        "dynamicKey": "DamageSystemValue"
+                      },
+                      {
+                        "isOperator": true,
+                        "operation": "Mul"
+                      }
+                    ]
+                  },
+                  "trueDamage": true
+                },
+                "hitPattern": {
+                  "onHitEffectName": "default",
+                  "hitImpulseType": "Default",
+                  "hitHaltTimeScale": 0.01
+                }
+              }
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_KillMonster_Monster_CD": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_Ability_ArenaChallenge2_KillMonster_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_KillMonster_Handler_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_AtkWeakTriggerThunderAoe",
+      "abilitySpecials": {
+        "CDTime": {
+          "type": "float",
+          "dynamicValue": 4.0
+        },
+        "Value_DamageSystemValue": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Value_DamageRate": {
+          "type": "float",
+          "dynamicValue": 20.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_MONSTER_AutoMatron_WeakTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "_ActivityAbility_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "target": "Team",
+                  "key": "HAS_ELECTRIC_FAIRY_BUFF_Team",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetGlobalPos",
+                  "target": "Target",
+                  "key": "_ABILITY_ArenaChallenge2_AtkWeakTriggerThunderAoe_Pos",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "onGround": true
+                  },
+                  "setTarget": false
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "modifierName": "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_Damage"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_Damage": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Burst_Down_Lightning"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_ABILITY_ArenaChallenge2_AtkWeakTriggerThunderAoe_Pos",
+                "directionKey": ""
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_ABILITY_ArenaChallenge2_AtkWeakTriggerThunderAoe_Pos",
+                    "directionKey": ""
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageRate"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "Value_DamageSystemValue"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "",
+                    "hitImpulseType": "LV1"
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Team",
+              "modifierName": "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD"
+            }
+          ]
+        },
+        "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "CDTime"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ActivityAbility_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_ArenaChallenge2_AtkWeakTriggerThunderAoe_Handler"
+        },
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "Value_DamageSystemValue",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "target": "Team",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_ActivityAbility_ArenaChallenge2_AtkWeakTriggerThunderAoe_CD",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ArenaChallenge2_KillMonsterThunder",
+      "abilitySpecials": {
+        "ThunderDuration": {
+          "type": "float",
+          "dynamicValue": 2.0
+        },
+        "ThunderDamageRatio": {
+          "type": "float",
+          "dynamicValue": 5.0
+        },
+        "ElementLevelCo": {
+          "type": "float",
+          "dynamicValue": 1.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_ArenaChallenge2_KillMonsterThunder_Handler_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "KillMixinModifier"
+            }
+          ]
+        },
+        "KillMixinModifier": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByKillingMixin",
+              "detectWindow": 0.6,
+              "onKill": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Other",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Monster"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.ApplyModifier",
+                      "target": "CurLocalAvatar",
+                      "modifierName": "GetPos"
+                    },
+                    {
+                      "$type": "MoleMole.Config.CreateGadget",
+                      "target": "CurLocalAvatar",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornByTarget"
+                      },
+                      "gadgetID": 44000308,
+                      "campID": 1001,
+                      "campTargetType": "SelfCamp"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "GetPos": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "target": "Applier",
+              "key": "ThunderPos",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf",
+                "bornRandom": {
+                  "$type": "MoleMole.Config.BornRandomFromCenter",
+                  "minRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "maxRandomRange": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "WarningThunder": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "ThunderDuration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Ambor_AlertCircle"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "ThunderPos",
+                "directionKey": ""
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_ThunderFall_01"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "ThunderPos",
+                "directionKey": ""
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackSphere",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "ThunderPos",
+                    "directionKey": ""
+                  },
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "Thuner_Falling",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Electric",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 25.0
+                    },
+                    "ignoreAttackerProperty": true,
+                    "strikeType": "Default",
+                    "enBreak": 0.0,
+                    "damageExtra": {
+                      "isFormula": true,
+                      "formula": [
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "ElementLevelCo"
+                        },
+                        {
+                          "isOperator": false,
+                          "isDynamic": true,
+                          "dynamicKey": "ThunderDamageRatio"
+                        },
+                        {
+                          "isOperator": true,
+                          "operation": "Mul"
+                        }
+                      ]
+                    },
+                    "trueDamage": true
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "retreatType": "ByHitDirection",
+                    "hitHaltTimeScale": 0.05
+                  }
+                }
+              },
+              "targetType": "SelfCamp"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetSystemValueToOverrideMap",
+          "doOffStage": true,
+          "key": "ElementLevelCo",
+          "type": "ElementLevelCo"
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_ArenaChallenge2_KillMonsterThunder_Handler_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

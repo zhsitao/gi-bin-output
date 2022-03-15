@@ -1,0 +1,814 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscleMan_Wallenstein_SteerAttack",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "QuickCombo01"
+          ],
+          "endNormalizedTime": 0.4,
+          "angularSpeed": 480.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "QuickCombo01_2"
+          ],
+          "endNormalizedTime": 0.4,
+          "angularSpeed": 480.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "QuickCombo02"
+          ],
+          "endNormalizedTime": 0.285,
+          "angularSpeed": 240.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "QuickCombo02_2"
+          ],
+          "endNormalizedTime": 0.285,
+          "angularSpeed": 240.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "PowerCombo01"
+          ],
+          "endNormalizedTime": 0.2,
+          "angularSpeed": 480.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "PowerCombo02"
+          ],
+          "startNormalizedTime": 0.1,
+          "endNormalizedTime": 0.2,
+          "angularSpeed": 360.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscleMan_Wallenstein_JumpAttack_RushMove",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "JumpAttack"
+          ],
+          "endNormalizedTime": 0.4,
+          "angularSpeed": 140.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RushMove",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornBySelf",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            }
+          },
+          "minRange": 1.2,
+          "maxRange": 1.2,
+          "timeRange": 0.255
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscleMan_Wallenstein_WhirlAtk_Manage",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "WhirlAtkBS"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "WhirlAtkLoop"
+          ],
+          "endNormalizedTime": 99.0,
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "WhirlAtkLoop"
+          ],
+          "modifierName": "Thoarder_MuscleMan_Wallenstein_WhirlAtk_Loop"
+        },
+        {
+          "$type": "MoleMole.Config.AttackHittingSceneMixin",
+          "onHittingScene": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "CrashTrigger"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ActCameraShake",
+              "cameraShake": {
+                "shakeRange": 0.16,
+                "shakeTime": 0.09,
+                "shakeDistance": 25.0
+              }
+            }
+          ],
+          "animEventIDs": [
+            "Whirl_HitScene"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Thoarder_MuscleMan_Wallenstein_WhirlAtk_Loop": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Thoarder_MuscleMan_Hammer_WhirlAtk_Loop"
+              }
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ],
+                  "useEventSource": true
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "WildSlamLoopEndTrigger"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscleMan_Wallenstein_JumpAtk",
+      "modifiers": {
+        "Thoarder_MuscleMan_Wallenstein_JumpAtk": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.5
+                      }
+                    },
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByEntity",
+                      "angleOffset": {
+                        "x": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        },
+                        "y": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 30.0
+                        },
+                        "z": {
+                          "isFormula": false,
+                          "isDynamic": false,
+                          "fixedValue": 0.0
+                        }
+                      }
+                    }
+                  },
+                  "height": 2.1,
+                  "fanAngle": 180.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.75
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 100.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 200.0,
+                    "attackType": "Melee"
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV5"
+                  },
+                  "cameraShake": {
+                    "shakeType": "HitVector",
+                    "shakeRange": 0.06,
+                    "shakeTime": 0.09,
+                    "shakeDir": {
+                      "y": -1.0
+                    }
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Thoarder_MuscleMan_Wallenstein_JumpAtk"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscicMan_Wallenstein_Throw_Effect",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.BySceneSurfaceType",
+              "filters": [
+                "Water"
+              ],
+              "include": false
+            }
+          ],
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Thoarder_HatchetThrow"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscicMan_Wallenstein_Throw_Damage",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Defender_None_Step"
+          },
+          "scale": 2.0
+        },
+        {
+          "$type": "MoleMole.Config.FireHitEffect",
+          "hitEntity": "",
+          "hitScene": {
+            "defaultEffect": "Eff_Monster_Thoarder_HatchetThrowBullet_HitScene",
+            "surfaceEffect": {
+              "Water": "Eff_Arrow_Fire_Hit_Water"
+            }
+          }
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "Target",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar",
+                "Monster",
+                "Gadget",
+                "Bullet"
+              ]
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackBox",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByCollisionPoint",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": -0.4
+                      }
+                    },
+                    "onGround": true,
+                    "alongGround": true
+                  },
+                  "size": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.6
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.6
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 3.2
+                    }
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.75
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "strikeType": "Slash",
+                    "enBreak": 100.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4",
+                    "hitHaltTimeScale": 0.05
+                  },
+                  "cameraShake": {
+                    "shakeRange": 0.06,
+                    "shakeTime": 0.09
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscicMan_Wallenstein_ThrowHammer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ThrowHammer"
+          ],
+          "endNormalizedTime": 0.1,
+          "angularSpeed": 500.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42504001,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByAttackTarget",
+              "maxAngleType": "Horizontal",
+              "maxAngle": 15.0
+            },
+            "attachPointName": "WeaponL"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscicMan_Wallenstein_ThrowHammer_DistanceCheck",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "ThrowHammer"
+          ],
+          "exitActions": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "ThrowDistance"
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "DistanceCheck_SetBool": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 3.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                  "target": "SelfAttackTarget",
+                  "logic": "GreaterOrEqual",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 5.0
+                  }
+                }
+              ],
+              "boolID": "ThrowDistance",
+              "value": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Thoarder_MuscicMan_Wallenstein_ActivitySkill",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ActivitySkill"
+          ],
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 480.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "FirecrackerHit"
+          ],
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 480.0,
+          "attackTrigger": "",
+          "attackDistance": 3.75
+        }
+      ],
+      "modifiers": {
+        "Thoarder_MuscicMan_Wallenstein_ActivitySkill_Manage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                301
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.UseSkillEliteSet",
+              "skillEliteSetID": 1
+            }
+          ]
+        },
+        "UNIQUE_Thoarder_MuscicMan_Wallenstein_ActivitySkill_Effect": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.BillboardFixedMarkMixin",
+              "prefabName": "Eff_UI_BillBoard_FixedMark_ForAngry"
+            }
+          ],
+          "properties": {
+            "Actor_FireSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_WaterSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_GrassSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_ElecSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_WindSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_IceSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_RockSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.6
+            },
+            "Actor_PhysicalSubHurtDelta": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.8
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Avatar_Properties_Defense_Up"
+              }
+            }
+          ],
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Firecracker"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "Thoarder_MuscicMan_Wallenstein_ActivitySkill_Manage"
+                },
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "FirecrackerHit"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "modifierName": "UNIQUE_Thoarder_MuscicMan_Wallenstein_ActivitySkill_Effect"
+                }
+              ]
+            }
+          ]
+        },
+        "ActivitySkill_ExitBattle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Thoarder_MuscicMan_Wallenstein_ActivitySkill_Effect"
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                301
+              ]
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "doOffStage": true,
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_THOARDER_ELITE_TAG_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "modifierName": "UNIQUE_Thoarder_MuscicMan_Wallenstein_ActivitySkill_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Thoarder_MuscicMan_Wallenstein_ActivitySkill_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Thoarder_Male_Shovel_WildSlam_BS_01"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            "attachPointName": "MoveHead"
+          }
+        }
+      ]
+    }
+  }
+]

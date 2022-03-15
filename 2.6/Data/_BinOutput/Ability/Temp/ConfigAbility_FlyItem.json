@@ -1,0 +1,101 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Activity_FlyItem",
+      "modifiers": {
+        "UNIQUE_Flying_SpeedUp_Team": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 30.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Team",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Widget_FlySpeedUp_Use_Loop"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "AttachEffect_Fly"
+            }
+          ]
+        },
+        "AttachEffect_Fly": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "Fly",
+                "Fall"
+              ],
+              "modifierName": "AttachEffect_Fly_FireEffect"
+            }
+          ],
+          "properties": {
+            "Actor_FlyForwardSpeedMaxRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.3
+            }
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "target": "CurLocalAvatar",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Widget_FlySpeedUp_Use"
+              }
+            }
+          ]
+        },
+        "AttachEffect_Fly_FireEffect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "target": "Team",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_SceneObj_Widget_FlySpeedUp"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "target": "Team",
+          "modifierName": "UNIQUE_Flying_SpeedUp_Team"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

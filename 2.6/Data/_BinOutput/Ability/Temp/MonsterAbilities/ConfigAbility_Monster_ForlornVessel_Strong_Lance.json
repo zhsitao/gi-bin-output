@@ -1,0 +1,689 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_HitShield",
+      "abilitySpecials": {
+        "ForlornVessel_Heal_Layer": {
+          "type": "float",
+          "dynamicValue": 4.0
+        },
+        "ForlornVessel_Heal": {
+          "type": "float",
+          "dynamicValue": 0.01
+        }
+      },
+      "modifiers": {
+        "ForlornVessel_Lance_HitShield_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShieldV2",
+                  "type": "All"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Monster_ForlornVessel_Attack",
+                    "Monster_ForlornVessel_Lance_ChargeAtk"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "modifierName": "UNIQUE_ForlornVessel_Lance_HitShield_Succ"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_ForlornVessel_Lance_HitShield_Succ": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "Caster",
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetCurrentHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.15
+              },
+              "lethal": false,
+              "enableInvincible": true,
+              "enableLockHP": true
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR5H5",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasFeatureTag",
+                      "featureTagIDs": [
+                        4014
+                      ]
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasFeatureTag",
+                      "featureTagIDs": [
+                        4013
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_ForlornVessel_Strong_Lance_HealCircle"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf",
+                    "offset": {
+                      "x": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "y": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "z": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    "alongGround": true
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Target",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "ForlornVessel_Lance_Heal",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 3.0
+                      },
+                      "compareType": "LessAndEqual"
+                    }
+                  ],
+                  "modifierName": "ForlornVessel_Lance_Hot"
+                }
+              ]
+            }
+          ]
+        },
+        "ForlornVessel_Lance_Hot": {
+          "stacking": "Multiple",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "ForlornVessel_Heal_Layer"
+            }
+          },
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "ForlornVessel_Lance_Heal",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "ForlornVessel_Lance_Heal",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "ForlornVessel_Heal"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_ForlornVessel_Strong_Lance_HealTick"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "ForlornVessel_Lance_HitShield_Detect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_ExitBattle",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            0
+          ],
+          "modifierName": "ExitBattle"
+        }
+      ],
+      "modifiers": {
+        "ExitBattle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_ForlornVessel_Warbanner_ElementShield_ShieldHandler"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_Steer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk01"
+          ],
+          "startNormalizedTime": 0.04,
+          "endNormalizedTime": 0.07,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk01"
+          ],
+          "startNormalizedTime": 0.29,
+          "endNormalizedTime": 0.32,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAtk02"
+          ],
+          "endNormalizedTime": 0.15,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChargeAtk_BS"
+          ],
+          "endNormalizedTime": 0.26,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChargeAtk_BS"
+          ],
+          "startNormalizedTime": 0.41,
+          "endNormalizedTime": 0.52,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChargeAtk_Loop"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_EndureDelta",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "NormalAtk01",
+          "modifierName": "ForlornVessel_Strong_Lance_EndureDelta",
+          "normalizeEnd": 0.4
+        },
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "NormalAtk02",
+          "modifierName": "ForlornVessel_Strong_Lance_EndureDelta",
+          "normalizeEnd": 0.35
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ChargeAtk_BS"
+          ],
+          "modifierName": "ForlornVessel_Strong_Lance_EndureDelta"
+        }
+      ],
+      "modifiers": {
+        "ForlornVessel_Strong_Lance_EndureDelta": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_ForlornVessel_EndureDelta_Add"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_ForlornVessel_EndureDelta_Remove"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_WeaponHanler",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "NormalAtk01",
+          "modifierName": "ForlornVessel_Strong_Lance_NormalAtk_WeaponHanler",
+          "normalizeStart": 0.11,
+          "normalizeEnd": 0.68
+        }
+      ],
+      "modifiers": {
+        "ForlornVessel_Strong_Lance_NormalAtk_WeaponHanler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetWeaponAttachPointRealName",
+              "partName": "equip01",
+              "realName": "WeaponL"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetWeaponAttachPointRealName",
+              "partName": "equip01",
+              "realName": "WeaponR"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_ChargeAtk",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ChargeAtk_Loop"
+          ],
+          "modifierName": "Lance_ChargeAtk_Detect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ChargeAtk_BS",
+            "ChargeAtk_Loop"
+          ],
+          "modifierName": "Lance_ChargeAtk_Effect"
+        }
+      ],
+      "modifiers": {
+        "Lance_ChargeAtk_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttackHittingSceneMixin",
+              "onHittingScene": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "ChargeAtkEnd"
+                  }
+                }
+              ],
+              "animEventIDs": [
+                "ChargeAtk_Route"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_ForlornVessel_Strong_Lance_ChargeAtk_Route"
+              }
+            }
+          ],
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ],
+                  "useEventSource": true
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Monster_ForlornVessel_Lance_ChargeAtk"
+                  ]
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "ChargeAtkEnd"
+              }
+            }
+          ]
+        },
+        "Lance_ChargeAtk_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_ForlornVessel_Strong_Lance_ChargeAtk_Hand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_Alert",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            0,
+            1
+          ],
+          "modifierName": "ForlornVessel_Strong_Lance_AlertHandler"
+        }
+      ],
+      "modifiers": {
+        "ForlornVessel_Strong_Lance_AlertHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Leisure"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Patrol"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Worship"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_ForlornVessel_Strong_Lance_WeaponSpecialElementState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAbilityStateMixin",
+          "abilityStates": [
+            "ElementFreeze"
+          ],
+          "modifierName": "WeaponElementFreezeHandler"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToAbilityStateMixin",
+          "abilityStates": [
+            "ElementPetrifaction"
+          ],
+          "modifierName": "WeaponElementPetrifactionHandler"
+        }
+      ],
+      "modifiers": {
+        "WeaponElementFreezeHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02"
+                ]
+              },
+              "modifierName": "WeaponElementFreeze"
+            }
+          ]
+        },
+        "WeaponElementPetrifactionHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByEquipParts",
+                "equipPartNames": [
+                  "equip01",
+                  "equip02"
+                ]
+              },
+              "modifierName": "WeaponElementPetrifaction"
+            }
+          ]
+        },
+        "WeaponElementFreeze": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "ElementFreeze"
+        },
+        "WeaponElementPetrifaction": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "ElementPetrifaction"
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,231 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Sylph_Deathrattle_PlayOnce",
+      "modifiers": {
+        "DeathTag_Change": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "NoMoreDeath",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "DeathTag_Change"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Sylph_SpecialState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "SpecialState"
+          ],
+          "modifierName": "SpecialState"
+        }
+      ],
+      "abilitySpecials": {
+        "Override_Sylph_RandomAction": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "SpecialState": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "RandomAction"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "RandomAction",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_SYLPH_SPECIAL_STATE_",
+              "useLimitRange": true,
+              "randomInRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+              "globalValueKey": "_SYLPH_SPECIAL_STATE_",
+              "overrideMapKey": "Override_Sylph_RandomAction"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorFloat",
+              "floatID": "RandomAction",
+              "value": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Override_Sylph_RandomAction"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_SYLPH_SPECIAL_STATE_",
+          "useLimitRange": true,
+          "randomInRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+          "globalValueKey": "_SYLPH_SPECIAL_STATE_",
+          "overrideMapKey": "Override_Sylph_RandomAction"
+        },
+        {
+          "$type": "MoleMole.Config.SetAnimatorFloat",
+          "floatID": "RandomAction",
+          "value": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Override_Sylph_RandomAction"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Sylph_Activated_FaceChange",
+      "modifiers": {
+        "UNIQUE_Sylph_Face": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ReplaceFaceAnimationMixin",
+              "oldFaceAnimations": [
+                "Default"
+              ],
+              "newFaceAnimations": [
+                "Activated"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ReplaceFaceAnimationMixin",
+              "oldFaceAnimations": [
+                "Blink"
+              ],
+              "newFaceAnimations": [
+                "Activated"
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Sylph_Face"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "MonsterAffix_Property_HpDown_Sylph",
+      "modifiers": {
+        "UNIQUE_MonsterAffix_Property_HpDown_Sylph": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_MaxHPRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.9
+            }
+          }
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_MonsterAffix_Property_HpDown_Sylph"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

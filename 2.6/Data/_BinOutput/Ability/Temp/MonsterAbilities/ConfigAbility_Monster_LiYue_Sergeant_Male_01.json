@@ -1,0 +1,496 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Human_Male_Pole_ResetBackSprintCD",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "GroupAttack01",
+            "GroupAttack02"
+          ],
+          "exitActions": [
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                401
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "TestFixedCombatMove",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "SelfAttackTarget",
+          "doOffStage": true,
+          "key": "_ABILITY_Millelith_Target_Pos",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByTarget"
+          },
+          "setTarget": false
+        },
+        {
+          "$type": "MoleMole.Config.SetCombatFixedMovePoint",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "offset": {
+              "x": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "y": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "z": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            },
+            "direction": {
+              "$type": "MoleMole.Config.ConfigDirectionByEntity",
+              "angleOffset": {
+                "x": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "y": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 30.0
+                },
+                "z": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                }
+              }
+            },
+            "positionKey": "_ABILITY_Millelith_Target_Pos",
+            "directionKey": ""
+          }
+        },
+        {
+          "$type": "MoleMole.Config.SetPoseBool",
+          "boolID": "Surround",
+          "value": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Human_Male_Pole_ResetSurroundPosition",
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -10.0
+          },
+          "key": "_ABILITY_Millelith_SorroundPositionID",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": -10.0
+          },
+          "key": "_ABILITY_Millelith_SorroundPositionID",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Human_Male_Pole_TurnToSurround",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "TurnToSurround"
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Surround",
+              "value": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Human_Male_Pole_WaitState",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "Wait"
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Human_Male_Pole_ResetSurroundPosition"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Wait",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Surround"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "WaitTimer"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR25",
+                "campTargetType": "AllExceptSelf",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_ABILITY_Count_WaitingSoldiers",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "WaitTimer": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Wait"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Human_Male_Pole_SetSurroundPosition",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_ABILITY_Millelith_SorroundPositionID",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 2.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 3.5
+            }
+          ],
+          "modifierNameSteps": [
+            "T",
+            "T",
+            "T",
+            "T"
+          ],
+          "actionQueues": [
+            [
+              {
+                "$type": "MoleMole.Config.SetCombatFixedMovePoint",
+                "setPoint": false
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetGlobalPos",
+                "target": "SelfAttackTarget",
+                "doOffStage": true,
+                "key": "_ABILITY_Millelith_Target_Pos",
+                "born": {
+                  "$type": "MoleMole.Config.ConfigBornByTarget",
+                  "offset": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 2.4
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.5
+                    }
+                  }
+                },
+                "setTarget": false
+              },
+              {
+                "$type": "MoleMole.Config.SetCombatFixedMovePoint",
+                "toPos": {
+                  "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                  "positionKey": "_ABILITY_Millelith_Target_Pos",
+                  "directionKey": ""
+                }
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetGlobalPos",
+                "target": "SelfAttackTarget",
+                "doOffStage": true,
+                "key": "_ABILITY_Millelith_Target_Pos",
+                "born": {
+                  "$type": "MoleMole.Config.ConfigBornByTarget",
+                  "offset": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": -2.4
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.5
+                    }
+                  }
+                },
+                "setTarget": false
+              },
+              {
+                "$type": "MoleMole.Config.SetCombatFixedMovePoint",
+                "toPos": {
+                  "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                  "positionKey": "_ABILITY_Millelith_Target_Pos",
+                  "directionKey": ""
+                }
+              }
+            ],
+            [
+              {
+                "$type": "MoleMole.Config.SetGlobalPos",
+                "target": "SelfAttackTarget",
+                "doOffStage": true,
+                "key": "_ABILITY_Millelith_Target_Pos",
+                "born": {
+                  "$type": "MoleMole.Config.ConfigBornByTarget",
+                  "offset": {
+                    "x": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "y": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "z": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": -3.0
+                    }
+                  }
+                },
+                "setTarget": false
+              },
+              {
+                "$type": "MoleMole.Config.SetCombatFixedMovePoint",
+                "toPos": {
+                  "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                  "positionKey": "_ABILITY_Millelith_Target_Pos",
+                  "directionKey": ""
+                }
+              }
+            ]
+          ],
+          "removeAppliedModifier": false
+        }
+      ],
+      "modifiers": {
+        "T": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Millelith_TurnToOrdered",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.DoActionByStateIDMixin",
+          "stateIDs": [
+            "TurnToOrdered"
+          ],
+          "enterActions": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_OrderedState"
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "UNIQUE_OrderedState": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Ordered",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Ordered"
+            },
+            {
+              "$type": "MoleMole.Config.ReTriggerAISkillInitialCD",
+              "skillIDs": [
+                201,
+                202
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Millelith_OutOfOrdered",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_OrderedState"
+        }
+      ]
+    }
+  }
+]

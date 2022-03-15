@@ -1,0 +1,251 @@
+{
+  "common": {
+    "effectAttachShape": {
+      "$type": "MoleMole.Config.ConfigEffectAttachSkinnedMesh",
+      "mesh": "EffectMesh"
+    },
+    "mass": 20.0,
+    "height": 0.8,
+    "viewSize": 3.0,
+    "affectedByWorld": true,
+    "checkInSurface": true,
+    "scale": 3.0,
+    "canTriggerElementReactionText": false,
+    "clearAnimatorOnSetLightDeactive": true,
+    "clearAIOnSetLightDeactive": true
+  },
+  "model": {
+    "bornEffect": "",
+    "attachEffect": "",
+    "canBakeMesh": false
+  },
+  "dither": {
+    "startDitherAction": {
+      "enable": true
+    }
+  },
+  "combat": {
+    "property": {
+      "endureType": "Monster_Minion",
+      "weight": 30.0,
+      "isInvincible": true
+    },
+    "beHit": {
+      "hitBloodEffect": "",
+      "muteAllHitText": true
+    },
+    "combatLock": {
+      "lockShape": "CircleLockEnemy",
+      "denyLockOn": true,
+      "lockType": "Default"
+    },
+    "die": {
+      "dieEndTime": 0.01,
+      "dieForceDisappearTime": 10.0,
+      "dieDisappearEffect": ""
+    }
+  },
+  "abilities": [
+    {
+      "abilityID": "",
+      "abilityName": "Animal_Common_Initial",
+      "abilityOverride": ""
+    },
+    {
+      "abilityID": "",
+      "abilityName": "Animal_Fishable_Ray_Stellamarisidae_02_StateManager",
+      "abilityOverride": ""
+    }
+  ],
+  "stateLayers": {
+    "defaultLayer": {
+      "$type": "MoleMole.Config.ConfigNormalStateLayer",
+      "layerIndexName": "",
+      "stateIDs": {
+        "Born": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Born": []
+          },
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ],
+          "forceSetAirMove": true
+        },
+        "NormalIdle": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Standby": []
+          },
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ]
+        },
+        "NormalMove": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Walk": [],
+            "Run": []
+          },
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ],
+          "canSteer": true
+        },
+        "Turn": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Turn_Walk": [],
+            "Turn_Run": []
+          },
+          "canSyncMove": true,
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ],
+          "canSteer": true
+        },
+        "BeHit": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Hit_L": []
+          },
+          "resetAnimatorTriggerOnEnter": [
+            "BeHit"
+          ],
+          "resetAnimatorTriggerOnExit": [
+            "DoSkill"
+          ]
+        },
+        "Die": {
+          "$type": "MoleMole.Config.ConfigMonsterStateIDInfo",
+          "animatorStates": {
+            "Die": []
+          }
+        }
+      }
+    }
+  },
+  "initialPoses": {
+    "Default": {}
+  },
+  "aibeta": {
+    "enable": true,
+    "friendliness": 1,
+    "decisionArchetype": "Animal_Ray",
+    "moveSetting": {
+      "useNavMesh": false,
+      "navMeshAgentName": "Undead01"
+    },
+    "sensing": {
+      "settings": {
+        "DefaultSetting": {
+          "enableVision": false,
+          "hearAttractionRange": 9.0,
+          "feelRange": 9.0
+        }
+      }
+    },
+    "neurons": {
+      "DefaultSetting": [
+        "HIT"
+      ]
+    },
+    "threat": {
+      "feelThreatGrow": 1000.0,
+      "threatBroadcastRange": 5.0
+    },
+    "defendArea": {
+      "defendRange": 100.0
+    },
+    "fly": {
+      "enable": true,
+      "floatingPoses": [
+        101,
+        102,
+        201
+      ]
+    },
+    "ui": {
+      "hasDirectionIndicator": false
+    },
+    "followScriptedPathTactic": {
+      "enable": true,
+      "condition": {
+        "pose": [
+          101,
+          102
+        ]
+      },
+      "201": {
+        "NOACCPKANKN": 0.8,
+        "LMKHPFDIIPB": 0.8,
+        "ABJBKBHCCFO": true
+      }
+    },
+    "extractionTactic": {
+      "enable": true,
+      "condition": {
+        "pose": [
+          201
+        ]
+      },
+      "201": {}
+    },
+    "mixin": {
+      "setControllerParameterOnBeHitByEntityType": [
+        {
+          "poseIDs": [
+            1,
+            2,
+            101,
+            201,
+            401
+          ],
+          "settings": [
+            {
+              "entityTypes": [
+                "Bullet",
+                "Avatar",
+                "Field",
+                "Gadget"
+              ],
+              "onSuccess": {
+                "ALPOAMEGEAC": [
+                  {
+                    "boolID": "Flee_State",
+                    "value": true
+                  }
+                ]
+              },
+              "onFail": {
+                "ALPOAMEGEAC": [
+                  {
+                    "boolID": "Flee_State",
+                    "value": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "move": {
+    "$type": "MoleMole.Config.ConfigAnimatorMove",
+    "velocityForce": {
+      "excludeForces": [
+        "RetreatType",
+        "RetreatAirType",
+        "WindZoneType",
+        "AirflowType"
+      ]
+    }
+  },
+  "animal": {
+    "hasCharacterRenderering": false
+  }
+}

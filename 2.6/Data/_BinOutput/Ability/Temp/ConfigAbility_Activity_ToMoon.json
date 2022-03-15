@@ -1,0 +1,1012 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ToMoon_FoodChallenge_Part1",
+      "abilitySpecials": {
+        "Kill_Count": {
+          "type": "float",
+          "dynamicValue": 0.0
+        },
+        "Kill_MaxCount": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Kill_PerDamgeUp": {
+          "type": "float",
+          "dynamicValue": 0.06
+        },
+        "Attack_Duration": {
+          "type": "float",
+          "dynamicValue": 90.0
+        },
+        "Heal_Interval": {
+          "type": "float",
+          "dynamicValue": 1.0
+        },
+        "Heal_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.1
+        }
+      },
+      "modifiers": {
+        "Activity_ToMoon_Part1_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "_Activity_ToMoon_Part1_Level",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_Activity_ToMoon_Part1_Level",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "Activity_ToMoon_Part1_Lv2",
+                "Activity_ToMoon_Part1_Lv4"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "luaCallType": "CurChallengeGroup",
+              "funcName": "RefreshSacrificeNum",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_Lv2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part1_AttackBuff"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_Lv4": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part1_AttackBuff"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part1_DefendBuff"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_AttackBuff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "target": "Team",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_ABILITY_Activity_ToMoon_Part1_Count",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "Activity_ToMoon_Part1_AttackBuff_OnAvatar"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "modifierName": "Activity_ToMoon_Part1_AttackBuff_OnAvatar"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_AttackBuff_OnAvatar": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.DoActionByKillingMixin",
+              "detectWindow": 0.4,
+              "onKill": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Other",
+                  "doOffStage": true,
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Monster"
+                      ]
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByTargetGlobalValue",
+                      "key": "_ANIMAL_ENTITY_TYPE",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      },
+                      "compareType": "NoneOrEqual"
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.AddGlobalValue",
+                      "target": "Team",
+                      "doOffStage": true,
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 1.0
+                      },
+                      "key": "_ABILITY_Activity_ToMoon_Part1_Count",
+                      "useLimitRange": true,
+                      "maxValue": {
+                        "isFormula": false,
+                        "isDynamic": true,
+                        "dynamicKey": "Kill_MaxCount"
+                      },
+                      "minValue": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 0.0
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.SetGlobalValueToOverrideMap",
+                      "target": "Team",
+                      "doOffStage": true,
+                      "globalValueKey": "_ABILITY_Activity_ToMoon_Part1_Count",
+                      "overrideMapKey": "Kill_Count"
+                    },
+                    {
+                      "$type": "MoleMole.Config.RemoveUniqueModifier",
+                      "target": "CurTeamAvatars",
+                      "doOffStage": true,
+                      "modifierName": "UNIQUE_Activity_ToMoon_Part1_AttackBuff"
+                    },
+                    {
+                      "$type": "MoleMole.Config.AttachModifier",
+                      "target": "CurTeamAvatars",
+                      "doOffStage": true,
+                      "modifierName": "UNIQUE_Activity_ToMoon_Part1_AttackBuff"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Activity_ToMoon_Part1_AttackBuff": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Attack_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AddHurtDelta": {
+              "isFormula": true,
+              "formula": [
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Kill_PerDamgeUp"
+                },
+                {
+                  "isOperator": false,
+                  "isDynamic": true,
+                  "dynamicKey": "Kill_Count"
+                },
+                {
+                  "isOperator": true,
+                  "operation": "Mul"
+                }
+              ]
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Activity_ToMoon_Part1_DefendBuff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixin",
+              "modifierName": "Activity_ToMoon_Part1_DefendBuff_OnAvatar"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_DefendBuff_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.AttachToStateIDMixin",
+              "stateIDs": [
+                "FlyStart",
+                "Fly"
+              ],
+              "modifierName": "Activity_ToMoon_Part1_DefendBuff_FlyHealHP",
+              "isCheckOnAttach": true
+            }
+          ]
+        },
+        "Activity_ToMoon_Part1_DefendBuff_FlyHealHP": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Heal_Interval"
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Heal_Ratio"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_Activity_ToMoon_Part1_Level",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Activity_ToMoon_Part1_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ToMoon_FoodChallenge_Part2",
+      "abilitySpecials": {
+        "MasteryUp": {
+          "type": "float",
+          "dynamicValue": 300.0
+        },
+        "Heal_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.1
+        },
+        "Heal_Interval": {
+          "type": "float",
+          "dynamicValue": 2.0
+        }
+      },
+      "modifiers": {
+        "Activity_ToMoon_Part2_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "_Activity_ToMoon_Part2_Level",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_Activity_ToMoon_Part2_Level",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "Activity_ToMoon_Part2_Lv2_OnTeam",
+                "Activity_ToMoon_Part2_Lv4_OnTeam"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "luaCallType": "CurChallengeGroup",
+              "funcName": "RefreshSacrificeNum",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Activity_ToMoon_Part2_Lv2_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixinV2",
+              "modifierName": "Activity_ToMoon_Part2_Lv2_OnAvatar"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part2_Lv2_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR6.5H5",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Gadget"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_SceneObj_ToMoon_WarmTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_Activity_ToMoon_Part2_MasteryUp"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_Activity_ToMoon_Part2_MasteryUp"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Activity_ToMoon_Part2_MasteryUp": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ElemMasteryDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "MasteryUp"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Activity_ToMoon_Part2_Lv4_OnTeam": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixinV2",
+              "modifierName": "Activity_ToMoon_Part2_Lv4_OnAvatar"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part2_Lv4_OnAvatar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "shapeName": "CircleR6.5H5",
+                "campTargetType": "All",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Gadget"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_ABILITY_SceneObj_ToMoon_WarmTag",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.RemoveUniqueModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_Activity_ToMoon_Part2_MasteryUp"
+                },
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "UNIQUE_Activity_ToMoon_Part2_MasteryUp"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Other",
+                  "modifierName": "Activity_ToMoon_Part2_HealWarmFire"
+                }
+              ]
+            }
+          ]
+        },
+        "Activity_ToMoon_Part2_HealWarmFire": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "duration": {
+            "isFormula": true,
+            "formula": [
+              {
+                "isOperator": false,
+                "isDynamic": true,
+                "dynamicKey": "Heal_Interval"
+              },
+              {
+                "isOperator": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              {
+                "isOperator": true,
+                "operation": "Sub"
+              }
+            ]
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.HealHP",
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": true,
+                "dynamicKey": "Heal_Ratio"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_Activity_ToMoon_Part2_Level",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Activity_ToMoon_Part2_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "ActivityAbility_ToMoon_FoodChallenge_Part3",
+      "abilitySpecials": {
+        "Attack_Ratio": {
+          "type": "float",
+          "dynamicValue": 0.3
+        },
+        "Attack_Duration": {
+          "type": "float",
+          "dynamicValue": 10.0
+        },
+        "Shield_Up": {
+          "type": "float",
+          "dynamicValue": 0.6
+        }
+      },
+      "modifiers": {
+        "Activity_ToMoon_Part3_Handler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ServerUpdateGlobalValueMixin",
+              "key": "_Activity_ToMoon_Part3_Level",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 10.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+              "globalValueKey": "_Activity_ToMoon_Part3_Level",
+              "defaultGlobalValueOnCreate": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 3.5
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 10.0
+                }
+              ],
+              "modifierNameSteps": [
+                "Activity_ToMoon_Part3_Lv2",
+                "Activity_ToMoon_Part3_Lv4"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ServerLuaCall",
+              "luaCallType": "CurChallengeGroup",
+              "funcName": "RefreshSacrificeNum",
+              "param1": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param2": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "param3": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_Lv2": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part3_AttackBuff"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_Lv4": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part3_AttackBuff"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Activity_ToMoon_Part3_DefendBuff"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_AttackBuff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "Activity_ToMoon_Part3_AttackBuff_BurstCheck"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "Activity_ToMoon_Part3_AttackBuff_BurstCheck"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_AttackBuff_BurstCheck": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.OnAvatarUseSkillMixin",
+              "onTriggerUltimateSkill": [
+                {
+                  "$type": "MoleMole.Config.AttachModifier",
+                  "target": "CurTeamAvatars",
+                  "modifierName": "Activity_ToMoon_Part3_AttackUp"
+                }
+              ],
+              "OIIDACCCPKO": 0.2
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_AttackUp": {
+          "stacking": "MultipleRefresh",
+          "stackingOption": {
+            "abilitySpecialName": "",
+            "maxModifierNumForMultipleType": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 4.0
+            }
+          },
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": true,
+            "dynamicKey": "Attack_Duration"
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Attack_Ratio"
+            }
+          },
+          "state": "AttackUp",
+          "isLimitedProperties": true
+        },
+        "Activity_ToMoon_Part3_DefendBuff": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "Activity_ToMoon_Part3_ShieldUp"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "target": "CurTeamAvatars",
+              "modifierName": "Activity_ToMoon_Part3_ShieldUp"
+            }
+          ]
+        },
+        "Activity_ToMoon_Part3_ShieldUp": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_ShieldCostMinusRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Shield_Up"
+            }
+          },
+          "isLimitedProperties": true
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.SetGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "key": "_Activity_ToMoon_Part3_Level",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Activity_ToMoon_Part3_Handler"
+        }
+      ],
+      "isDynamicAbility": true
+    }
+  }
+]

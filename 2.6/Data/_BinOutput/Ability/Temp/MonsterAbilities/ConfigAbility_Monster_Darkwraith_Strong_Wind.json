@@ -1,0 +1,2729 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Pose",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_DARKWRAITH_WIND_CLOSE_TAG_",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 99.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Pose_Close",
+            "Pose_Back"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_DARKWRAITH_WIND_DODGE_TAG_",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Pose_Normal",
+            "Pose_Dodge"
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.FieldEntityCountChangeMixin",
+          "campTargetType": "Alliance",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByHasFeatureTag",
+              "featureTagIDs": [
+                4902
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.ByHasFeatureTag",
+              "featureTagIDs": [
+                4013
+              ]
+            }
+          ],
+          "onFieldEnter": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DARKWRAITH_WIND_CLOSE_TAG_",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onFieldExit": [
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -1.0
+              },
+              "key": "_DARKWRAITH_WIND_CLOSE_TAG_",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 99.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      ],
+      "modifiers": {
+        "Pose_Close": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "CloseTag",
+              "value": true
+            }
+          ]
+        },
+        "Pose_Back": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "CloseTag"
+            }
+          ]
+        },
+        "Pose_Normal": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "DodgeTag"
+            }
+          ]
+        },
+        "Pose_Dodge": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.SetAnimationPauseByAbilityStateMixin",
+              "abilityStates": [
+                "ElementFrozen",
+                "ElementPetrifaction"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "DodgeTag",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Darkwraith_Strong_Wind_AddEffect"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Darkwraith_Strong_Wind_RemoveEffect"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Darkwraith_Wind_HitShield_Succ"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_AddEffect",
+      "modifiers": {
+        "UNIQUE_Darkwraith_Strong_Wind_Effect": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_WindElement"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Effect"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Effect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_RemoveEffect",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Effect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_HitShield",
+      "modifiers": {
+        "Darkwraith_Wind_HitShield_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByHasShieldV2",
+                  "type": "All"
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Monster_Darkwraith_Wind_Attack"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Caster",
+                  "modifierName": "UNIQUE_Darkwraith_Wind_HitShield_Succ"
+                }
+              ]
+            }
+          ]
+        },
+        "UNIQUE_Darkwraith_Wind_HitShield_Succ": {
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "Caster",
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetCurrentHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.15
+              },
+              "lethal": false,
+              "enableInvincible": true,
+              "enableLockHP": true
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_DARKWRAITH_WIND_DODGE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DARKWRAITH_WIND_DODGE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Darkwraith_Wind_HitShield_Detect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge_Invincible",
+      "modifiers": {
+        "UNIQUE_Darkwraith_Strong_Wind_Invincible": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible",
+          "onBeingHit": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "useOriginDamage": true
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAbility",
+                  "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge"
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "TargetOriginOwner",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHitDamage",
+                  "damage": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "useOriginDamage": true
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TriggerAbility",
+                  "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Invincible"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToNormalizedTimeMixin",
+          "stateID": "Dodge",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Dodge_Handler",
+          "normalizeEnd": 0.95
+        }
+      ],
+      "abilitySpecials": {
+        "Darkwraith_Strong_Wind_AttackEnhance": {
+          "type": "float",
+          "dynamicValue": 0.3
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Darkwraith_Strong_Wind_Dodge_Handler": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DARKWRAITH_WIND_DODGE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Darkwraith_Strong_Wind_Dodge_Invincible"
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "Darkwraith_Strong_Wind_Dodge_DenyLockOn"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible"
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard",
+              "hide": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_Weapon"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HeadBox"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_Dodge_BS"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Eye"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HitBox_Weapon"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnableHitBoxByName",
+              "hitBoxNames": [
+                "HeadBox"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.EnablePushColliderName",
+              "pushColliderNames": [
+                "PushCollider"
+              ],
+              "setEnable": true
+            },
+            {
+              "$type": "MoleMole.Config.TriggerSetVisible",
+              "visible": true
+            },
+            {
+              "$type": "MoleMole.Config.HideUIBillBoard"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_Dodge_BS"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Darkwraith_Strong_Wind_Dodge_ResetCD"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Dodge_AttackEnhance"
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "abilityName": "Monster_Darkwraith_Strong_Wind_Alert"
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_Dodge_Invincible": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "Invincible"
+        },
+        "Darkwraith_Strong_Wind_Dodge_DenyLockOn": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "state": "DenyLockOn"
+        },
+        "Darkwraith_Strong_Wind_Dodge_Actions": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.1
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByHasAbilityState",
+                      "abilityState": "ElementFreeze"
+                    },
+                    {
+                      "$type": "MoleMole.Config.ByHasAbilityState",
+                      "abilityState": "ElementPetrifaction"
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByEntityIsAlive",
+                  "target": "Self"
+                }
+              ],
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "DodgeTrigger"
+              },
+              "MPTriggerOnRemote": true
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_Dodge_ResetCD": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+              "skillIDs": [
+                201,
+                202,
+                301,
+                302,
+                401,
+                402,
+                501,
+                502,
+                601,
+                602,
+                701,
+                702,
+                703
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD"
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAISkillGCD",
+              "value": 3.0
+            }
+          ]
+        },
+        "UNIQUE_Darkwraith_Strong_Wind_Dodge_AttackEnhance": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_AttackRatio": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Darkwraith_Strong_Wind_AttackEnhance"
+            }
+          },
+          "state": "AttackUp"
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Darkwraith_Strong_Wind_Dodge_Actions"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge_FindBlinkPoint",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "target": "SelfAttackTarget",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+              "logic": "LesserOrEqual",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 7.5
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+              "target": "SelfAttackTarget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "linearOffset": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": -5.0
+                },
+                "baseOnTarget": false,
+                "linearMin": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "linearMax": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                }
+              },
+              "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+              "limitY": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.5
+              },
+              "ignoreWater": true
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByFindBlinkPointSuccess",
+                  "findPointSuccess": false
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "bornRandom": {
+                      "$type": "MoleMole.Config.BornRandomFromCenter",
+                      "minRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 4.0
+                      },
+                      "maxRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 6.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+                  "limitY": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  },
+                  "ignoreWater": true
+                }
+              ]
+            }
+          ],
+          "failActions": [
+            {
+              "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByTargetLinearPoint",
+                "offset": {
+                  "x": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "y": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "z": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                },
+                "onGround": true,
+                "linearOffset": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 5.0
+                },
+                "baseOnTarget": false,
+                "linearMin": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "linearMax": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                }
+              },
+              "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+              "limitY": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.5
+              },
+              "ignoreWater": true
+            },
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByFindBlinkPointSuccess",
+                  "findPointSuccess": false
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.TryFindBlinkPointByBorn",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "bornRandom": {
+                      "$type": "MoleMole.Config.BornRandomFromCenter",
+                      "minRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 4.0
+                      },
+                      "maxRandomRange": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 6.0
+                      }
+                    },
+                    "onGround": true
+                  },
+                  "hitSceneType": "BlinkHitSceneTestByThreeSegments",
+                  "limitY": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 2.5
+                  },
+                  "ignoreWater": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Dodge_DoBlink",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.DoBlink"
+        },
+        {
+          "$type": "MoleMole.Config.TurnDirectionToPos",
+          "target": "SelfAttackTarget",
+          "toPos": {
+            "$type": "MoleMole.Config.ConfigBornByTarget"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_EndureDelta_Add",
+      "abilitySpecials": {
+        "Darkwraith_Endure": {
+          "type": "float",
+          "dynamicValue": 0.5
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Darkwraith_EndureDelta": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Darkwraith_Endure"
+            }
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "ForlornVessel_ElementShield",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "modifierName": "UNIQUE_Darkwraith_EndureDelta"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_EndureDelta_AddMax",
+      "abilitySpecials": {
+        "Darkwraith_Endure_Funnel": {
+          "type": "float",
+          "dynamicValue": 0.0
+        }
+      },
+      "modifiers": {
+        "UNIQUE_Darkwraith_EndureDelta_Funnel": {
+          "stacking": "Unique",
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "properties": {
+            "Actor_EndureDelta": {
+              "isFormula": false,
+              "isDynamic": true,
+              "dynamicKey": "Darkwraith_Endure_Funnel"
+            }
+          }
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "ForlornVessel_ElementShield",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "modifierName": "UNIQUE_Darkwraith_EndureDelta_Funnel"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_EndureDelta_Remove",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_EndureDelta"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_EndureDelta_Funnel"
+        },
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Dodge_AttackEnhance"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Steer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SwordAtk01"
+          ],
+          "endNormalizedTime": 0.08,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SwordAtk02"
+          ],
+          "endNormalizedTime": 0.07,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SwordAtk02"
+          ],
+          "startNormalizedTime": 0.24,
+          "endNormalizedTime": 0.31,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SwordAtk03"
+          ],
+          "endNormalizedTime": 0.07,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SwordAtk03"
+          ],
+          "startNormalizedTime": 0.22,
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 120.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChainAtk01"
+          ],
+          "startNormalizedTime": 0.25,
+          "endNormalizedTime": 0.3,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChainAtk02"
+          ],
+          "startNormalizedTime": 0.04,
+          "endNormalizedTime": 0.13,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "ChainAtk02"
+          ],
+          "startNormalizedTime": 0.31,
+          "endNormalizedTime": 0.41,
+          "angularSpeed": 270.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "FunnelAtk_BS"
+          ],
+          "startNormalizedTime": 0.35,
+          "endNormalizedTime": 0.45,
+          "angularSpeed": 180.0,
+          "attackTrigger": ""
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Dodge"
+          ],
+          "startNormalizedTime": 0.8,
+          "endNormalizedTime": 0.95,
+          "angularSpeed": 720.0,
+          "attackTrigger": ""
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_ChainAtk01_Weapon",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "ChainAtk01WeaponTrigger"
+          },
+          "MPTriggerOnRemote": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_ChainAtk02_Weapon",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetAnimatorTrigger",
+          "triggerID": {
+            "isDynamic": false,
+            "fixedValue": "ChainAtk02WeaponTrigger"
+          },
+          "MPTriggerOnRemote": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_ChainAtk02_TriggerBullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_01"
+          },
+          "trackTarget": "Self"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_02"
+          },
+          "trackTarget": "Self"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_03"
+          },
+          "trackTarget": "Self"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_04"
+          },
+          "trackTarget": "Self"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_05"
+          },
+          "trackTarget": "Self"
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208008,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+            "attachPointName": "ChainAtk02_06"
+          },
+          "trackTarget": "Self"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_ChainAtk02_KillBullet",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "ChainAtk02"
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_ChainAtk02_BulletHandler"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_ChainAtk02_BulletHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208008
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208008
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Darkwraith_Strong_Wind_ChainAtk02_Bullet",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.5
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Monster_Darkwraith_Wind_Attack",
+              "attenuationTag": "Monster_Darkwraith_Strong_Wind_ChainAtk02",
+              "attenuationGroup": "Monster_Darkwraith_Strong_Wind_ChainAtk02",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.4
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Wind",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 25.0
+                },
+                "strikeType": "Default",
+                "enBreak": 10.0
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV4",
+                "retreatType": "ByHitDirection"
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_01",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FunnelAtk_Loop"
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_Detect"
+        },
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalIdle"
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_KillGadget"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_01": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_01"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208001,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_Detect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.5
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208001
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208002
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208003
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208004
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208005
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208006
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "SelfAttackTarget",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByAny",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByTargetPositionToSelfPosition",
+                      "logic": "LesserOrEqual",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 3.5
+                      }
+                    },
+                    {
+                      "$type": "MoleMole.Config.BySelfForwardAndTargetPosition",
+                      "value": {
+                        "isFormula": false,
+                        "isDynamic": false,
+                        "fixedValue": 90.0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "FunnelAtkEnd"
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.SetAISkillCDAvailableNow",
+                  "skillIDs": [
+                    701
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_KillGadget": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208001
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208002
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208003
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208004
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208005
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208006
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208001
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208002
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208003
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208004
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208005
+              }
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208006
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_01"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208001
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208002
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208003
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208004
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208005
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByChildren",
+            "configID": 42208006
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_02",
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_02": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_02"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208002,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_02"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_03",
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_03": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_03"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208003,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_03"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_04",
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_04": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_04"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208004,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_04"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_05",
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_05": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_05"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208005,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_05"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_StaticBullet_06",
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_06": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByAttachPoint",
+                "attachPointName": "FunnelAtk_06"
+              },
+              "IOFKNDKNMHA": true,
+              "gadgetID": 42208006,
+              "campID": 4001,
+              "campTargetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_StaticGadget_06"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_Launch",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FunnelAtk_BS",
+            "FunnelAtk_Loop",
+            "FunnelAtk_AS"
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_GVHandler"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_GVHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Loop"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208001
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 2.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208006
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 3.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208002
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 4.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208005
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 5.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208003
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 6.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.TriggerAbility",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42208004
+              },
+              "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_Darkwraith_Strong_Wind_FunnelAtk_Count_",
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 6.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_FunnelAtk_Weapon",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "FunnelAtk_BS",
+            "FunnelAtk_Loop",
+            "FunnelAtk_AS"
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_WeaponHandler"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_FunnelAtk_WeaponHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FunnelAtkWeaponTag",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorBool",
+              "boolID": "FunnelAtkWeaponTag"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveModifier",
+          "modifierName": "Darkwraith_Strong_Wind_FunnelAtk_WeaponHandler"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_StaticBullet",
+      "modifiers": {
+        "FunnelAtk_StaticBullet_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Bullet"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Bullet_Trail"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "FunnelAtk_StaticBullet_Effect"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.Predicated",
+          "otherTargets": {
+            "$type": "MoleMole.Config.SelectTargetsByShape",
+            "sortType": "Nearest",
+            "shapeName": "CircleR50",
+            "campTargetType": "Enemy",
+            "sizeRatio": {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.0
+            }
+          },
+          "targetPredicates": [
+            {
+              "$type": "MoleMole.Config.ByEntityTypes",
+              "entityTypes": [
+                "Avatar"
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.BySelfForwardAndTargetPosition",
+              "logic": "Lesser",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 120.0
+              }
+            }
+          ],
+          "successActions": [
+            {
+              "$type": "MoleMole.Config.SetSelfAttackTarget",
+              "target": "Target"
+            }
+          ]
+        },
+        {
+          "$type": "MoleMole.Config.TriggerBullet",
+          "bulletID": 42208007,
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornBySelf"
+          }
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Darkwraith_Strong_Wind_FunnelAtk_Bullet",
+      "modifiers": {
+        "FunnelAtk_Bullet_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Bullet"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Bullet_Trail"
+              }
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "FunnelAtk_Bullet_Effect"
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf",
+          "target": "Owner"
+        }
+      ],
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.TriggerAttackEvent",
+          "attackEvent": {
+            "attackPattern": {
+              "$type": "MoleMole.Config.ConfigAttackSphere",
+              "triggerType": "TriggerNoRepeat",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByCollisionPoint"
+              },
+              "radius": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            "attackInfo": {
+              "attackTag": "Monster_Darkwraith_Wind_Attack",
+              "attenuationTag": "",
+              "attenuationGroup": "default",
+              "attackProperty": {
+                "damagePercentage": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.3
+                },
+                "damagePercentageRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                "elementType": "Wind",
+                "elementDurability": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 50.0
+                },
+                "strikeType": "Default",
+                "enBreak": 25.0,
+                "attackType": "Range"
+              },
+              "hitPattern": {
+                "onHitEffectName": "default",
+                "hitImpulseType": "LV3",
+                "retreatType": "ByHitDirection",
+                "hitHaltTimeScale": 0.05
+              },
+              "canBeModifiedBy": "OriginOwner"
+            }
+          },
+          "targetType": "Enemy"
+        },
+        {
+          "$type": "MoleMole.Config.KillSelf"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_FunnelAtk_Damage"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Alert",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            0,
+            1
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_AlertHandler"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_AlertHandler": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Leisure"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "Ceremony"
+            }
+          ]
+        },
+        "UNIQUE_Darkwraith_Strong_Wind_Eye": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Darkwraith_Strong_Flammard_Eye"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Eye"
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Eye"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_Salute",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToPoseIDMixin",
+          "poseIDs": [
+            9001
+          ],
+          "modifierName": "Darkwraith_Strong_Wind_Salute"
+        }
+      ],
+      "modifiers": {
+        "Darkwraith_Strong_Wind_Salute": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 20.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "sortType": "Nearest",
+                "shapeName": "CircleR15",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4013
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.IssueCommand",
+                  "target": "Target",
+                  "commandID": 20701,
+                  "duration": 2.0
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "Darkwraith_Strong_Wind_SaluteTick"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "Target",
+                  "modifierName": "Darkwraith_Strong_Wind_SalutePos"
+                }
+              ]
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_SaluteTick": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByShape",
+                "topLimit": 1,
+                "sortType": "Nearest",
+                "shapeName": "CircleR15",
+                "campTargetType": "Alliance",
+                "sizeRatio": {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 1.0
+                }
+              },
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Monster"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByHasFeatureTag",
+                  "featureTagIDs": [
+                    4013
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetGlobalValue",
+                  "key": "_FORLORNVESSEL_SALUTE_",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.0
+                  }
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "modifierName": "Darkwraith_Strong_Wind_SaluteAction"
+                },
+                {
+                  "$type": "MoleMole.Config.SetGlobalValue",
+                  "target": "Target",
+                  "value": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "key": "_FORLORNVESSEL_SALUTE_",
+                  "maxValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  },
+                  "minValue": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_SaluteAction": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.SteerAttackTraceToPosMixin",
+              "steerStateIDs": [
+                "Salute"
+              ],
+              "endNormalizedTime": 0.5,
+              "angularSpeed": 720.0,
+              "attackTrigger": "",
+              "globalPosKey": "_DARKWRAITH_SALUTE_POS_"
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "target": "Applier",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "Salute"
+              }
+            }
+          ]
+        },
+        "Darkwraith_Strong_Wind_SalutePos": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "key": "_DARKWRAITH_SALUTE_POS_",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "setTarget": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Darkwraith_Strong_Wind_ExitBattle",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            0
+          ],
+          "modifierName": "ExitBattle"
+        }
+      ],
+      "modifiers": {
+        "ExitBattle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_DARKWRAITH_WIND_DODGE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Dodge_AttackEnhance"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "modifierName": "UNIQUE_Darkwraith_Strong_Wind_Eye"
+            }
+          ]
+        }
+      }
+    }
+  }
+]

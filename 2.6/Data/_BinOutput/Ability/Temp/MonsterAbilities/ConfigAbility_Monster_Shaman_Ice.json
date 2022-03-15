@@ -1,0 +1,1247 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_IceBurst",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToStateIDMixin",
+          "stateIDs": [
+            "NormalAttack",
+            "NormalAttack_BS"
+          ],
+          "modifierName": "Monster_Shaman_Ice_WeaponEffectLoop"
+        }
+      ],
+      "modifiers": {
+        "Monster_Shaman_Ice_WeaponEffectLoop": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_WeaponLoop"
+              }
+            }
+          ]
+        },
+        "Shamam_Ice_IceBurt_Damage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "NormalAttackOver"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_WeaponBS"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+                    "directionKey": ""
+                  },
+                  "height": 3.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 101.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 1.0,
+                    "shakeTime": 0.2
+                  }
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+                "directionKey": ""
+              },
+              "gadgetID": 42103014,
+              "campID": 4001,
+              "byServer": true
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.SetGlobalPos",
+          "target": "SelfAttackTarget",
+          "key": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByPredicatePoint",
+            "onGround": true,
+            "alongGround": true,
+            "timeForPredictive": 0.7
+          },
+          "setTarget": false
+        },
+        {
+          "$type": "MoleMole.Config.FireEffect",
+          "effectPattern": {
+            "isDynamic": false,
+            "fixedValue": "Eff_Monster_Shaman_Ice_NormalAttack"
+          },
+          "born": {
+            "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+            "onGround": true,
+            "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+            "directionKey": ""
+          }
+        },
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Shamam_Ice_IceBurt_Damage"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_ContinuousIceBurst",
+      "modifiers": {
+        "Monster_Shaman_Ice_NormalAttackPowerDamage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.3
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalPos",
+              "target": "SelfAttackTarget",
+              "key": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByPredicatePoint",
+                "onGround": true,
+                "alongGround": true,
+                "timeForPredictive": 0.4
+              },
+              "setTarget": false
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_NormalAttack"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+                "directionKey": ""
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                    "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+                    "directionKey": ""
+                  },
+                  "height": 3.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 1.0
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 101.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV4"
+                  },
+                  "forceCameraShake": true,
+                  "cameraShake": {
+                    "shakeRange": 1.0,
+                    "shakeTime": 0.2
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornByGlobalValue",
+                "positionKey": "_MONSTER_SHAMAN_ICE_ICEBURST_POS",
+                "directionKey": ""
+              },
+              "gadgetID": 42103014,
+              "campID": 4001,
+              "byServer": true
+            }
+          ]
+        },
+        "Monster_Shaman_Ice_NormalAttackPowerDamageDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 7.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.7
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetAnimatorTrigger",
+              "triggerID": {
+                "isDynamic": false,
+                "fixedValue": "NormalAttackOver"
+              }
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Shaman_Ice_NormalAttackPowerDamage"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Shaman_Ice_NormalAttackPowerDamageDelay"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_NormalAttack_SlowDownArea",
+      "modifiers": {
+        "SlowDownArea_ElementDamage": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 5.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_NormalAttack_IceArea"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "height": 3.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 1.5
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.3
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 20.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV2"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "SlowDownArea_ElementDamage"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_EscapeState",
+      "modifiers": {
+        "Shaman_Escape": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EscapeState",
+              "value": true
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "EscapeState"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Shaman_Escape"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_AnimationSteer",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "NormalAttack_BS"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "SupportAttack_BS"
+          ],
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "MeleeAttack"
+          ],
+          "endNormalizedTime": 0.15,
+          "angularSpeed": 180.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        },
+        {
+          "$type": "MoleMole.Config.SteerAttackMixin",
+          "steerStateIDs": [
+            "Turn"
+          ],
+          "startNormalizedTime": 0.2,
+          "endNormalizedTime": 0.75,
+          "angularSpeed": 120.0,
+          "attackTrigger": "",
+          "attackDistance": 12.0
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_WeaponEffect"
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_ClearPillarOnHitThrow",
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.RemoveUniqueModifier",
+          "modifierName": "UNIQUE_Shaman_Create_IcePillar"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_CreatePillar",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachModifierToSelfGlobalValueMixin",
+          "globalValueKey": "_MONSTER_SHAMAN_ICE_HASPILLAR",
+          "defaultGlobalValueOnCreate": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          },
+          "valueSteps": [
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": -0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 0.5
+            },
+            {
+              "isFormula": false,
+              "isDynamic": false,
+              "fixedValue": 1.5
+            }
+          ],
+          "modifierNameSteps": [
+            "Monster_Shaman_Ice_HasNoPillar",
+            "Monster_Shaman_Ice_HasPillar"
+          ]
+        }
+      ],
+      "modifiers": {
+        "Monster_Shaman_Ice_HasNoPillar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "OnPillar"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "IcePillarSum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Shaman_Ice_HasPillar": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachModifier",
+              "modifierName": "UNIQUE_Shaman_Create_IcePillar"
+            }
+          ]
+        },
+        "UNIQUE_Shaman_Create_IcePillar": {
+          "modifierName": "",
+          "isUnique": true,
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.CreateGadget",
+              "lifeByOwnerIsAlive": true,
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              },
+              "gadgetID": 42103015,
+              "campID": 4001,
+              "byServer": true
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "OnPillar",
+              "value": true
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "IcePillarSum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "key": "_WATCHER_82068_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_LifeOver"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "otherTargets": {
+                "$type": "MoleMole.Config.SelectTargetsByChildren",
+                "configID": 42103015
+              },
+              "modifierName": "Monster_Shaman_Ice_KillPillar"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "IcePillarSum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "OnPillar"
+            },
+            {
+              "$type": "MoleMole.Config.AddGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": -2.0
+              },
+              "key": "_MONSTER_SHAMAN_ICE_HASPILLAR",
+              "useLimitRange": true,
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ],
+          "onKill": [
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "boolID": "OnPillar"
+            },
+            {
+              "$type": "MoleMole.Config.SetAnimatorInt",
+              "intID": "IcePillarSum",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        },
+        "Monster_Shaman_Ice_KillPillar": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.AddGlobalValue",
+          "value": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "key": "_MONSTER_SHAMAN_ICE_HASPILLAR",
+          "useLimitRange": true,
+          "maxValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "minValue": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.0
+          }
+        }
+      ],
+      "onKill": [
+        {
+          "$type": "MoleMole.Config.DoWatcherSystemAction",
+          "predicates": [
+            {
+              "$type": "MoleMole.Config.ByTargetGlobalValue",
+              "target": "Self",
+              "key": "_WATCHER_82068_",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "compareType": "NoneOrEqual"
+            }
+          ],
+          "watcherId": 82068,
+          "inThreatListOnly": true
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_CreatePillar_Effect",
+      "modifiers": {
+        "Monster_Shaman_Ice_CreatePillarEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 2.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_WeaponLoop"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_CreateBS"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Monster_Shaman_Ice_CreatePillarEffect"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Shaman_IcePillar_Create",
+      "modifiers": {
+        "IcePillar_Element": {
+          "modifierName": "",
+          "elementType": "Frozen",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 300.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.ElementShieldMixin",
+              "elementType": "Ice",
+              "showDamageText": "",
+              "shieldAngle": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 360.0
+              },
+              "shieldHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 1.0
+              },
+              "damageRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.2
+              },
+              "onShieldBroken": [
+                {
+                  "$type": "MoleMole.Config.SetPoseBool",
+                  "target": "Owner",
+                  "boolID": "OnPillar"
+                },
+                {
+                  "$type": "MoleMole.Config.RemoveModifier",
+                  "modifierName": "IcePillar_Element"
+                }
+              ],
+              "onShieldSuccess": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_BeHitFailed"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                }
+              ],
+              "onShieldFailed": [
+                {
+                  "$type": "MoleMole.Config.Predicated",
+                  "target": "Target",
+                  "targetPredicates": [
+                    {
+                      "$type": "MoleMole.Config.ByEntityTypes",
+                      "entityTypes": [
+                        "Avatar"
+                      ]
+                    }
+                  ],
+                  "successActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "Target",
+                      "key": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ],
+                  "failActions": [
+                    {
+                      "$type": "MoleMole.Config.SetGlobalDir",
+                      "target": "TargetOriginOwner",
+                      "key": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT",
+                      "born": {
+                        "$type": "MoleMole.Config.ConfigBornBySelf",
+                        "direction": {
+                          "$type": "MoleMole.Config.ConfigDirectionByLookAtEntity"
+                        }
+                      },
+                      "setTarget": false
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.FireEffect",
+                  "effectPattern": {
+                    "isDynamic": false,
+                    "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_BeHitSuccess"
+                  },
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornByTarget",
+                    "direction": {
+                      "$type": "MoleMole.Config.ConfigDirectionByGlobalValue",
+                      "directionKey": "_MONSTER_SHAMAN_ICE_ELEMENTSHIELD_HIT"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "MoleMole.Config.AttachModifierToElementDurabilityMixin",
+              "valueSteps": [
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 0.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 150.0
+                },
+                {
+                  "isFormula": false,
+                  "isDynamic": false,
+                  "fixedValue": 301.0
+                }
+              ],
+              "modifierNameSteps": [
+                "Monster_Shaman_Ice_PillarLowD",
+                "Empty"
+              ]
+            }
+          ],
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_Create"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            }
+          ],
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_LifeOver"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "target": "Owner",
+              "modifierName": "Watcher_82069"
+            },
+            {
+              "$type": "MoleMole.Config.SetPoseBool",
+              "target": "Owner",
+              "boolID": "OnPillar"
+            },
+            {
+              "$type": "MoleMole.Config.RemoveUniqueModifier",
+              "target": "Owner",
+              "modifierName": "UNIQUE_Shaman_Create_IcePillar"
+            },
+            {
+              "$type": "MoleMole.Config.KillSelf"
+            }
+          ]
+        },
+        "Empty": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          }
+        },
+        "Monster_Shaman_Ice_PillarLowD": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "Damaged",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_Create"
+              }
+            }
+          ]
+        },
+        "Watcher_82069": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.DoWatcherSystemAction",
+              "watcherId": 82069,
+              "inThreatListOnly": true
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "IcePillar_Element"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Shaman_Ice_PillarAoe",
+      "modifiers": {
+        "Ice_PillarAoeDamage": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 4.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Shaman_Ice_PillarStorageEffect"
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.RemoveModifier",
+              "modifierName": "Monster_Shaman_Ice_PillarStorageEffect"
+            },
+            {
+              "$type": "MoleMole.Config.FireEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IcePillar_IceBurst"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.TriggerAttackEvent",
+              "attackEvent": {
+                "attackPattern": {
+                  "$type": "MoleMole.Config.ConfigAttackCircle",
+                  "triggerType": "TriggerNoRepeat",
+                  "born": {
+                    "$type": "MoleMole.Config.ConfigBornBySelf"
+                  },
+                  "height": 1.0,
+                  "radius": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 3.0
+                  }
+                },
+                "attackInfo": {
+                  "attackTag": "",
+                  "attenuationTag": "",
+                  "attenuationGroup": "default",
+                  "attackProperty": {
+                    "damagePercentage": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.3
+                    },
+                    "damagePercentageRatio": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 0.0
+                    },
+                    "elementType": "Ice",
+                    "elementDurability": {
+                      "isFormula": false,
+                      "isDynamic": false,
+                      "fixedValue": 50.0
+                    },
+                    "strikeType": "Blunt",
+                    "enBreak": 20.0
+                  },
+                  "hitPattern": {
+                    "onHitEffectName": "default",
+                    "hitImpulseType": "LV3"
+                  },
+                  "canBeModifiedBy": "OriginOwner"
+                }
+              },
+              "targetType": "Enemy"
+            },
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Shaman_Ice_PillarStorageEffectDelay"
+            }
+          ]
+        },
+        "Monster_Shaman_Ice_PillarStorageEffect": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 10.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Shaman_Ice_IceBurst_Storage"
+              },
+              "born": {
+                "$type": "MoleMole.Config.ConfigBornBySelf"
+              }
+            }
+          ]
+        },
+        "Monster_Shaman_Ice_PillarStorageEffectDelay": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onRemoved": [
+            {
+              "$type": "MoleMole.Config.ApplyModifier",
+              "modifierName": "Monster_Shaman_Ice_PillarStorageEffect"
+            }
+          ]
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.AttachModifier",
+          "modifierName": "Ice_PillarAoeDamage"
+        }
+      ]
+    }
+  }
+]

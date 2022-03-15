@@ -1,0 +1,405 @@
+[
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_RunState",
+      "modifiers": {
+        "Run_RandomValue": {
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 0.2
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.Randomed",
+              "chance": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.3
+              },
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.SetAnimatorTrigger",
+                  "triggerID": {
+                    "isDynamic": false,
+                    "fixedValue": "RunRandom"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "onAbilityStart": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Run_RandomValue"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Corruption_LoseHP",
+      "modifiers": {
+        "Hound_Corruption_LoseHP_AttackCheck": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAttackLanded": [
+            {
+              "$type": "MoleMole.Config.Predicated",
+              "target": "Target",
+              "targetPredicates": [
+                {
+                  "$type": "MoleMole.Config.ByEntityTypes",
+                  "entityTypes": [
+                    "Avatar"
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByAttackTags",
+                  "attackTags": [
+                    "Hound_Corruption_Tag"
+                  ]
+                }
+              ],
+              "successActions": [
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "TargetTeam",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByNot",
+                      "predicates": [
+                        {
+                          "$type": "MoleMole.Config.ByDungeonSettled"
+                        }
+                      ]
+                    }
+                  ],
+                  "modifierName": "Hound_Corruption_LoseHP_Logic"
+                },
+                {
+                  "$type": "MoleMole.Config.ApplyModifier",
+                  "target": "TargetTeam",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByNot",
+                      "predicates": [
+                        {
+                          "$type": "MoleMole.Config.ByDungeonSettled"
+                        }
+                      ]
+                    }
+                  ],
+                  "modifierName": "UNIQUE_Hound_Corruption_LoseHP_Effect_LocalHandler"
+                }
+              ]
+            }
+          ]
+        },
+        "Hound_Corruption_LoseHP_Logic": {
+          "timeScale": "Level",
+          "stacking": "Multiple",
+          "modifierName": "",
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 9.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "thinkInterval": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 1.0
+          },
+          "state": "UnlockFrequencyLimit",
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByIsLocalAvatar"
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.15
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByGameTimeIsLocked"
+                }
+              ],
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.005
+              },
+              "lethal": false,
+              "enableInvincible": true,
+              "enableLockHP": true,
+              "disableWhenLoading": true,
+              "useMeta": true
+            },
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByIsLocalAvatar"
+                },
+                {
+                  "$type": "MoleMole.Config.ByGameTimeIsLocked"
+                }
+              ],
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.005
+              },
+              "enableInvincible": true,
+              "enableLockHP": true,
+              "disableWhenLoading": true,
+              "useMeta": true
+            }
+          ],
+          "onThinkInterval": [
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByNot",
+                  "predicates": [
+                    {
+                      "$type": "MoleMole.Config.ByIsLocalAvatar"
+                    }
+                  ]
+                },
+                {
+                  "$type": "MoleMole.Config.ByTargetHPRatio",
+                  "HPRatio": {
+                    "isFormula": false,
+                    "isDynamic": false,
+                    "fixedValue": 0.15
+                  }
+                },
+                {
+                  "$type": "MoleMole.Config.ByGameTimeIsLocked"
+                }
+              ],
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.005
+              },
+              "lethal": false,
+              "enableInvincible": true,
+              "enableLockHP": true,
+              "disableWhenLoading": true,
+              "useMeta": true
+            },
+            {
+              "$type": "MoleMole.Config.LoseHP",
+              "target": "CurTeamAvatars",
+              "doOffStage": true,
+              "predicates": [
+                {
+                  "$type": "MoleMole.Config.ByIsLocalAvatar"
+                },
+                {
+                  "$type": "MoleMole.Config.ByGameTimeIsLocked"
+                }
+              ],
+              "amount": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "amountByTargetMaxHPRatio": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.005
+              },
+              "enableInvincible": true,
+              "enableLockHP": true,
+              "disableWhenLoading": true,
+              "useMeta": true
+            }
+          ],
+          "onThinkIntervalIsFixedUpdate": true,
+          "FBHKLDAENOC": [
+            "Corruption"
+          ]
+        },
+        "UNIQUE_Hound_Corruption_LoseHP_Effect_LocalHandler": {
+          "stacking": "RefreshUniqueDurability",
+          "modifierName": "",
+          "isUnique": true,
+          "duration": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 9.5
+          },
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "modifierMixins": [
+            {
+              "$type": "MoleMole.Config.CurLocalAvatarMixinV2",
+              "modifierName": "Hound_Corruption_LoseHP_Effect"
+            },
+            {
+              "$type": "MoleMole.Config.LocalAvatarsMixin",
+              "modifierName": "Hound_Corruption_LoseHP_Icon"
+            }
+          ],
+          "FBHKLDAENOC": [
+            "Corruption"
+          ]
+        },
+        "Hound_Corruption_LoseHP_Effect": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.AttachEffect",
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Common_Corruption_LoseHP"
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SendEffectTrigger",
+              "parameter": "Stage",
+              "type": "Int",
+              "value": 2,
+              "effectPattern": {
+                "isDynamic": false,
+                "fixedValue": "Eff_Monster_Common_Corruption_LoseHP"
+              }
+            }
+          ]
+        },
+        "Hound_Corruption_LoseHP_Icon": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "buffID": 90005
+        }
+      },
+      "onAdded": [
+        {
+          "$type": "MoleMole.Config.ApplyModifier",
+          "modifierName": "Hound_Corruption_LoseHP_AttackCheck"
+        }
+      ]
+    }
+  },
+  {
+    "Default": {
+      "$type": "MoleMole.Config.ConfigAbility",
+      "abilityName": "Monster_Hound_Riftstalker_ExitBattle",
+      "abilityMixins": [
+        {
+          "$type": "MoleMole.Config.AttachToAIAlertnessMixin",
+          "alertness": [
+            0
+          ],
+          "modifierName": "ExitBattle"
+        }
+      ],
+      "modifiers": {
+        "ExitBattle": {
+          "modifierName": "",
+          "elementDurability": {
+            "isFormula": false,
+            "isDynamic": false,
+            "fixedValue": 100.0
+          },
+          "onAdded": [
+            {
+              "$type": "MoleMole.Config.SetGlobalValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "key": "_Riftstalker_POSE_TAG_",
+              "maxValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              },
+              "minValue": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            },
+            {
+              "$type": "MoleMole.Config.SetChargeBarValue",
+              "value": {
+                "isFormula": false,
+                "isDynamic": false,
+                "fixedValue": 0.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]
